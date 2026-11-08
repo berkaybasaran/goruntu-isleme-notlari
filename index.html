@@ -1,0 +1,2044 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sayısal Görüntü İşleme - Kapsamlı Sınav Hazırlık Portalı</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.1); }
+        ::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.4); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.7); }
+        .matrix-bracket {
+            position: relative;
+            display: inline-block;
+            padding: 0 10px;
+        }
+        .matrix-bracket::before, .matrix-bracket::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 6px;
+            border: 2px solid currentColor;
+        }
+        .matrix-bracket::before { left: 0; border-right: none; }
+        .matrix-bracket::after { right: 0; border-left: none; }
+        .flip-card { perspective: 1000px; }
+        .flip-card-inner {
+            transition: transform 0.5s;
+            transform-style: preserve-3d;
+        }
+        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        .flip-card-back { transform: rotateY(180deg); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 font-sans antialiased selection:bg-indigo-500 selection:text-white transition-colors duration-200">
+
+    <!-- Top Header -->
+    <header class="sticky top-0 z-40 h-16 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-4 lg:px-8 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <button id="mobileMenuBtn" class="lg:hidden p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-indigo-500/20">
+                SGİ
+            </div>
+            <div>
+                <h1 class="font-bold text-base sm:text-lg leading-tight">Sayısal Görüntü İşleme</h1>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Öğr. Gör. Dr. Merve KESİM ÖNAL • Ders Notları & Sınav Kampı</p>
+            </div>
+        </div>
+
+        <!-- Progress & Actions -->
+        <div class="flex items-center gap-3 sm:gap-5">
+            <div class="hidden md:flex items-center gap-3 bg-slate-100 dark:bg-slate-800/80 px-3.5 py-1.5 rounded-full border border-slate-200 dark:border-slate-700">
+                <span class="text-xs font-medium text-slate-600 dark:text-slate-300">Çalışma İlerlemesi:</span>
+                <div class="w-28 h-2 bg-slate-300 dark:bg-slate-700 rounded-full overflow-hidden">
+                    <div id="overallProgressBar" class="h-full bg-gradient-to-r from-indigo-500 to-emerald-400 w-0 transition-all duration-500"></div>
+                </div>
+                <span id="overallProgressText" class="text-xs font-bold text-indigo-600 dark:text-indigo-400">0/6</span>
+            </div>
+
+            <button onclick="toggleNotesDrawer()" class="relative p-2.5 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 hover:bg-amber-500/20 border border-amber-500/20 transition flex items-center gap-2 text-xs font-semibold">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                <span class="hidden sm:inline">Notlarım</span>
+                <span id="savedNotesCount" class="px-1.5 py-0.5 text-[10px] rounded-full bg-amber-500 text-white">0</span>
+            </button>
+
+            <button id="themeToggleBtn" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+                <svg id="sunIcon" class="w-5 h-5 hidden dark:block text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                <svg id="moonIcon" class="w-5 h-5 block dark:hidden text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+            </button>
+        </div>
+    </header>
+
+    <div class="flex min-h-[calc(100vh-4rem)]">
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar" class="fixed lg:sticky top-16 left-0 z-30 w-72 h-[calc(100vh-4rem)] bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col justify-between p-4">
+            <div class="space-y-6">
+                <!-- Search Filter -->
+                <div class="relative">
+                    <input type="text" id="topicSearch" placeholder="Konu, formül veya kavram ara..." class="w-full pl-9 pr-4 py-2 text-xs rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <svg class="w-4 h-4 text-slate-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+
+                <!-- Modules List -->
+                <div>
+                    <p class="px-2 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Ders Modülleri (1-6)</p>
+                    <nav class="space-y-1" id="moduleNav">
+                        <button onclick="switchTab('bolum1')" data-tab="bolum1" class="nav-btn w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-left text-xs font-medium transition">
+                            <span class="flex items-center gap-2.5">
+                                <span class="w-6 h-6 rounded-lg bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold">1</span>
+                                <span>Sinyal, Işık, Göz & Örnekleme</span>
+                            </span>
+                            <span id="check-bolum1" class="hidden text-emerald-500">✓</span>
+                        </button>
+                        <button onclick="switchTab('bolum2')" data-tab="bolum2" class="nav-btn w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-left text-xs font-medium transition">
+                            <span class="flex items-center gap-2.5">
+                                <span class="w-6 h-6 rounded-lg bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold">2</span>
+                                <span>Formatlar, RGB, Bellek & Kontrast</span>
+                            </span>
+                            <span id="check-bolum2" class="hidden text-emerald-500">✓</span>
+                        </button>
+                        <button onclick="switchTab('bolum3')" data-tab="bolum3" class="nav-btn w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-left text-xs font-medium transition">
+                            <span class="flex items-center gap-2.5">
+                                <span class="w-6 h-6 rounded-lg bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold">3</span>
+                                <span>LUT, Negatif, Gri, Eşikleme & Hist.</span>
+                            </span>
+                            <span id="check-bolum3" class="hidden text-emerald-500">✓</span>
+                        </button>
+                        <button onclick="switchTab('bolum4')" data-tab="bolum4" class="nav-btn w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-left text-xs font-medium transition">
+                            <span class="flex items-center gap-2.5">
+                                <span class="w-6 h-6 rounded-lg bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold">4</span>
+                                <span>Histogram Germe & Eşitleme</span>
+                            </span>
+                            <span id="check-bolum4" class="hidden text-emerald-500">✓</span>
+                        </button>
+                        <button onclick="switchTab('bolum5')" data-tab="bolum5" class="nav-btn w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-left text-xs font-medium transition">
+                            <span class="flex items-center gap-2.5">
+                                <span class="w-6 h-6 rounded-lg bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold">5</span>
+                                <span>Geometrik Dönüşümler & Aliasing</span>
+                            </span>
+                            <span id="check-bolum5" class="hidden text-emerald-500">✓</span>
+                        </button>
+                        <button onclick="switchTab('bolum6')" data-tab="bolum6" class="nav-btn w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-left text-xs font-medium transition">
+                            <span class="flex items-center gap-2.5">
+                                <span class="w-6 h-6 rounded-lg bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold">6</span>
+                                <span>Bitsel (Boolean) İşlemler & Maske</span>
+                            </span>
+                            <span id="check-bolum6" class="hidden text-emerald-500">✓</span>
+                        </button>
+                    </nav>
+                </div>
+
+                <!-- Special Tools & Exam -->
+                <div>
+                    <p class="px-2 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Pratik & Sınav Merkezi</p>
+                    <nav class="space-y-1">
+                        <button onclick="switchTab('hatirlaticilar')" data-tab="hatirlaticilar" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-left text-xs font-medium transition">
+                            <span class="w-6 h-6 rounded-lg bg-amber-500/10 text-amber-500 flex items-center justify-center">⚡</span>
+                            <span>Hızlı Hatırlatıcılar & Ezber Kartları</span>
+                        </button>
+                        <button onclick="switchTab('simulator')" data-tab="simulator" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-left text-xs font-medium transition">
+                            <span class="w-6 h-6 rounded-lg bg-emerald-500/10 text-emerald-500 flex items-center justify-center">🧪</span>
+                            <span>İnteraktif Hesaplayıcı & Lab</span>
+                        </button>
+                        <button onclick="switchTab('sinav')" data-tab="sinav" class="nav-btn w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-left text-xs font-bold bg-gradient-to-r from-indigo-600/10 to-purple-600/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 transition">
+                            <span class="w-6 h-6 rounded-lg bg-indigo-600 text-white flex items-center justify-center">🏆</span>
+                            <span>Genel Sınav Simülasyonu (20 Soru)</span>
+                        </button>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Exam Countdown / Tip Box -->
+            <div class="p-3.5 rounded-2xl bg-slate-100 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700/80 text-xs space-y-2">
+                <div class="flex items-center justify-between font-bold text-indigo-600 dark:text-indigo-400">
+                    <span>💡 Sınav Tüyosu</span>
+                    <button onclick="nextRandomTip()" class="text-[11px] hover:underline">Değiştir ↻</button>
+                </div>
+                <p id="sidebarRandomTip" class="text-slate-600 dark:text-slate-300 leading-relaxed text-[11px]">
+                    MATLAB'da diziler 1'den başlar! Bu yüzden 0 gri değerini LUT tablosunda ararken <code>LUT(im+1)</code> kullanılır.
+                </p>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 p-4 sm:p-6 lg:p-10 max-w-5xl mx-auto w-full space-y-8 overflow-x-hidden">
+
+            <!-- ==========================================
+                 BÖLÜM 1: SİNYAL, IŞIK, GÖRME SİSTEMİ & SAYISALLAŞTIRMA
+                 ========================================== -->
+            <section id="tab-bolum1" class="tab-content space-y-8">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
+                    <div>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 mb-2">1. Bölüm Ders Notu</span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Sinyal, Işık, İnsan Görme Sistemi ve Sayısallaştırma</h2>
+                    </div>
+                    <button onclick="toggleComplete('bolum1')" id="btn-complete-bolum1" class="px-4 py-2.5 rounded-xl text-xs font-bold border border-slate-300 dark:border-slate-700 hover:bg-emerald-500 hover:text-white hover:border-emerald-500 transition flex items-center gap-2 self-start">
+                        <span>✓ Konuyu Tamamladım</span>
+                    </button>
+                </div>
+
+                <!-- 1.1 Sinyal Kavramı ve Boyutları -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-sm">1.1</span>
+                        Sinyal Kavramı ve Boyutlarına Göre Sınıflandırılması
+                    </h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                        <strong>Sinyal:</strong> Fiziksel değişkenlerin durumu hakkında bilgi taşıyan ve matematiksel olarak bir <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 font-mono text-indigo-500">f</code> fonksiyonu ile gösterilen kavramdır. Sinyaller <strong>1, 2, ..., n boyutlu</strong> olabilir.
+                        Dalgalar şeklinde yayılan ses, görüntü bilgisinin mekânsal/zamansal değişimi, bir haberleşme uydusunun dünyaya gönderdiği elektromanyetik dalgalar veya bir fotoğraf karesindeki parlaklığın <code class="font-mono">x</code> ve <code class="font-mono">y</code> değişkenleri biçiminde ifadesi sinyale örnektir.
+                    </p>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                            <thead>
+                                <tr class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">
+                                    <th class="p-3 rounded-tl-xl border-b border-slate-200 dark:border-slate-700">Boyut</th>
+                                    <th class="p-3 border-b border-slate-200 dark:border-slate-700">Örnek</th>
+                                    <th class="p-3 border-b border-slate-200 dark:border-slate-700">Matematiksel İfade</th>
+                                    <th class="p-3 rounded-tr-xl border-b border-slate-200 dark:border-slate-700">Bağımsız Değişkenler & Açıklama</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+                                <tr>
+                                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">1 Boyutlu</td>
+                                    <td class="p-3">Dalga formu (Ses vb.)</td>
+                                    <td class="p-3 font-mono">Genlik = f(t)</td>
+                                    <td class="p-3"><code class="font-mono">t</code> (zaman) tek bağımsız değişkendir. Tek boyutlu olduğu için tek değişken vardır.</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">2 Boyutlu</td>
+                                    <td class="p-3">Fotoğraf / Görüntü</td>
+                                    <td class="p-3 font-mono">Görüntü = f(x, y)</td>
+                                    <td class="p-3"><code class="font-mono">x</code> ve <code class="font-mono">y</code> bir pikselin konumunu (koordinatını) ifade eden iki bağımsız değişkendir.</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">3 Boyutlu</td>
+                                    <td class="p-3">Uzayda bir nokta</td>
+                                    <td class="p-3 font-mono">Nokta = f(x, y, z)</td>
+                                    <td class="p-3">Güneş sistemindeki herhangi bir nokta güneş merkezli koordinat sisteminde <code class="font-mono">x, y, z</code> konumları ile belirlenir.</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-bold text-indigo-600 dark:text-indigo-400">4 Boyutlu</td>
+                                    <td class="p-3">Animasyon Film / Video</td>
+                                    <td class="p-3 font-mono">Film = f(x, y, z, t)</td>
+                                    <td class="p-3">3 boyuttan farklı olarak eklenen 4. boyut <code class="font-mono">t</code> zamandır (değişimin ölçüldüğü zamansal boyut). 3B karakterlerin zaman içindeki hareketini gösterir.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 1.2 Analog ve Dijital Sinyal -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-sm">1.2</span>
+                        Analog ve Dijital Sinyal Karşılaştırması
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                            <h4 class="font-bold text-base mb-2 text-rose-600 dark:text-rose-400">〰️ Analog Sinyal</h4>
+                            <ul class="list-disc list-inside space-y-1.5 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+                                <li>Taşıdıkları bilgiyi mekan ve zamana bağlı <strong>sürekli (continuous)</strong> bir fonksiyon olarak ifade ederler.</li>
+                                <li>Örn: Hava basıncı herhangi bir <code class="font-mono">t</code> anında sürekli değer alabilir.</li>
+                                <li><strong>Sonsuz sayıda</strong> değere sahip olabilir.</li>
+                                <li>Genellikle <strong>sinüs dalgasıyla</strong> temsil edilir ve mühendislikte karşılaşılan birçok doğal sinyal analogdur.</li>
+                            </ul>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                            <h4 class="font-bold text-base mb-2 text-emerald-600 dark:text-emerald-400">📊 Dijital (Sayısal) Sinyal</h4>
+                            <ul class="list-disc list-inside space-y-1.5 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+                                <li>Analog sinyalin bir alt kümesidir; sürekli analog sinyallerin belirli zaman aralıklarında <strong>örneklenmesinden</strong> oluşan <strong>sürekli olmayan (ayrık zamanlı)</strong> sinyaldir.</li>
+                                <li><strong>Genliği</strong> (bir dalga tepesi ile dalga çukuru arasındaki mesafenin yarısı) <strong>0 veya 1</strong> olan <strong>kare formundaki dalgalar</strong> şeklinde gösterilir.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto pt-2">
+                        <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                            <thead>
+                                <tr class="bg-indigo-500/10 text-indigo-700 dark:text-indigo-300">
+                                    <th class="p-3 rounded-tl-xl">Karşılaştırma Ögesi</th>
+                                    <th class="p-3">Analog Sinyal</th>
+                                    <th class="p-3 rounded-tr-xl">Dijital Sinyal</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+                                <tr><td class="p-2.5 font-semibold">Analiz</td><td class="p-2.5">Zor</td><td class="p-2.5 font-medium text-emerald-600 dark:text-emerald-400">Mümkün</td></tr>
+                                <tr><td class="p-2.5 font-semibold">Gösterim</td><td class="p-2.5">Sürekli</td><td class="p-2.5">Ayrık</td></tr>
+                                <tr><td class="p-2.5 font-semibold">Doğruluk</td><td class="p-2.5 font-medium text-emerald-600 dark:text-emerald-400">Daha fazla (Orijinal)</td><td class="p-2.5">Daha az (Örneklenmiş)</td></tr>
+                                <tr><td class="p-2.5 font-semibold">Depolama</td><td class="p-2.5">Sonsuz hafıza ihtiyacı</td><td class="p-2.5 font-medium text-emerald-600 dark:text-emerald-400">Kolaylıkla depolanabilir</td></tr>
+                                <tr><td class="p-2.5 font-semibold">Gürültü Etkisi</td><td class="p-2.5">Var</td><td class="p-2.5 font-medium text-emerald-600 dark:text-emerald-400">Yok (Çok düşük)</td></tr>
+                                <tr><td class="p-2.5 font-semibold">Kayıt Tekniği</td><td class="p-2.5">Orijinal sinyal korunur</td><td class="p-2.5">Sinyal örnekleri alınır ve korunur</td></tr>
+                                <tr><td class="p-2.5 font-semibold">Örnekler</td><td class="p-2.5">İnsan sesi, Termometre, Analog telefonlar</td><td class="p-2.5">Bilgisayarlar, Dijital telefonlar, Dijital kalemler</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 1.3 Işık ve Elektromanyetik Spektrum -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-sm">1.3</span>
+                        Işık Фиziği ve Elektromanyetik Spektrum
+                    </h3>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                        <div class="lg:col-span-2 space-y-3 text-sm text-slate-600 dark:text-slate-300">
+                            <p>• <strong>Işık:</strong> Işık kaynağı tarafından yayılan, radyasyon enerjisi (elektromanyetik radyasyon) şeklindeki küçük dalgacıklardır.</p>
+                            <p>• <strong>Görünen Işık Bölgesi:</strong> Elektromanyetik spektrumda çok küçük bir aralıkta (<strong>%2 civarı</strong>) bulunur. Gözlerimizle gördüğümüz ışığın dalga boyu <strong>0,380 – 0,760 mikron (380 – 760 nanometre)</strong> aralığındadır.</p>
+                            <p>• <strong>Renk ve Dalga Boyu İlişkisi:</strong> Beyaz ışık kendi renklerine ayrıştırılırsa bir renk bandından (spektrumundan) oluşur. Dalga boyu (λ) <strong>küçük değerden (380 nm) büyük değere (760 nm)</strong> doğru ilerledikçe ışığın rengi <strong>Maviden (Mor) ➔ Kırmızıya (Kızıl)</strong> doğru dönüşüm yapar. (Dalga boyu ile frekans ters orantılıdır!)</p>
+                            <p>• <strong>Canlılarda Görünür Aralık:</strong> İnsan gözü 380-760 nm arasını görürken, <strong>bir arının görebildiği spektral aralık ultraviyole (morötesi) bölgede başlar ve yeşil dalga boylarında sona erer.</strong></p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-indigo-600 text-white flex flex-col justify-center space-y-3 shadow-lg shadow-indigo-600/20">
+                            <div class="text-xs uppercase tracking-wider opacity-80 font-bold">Temel Işık Denklemi</div>
+                            <div class="text-2xl font-mono font-bold text-center py-2 bg-white/10 rounded-xl">
+                                c = f · λ
+                            </div>
+                            <ul class="text-xs space-y-1 opacity-95">
+                                <li>• <strong>c (Işık Hızı):</strong> Boşlukta <code class="font-mono">299.792.458 m/s</code> (yaklaşık <code class="font-mono">300.000 km/s</code> = <code class="font-mono">3×10⁸ m/s</code>)</li>
+                                <li>• <strong>f veya ν (Frekans):</strong> Birimi Hertz (Hz) — 1 saniyedeki dalga sayısı.</li>
+                                <li>• <strong>λ (Dalga Boyu):</strong> Birimi Metre (m).</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Siyah Cisim ve Frekans Dönüşümü Uygulamaları -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                        <div class="p-4 rounded-xl bg-slate-900 text-slate-100 border border-slate-700 text-xs sm:text-sm space-y-2">
+                            <h4 class="font-bold text-amber-400">🔥 Siyah Cisim Işıması ve Isıtılma Sırası</h4>
+                            <p class="text-slate-300">Tamamen siyah bir cisim üstüne düşen bütün ışığı emer (UV ve IR gibi görünmez). Ancak <strong>ısıtıldığı zaman</strong> sırasıyla şu ışınımları verir:</p>
+                            <ol class="list-decimal list-inside space-y-1 text-slate-200 font-medium">
+                                <li>Önce <strong>Kızılötesi (Infrared - IR)</strong> ışınlar saçar (gözle görülmez).</li>
+                                <li>Isındıkça <strong>Kırmızı</strong> renge döner.</li>
+                                <li>Daha çok ısındıkça <strong>Beyaz</strong> olur.</li>
+                                <li>Yeterli derecede ısıtılabilseydi <strong>Mavi</strong> renge dönüşüp en sıcak yıldızlar gibi <strong>Ultraviyole (Morötesi)</strong> ışınlar saçardı.</li>
+                            </ol>
+                        </div>
+                        <div class="p-4 rounded-xl bg-amber-500/5 border border-amber-500/20 text-xs sm:text-sm space-y-2">
+                            <h4 class="font-bold text-amber-600 dark:text-amber-400">✨ Görünmez Frekansı Görünür Yapma Uygulamaları</h4>
+                            <ul class="space-y-1.5 text-slate-600 dark:text-slate-300">
+                                <li>• <strong>Flüoresan (Fosforlu) Maddeler:</strong> Değişik frekansta (görünmez) ışık alıp farklı frekansta (görünür) yayarlar; reklam boya ve mürekkeplerinde daha parlak yansıma sağlar.</li>
+                                <li>• <strong>Optik Parlatıcılar (Deterjanlar):</strong> Temizleme tozlarında görünmez <strong>ultraviyole (UV) ışınları mavi ışığa çevirerek</strong> çamaşırları daha parlak gösterir.</li>
+                                <li>• <strong>Para Kontrol Cihazları:</strong> Gönderilen UV ışık gözle görülmez ama para üzerindeki özel boyalara çarpıp yansırken parlar.</li>
+                                <li>• <strong>Gece Görüş Kameraları:</strong> Gözle göremediğimiz <strong>kızılötesi (sıcak) ışınları</strong> görebildiğimiz dalga boyuna çevirir.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 1.4 İnsan Görme Sistemi ve Gözün Yapısı -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-sm">1.4</span>
+                        İnsan Görme Sistemi, Gözün Katmanları ve Odaklama
+                    </h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-300">
+                        İnsanlar ve hayvanlar gözleri ile <strong>analog temele dayanan</strong> görüntü işleme yaparlar. Bu olay beyin yardımıyla (akıllı sistem) <strong>online, paralel ve çok spektrumlu (multispektral)</strong> olarak gerçekleşir. Göz <strong>3 temel zar</strong> ile kaplıdır:
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs sm:text-sm">
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
+                            <div class="font-bold text-indigo-600 dark:text-indigo-400 mb-1">1. Dış Zar (Kornea ve Sklera)</div>
+                            <p class="text-slate-600 dark:text-slate-300">• <strong>Kornea (Saydam Tabaka):</strong> Sert ve saydam bir yapıya sahiptir.<br>• <strong>Sklera (Sert Tabaka):</strong> Saydam olmayan bir yapıdadır ve optik bölümü kuşatır.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
+                            <div class="font-bold text-indigo-600 dark:text-indigo-400 mb-1">2. Damar Tabaka (Koroid)</div>
+                            <p class="text-slate-600 dark:text-slate-300">• Sklera boyunca uzanan zardır.<br>• Gözü besleyen <strong>kan damarları</strong> bu tabakada yoğun şekilde bulunur.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
+                            <div class="font-bold text-indigo-600 dark:text-indigo-400 mb-1">3. Ağ Tabaka (Retina)</div>
+                            <p class="text-slate-600 dark:text-slate-300">• Gözün <strong>en önemli</strong> tabakasıdır; nesnenin görüntüsü buraya düşer.<br>• Yüzeyindeki <strong>Cone (Koni - renkli görme)</strong> ve <strong>Rod (Çubuk - karanlık/aydınlık)</strong> algılayıcıları ile algılanır.</p>
+                        </div>
+                    </div>
+
+                    <!-- Sınav Hatırlatıcısı: Göz Merceği Odaklama -->
+                    <div class="p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-start gap-3">
+                        <span class="text-xl">🚨</span>
+                        <div class="text-xs sm:text-sm space-y-1">
+                            <div class="font-bold text-rose-600 dark:text-rose-400">SINAV TUZAĞI: Göz Merceği (Lens) Odaklaması Nasıl Çalışır?</div>
+                            <p class="text-slate-700 dark:text-slate-200">
+                                Göz ile optik kamera lensi arasındaki temel fark <strong>gözdeki lensin esnek olmasıdır</strong>. Işığı kırma oranı lensin kalınlığı ile (kasların gerilmesiyle) kontrol edilir:<br>
+                                • <strong>Uzaktaki cismi görmek için:</strong> Lens <strong>yassılaşır (incelir)</strong> ve ışığı kırma <strong>MİNİMUMDUR</strong>.<br>
+                                • <strong>Yakındaki cismi görmek için:</strong> Lens <strong>kalınlaşır</strong> ve ışığı kırma <strong>MAKSİMUMDUR</strong>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 1.5 Görüntü Yakalama, Örnekleme ve Nicemleme -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-sm">1.5</span>
+                        Sensörler, Örnekleme (Sampling) ve Nicemleme (Quantization)
+                    </h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-300">
+                        <strong>Görüntü Yakalama (Image Acquisition):</strong> Gelen enerjiyi sayısal imgeye dönüştürmek için 3 temel sensör düzenlemesi kullanılır:
+                        <strong>(a) Tek Görüntüleme Sensörü (Single imaging sensor)</strong>, <strong>(b) Çizgi Sensör (Line sensor - tarayıcılar)</strong>, <strong>(c) Dizi Sensör (Array sensor - dijital kameralar, 2B matris)</strong>.
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-4 rounded-xl bg-indigo-500/5 border border-indigo-500/20 space-y-2">
+                            <h4 class="font-bold text-indigo-600 dark:text-indigo-400 text-sm">1. Görüntü Örnekleme (Sampling) ➔ KONUMSAL</h4>
+                            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+                                • Görüntü fonksiyonuna ilişkin <strong>koordinatların (x, y konumlarının) sayısallaştırılmasıdır</strong>.<br>
+                                • Sürekli görüntü üzerinden eşit aralıklarla yatayda <code class="font-mono">N</code> ve düşeyde <code class="font-mono">M</code> örnek alınarak <code class="font-mono">N × M</code> boyutlu bir matris oluşturulur.<br>
+                                • <strong>Önemli:</strong> Bu işlemde <strong>bilgi kaybı vardır</strong> (örnekler arasındaki sonsuz detay kaybolur).
+                            </p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-purple-500/5 border border-purple-500/20 space-y-2">
+                            <h4 class="font-bold text-purple-600 dark:text-purple-400 text-sm">2. Görüntü Nicemleme (Quantization) ➔ GENLİK / RENK</h4>
+                            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+                                • Görüntü fonksiyonunun <strong>genlik (parlaklık şiddeti / renk derinliği) değerlerinin sayısallaştırılmasıdır</strong>.<br>
+                                • Analog renk değerinin, basamaklara ayrılmış geçerli en yakın <strong>pozitif tamsayı</strong> dijital renk değerine dönüştürülmesidir.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Formatlar ve Tarihçe -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 text-xs sm:text-sm">
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                            <h4 class="font-bold mb-2">🎨 Piksel Başına Örnek Sayıları ve Koordinat</h4>
+                            <ul class="space-y-1 text-slate-600 dark:text-slate-300">
+                                <li>• <strong>Piksel başına 1 örnek:</strong> Siyah-Beyaz veya Gri Tonlamalı görüntü.</li>
+                                <li>• <strong>Piksel başına 3 örnek:</strong> Kırmızı, Yeşil ve Mavi (RGB).</li>
+                                <li>• <strong>Piksel başına 4 örnek:</strong> R, G, B ve <strong>"Alfa" (Opaklık / Saydamlık)</strong>.</li>
+                                <li>• <strong>Matris Orijini:</strong> Sayısal görüntüde orijin <code class="font-mono">(0,0)</code> <strong>sol üst köşedir</strong>; <code class="font-mono">x</code> dikey (satır: <code class="font-mono">0..M-1</code>), <code class="font-mono">y</code> yatay (sütun: <code class="font-mono">0..N-1</code>) eksendir.</li>
+                            </ul>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                            <h4 class="font-bold mb-2">📜 Görüntü İşlemenin Kısa Tarihi</h4>
+                            <ul class="space-y-1 text-slate-600 dark:text-slate-300">
+                                <li>• <strong>1920'lerin Başı:</strong> İlk uygulama <strong>gazete endüstrisindeydi</strong> (Londra-New York arası denizaltı kablosu).</li>
+                                <li>• <strong>1921:</strong> Özel yazı tipli telgraf yazıcısıyla kodlu şeritten üretilen ilk dijital resim.</li>
+                                <li>• <strong>1922:</strong> Atlantik'i iki kez geçtikten sonra delikli şeritten elde edilen görüntü.</li>
+                                <li>• <strong>1929:</strong> General Pershing ve Foch'un Londra'dan New York'a <strong>15 tonlu (seviyeli)</strong> ekipmanla iletilen resmi.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bölüm 1 Özeti -->
+                <div class="p-5 rounded-2xl bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 space-y-2">
+                    <h4 class="font-bold text-sm uppercase tracking-wider text-indigo-600 dark:text-indigo-400">📌 1. Bölüm Hızlı Özet</h4>
+                    <ul class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+                        <li>✓ Ses 1B <code class="font-mono">f(t)</code>, Görüntü 2B <code class="font-mono">f(x,y)</code>, Uzay 3B <code class="font-mono">f(x,y,z)</code>, Animasyon 4B <code class="font-mono">f(x,y,z,t)</code> sinyaldir.</li>
+                        <li>✓ <code class="font-mono">c = f · λ</code> (Görünür ışık: 380 nm Mor/Mavi — 760 nm Kırmızı).</li>
+                        <li>✓ Gözde görüntünün düştüğü, Koni ve Çubuk hücrelerinin bulunduğu tabaka <strong>Retina (Ağ tabaka)</strong>'dır.</li>
+                        <li>✓ Koordinatların sayısallaştırılması <strong>Örnekleme (Sampling)</strong>; parlaklık/renk genliğinin sayısallaştırılması <strong>Nicemleme (Quantization)</strong>'dir.</li>
+                    </ul>
+                </div>
+
+                <!-- Bölüm 1 Mini Test -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 space-y-4">
+                    <h4 class="font-bold text-base flex items-center gap-2">📝 1. Bölüm Konu Sonu Mini Testi</h4>
+                    <div id="quiz-bolum1" class="space-y-4"></div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 BÖLÜM 2: FORMATLAR, RGB, BELLEK HESABI & NOKTASAL İŞLEMLER
+                 ========================================== -->
+            <section id="tab-bolum2" class="tab-content hidden space-y-8">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
+                    <div>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 mb-2">2. Bölüm Ders Notu</span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Dosya Formatları, RGB Renk Modeli, Bellek Hesabı ve Noktasal İşlemler</h2>
+                    </div>
+                    <button onclick="toggleComplete('bolum2')" id="btn-complete-bolum2" class="px-4 py-2.5 rounded-xl text-xs font-bold border border-slate-300 dark:border-slate-700 hover:bg-emerald-500 hover:text-white hover:border-emerald-500 transition flex items-center gap-2 self-start">
+                        <span>✓ Konuyu Tamamladım</span>
+                    </button>
+                </div>
+
+                <!-- 2.1 Görüntü Saklama Formatları -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-sm">2.1</span>
+                        Görüntü Saklama Formatları ve Özellikleri
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-xs sm:text-sm">
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                            <div class="font-bold text-indigo-600 dark:text-indigo-400 mb-1">BMP (Bitmap)</div>
+                            <p class="text-slate-600 dark:text-slate-300">Microsoft'un kullandığı dosya biçimidir. <strong>24 bitlik</strong> görüntü destekler (2²⁴ = 16.777.216 renk). Yüksek kalite sunar ancak sıkıştırma olmadığı için <strong>dosya boyutları büyüktür</strong>.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                            <div class="font-bold text-rose-600 dark:text-rose-400 mb-1">JPEG (Joint Photographic Experts Group)</div>
+                            <p class="text-slate-600 dark:text-slate-300"><strong>Kayıplı (Lossy) sıkıştırma</strong> yapan en yaygın fotoğraf formatıdır. <strong>24 bitlik</strong> görüntü destekler. Sıkıştırma görüntüde kalite kaybına neden olabilir.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                            <div class="font-bold text-emerald-600 dark:text-emerald-400 mb-1">PNG (Portable Network Graphics)</div>
+                            <p class="text-slate-600 dark:text-slate-300"><strong>Kayıpsız (Lossless) sıkıştırma</strong> sağlar. 24 bitlik yapıyı, <strong>katmansal yapıyı ve saydamlığı (alfa kanalını)</strong> destekler.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                            <div class="font-bold text-amber-600 dark:text-amber-400 mb-1">GIF (Graphics Interchange Format)</div>
+                            <p class="text-slate-600 dark:text-slate-300"><strong>Animasyonları</strong> destekleyen, <strong>düşük renk derinliği (8-bit / 256 renk)</strong> ile <strong>kayıpsız sıkıştırma</strong> sağlayan formattır. Saydamlığı ve katmansal yapıyı destekler.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                            <div class="font-bold text-purple-600 dark:text-purple-400 mb-1">TIFF (Tagged Image File Format)</div>
+                            <p class="text-slate-600 dark:text-slate-300">Hem <strong>kayıpsız hem de kayıplı</strong> sıkıştırma seçenekleri sunan esnek ve profesyonel bir görüntü formatıdır.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                            <div class="font-bold text-sky-600 dark:text-sky-400 mb-1">HEIF (High Efficiency Image File)</div>
+                            <p class="text-slate-600 dark:text-slate-300"><strong>Apple</strong> tarafından geliştirilen, daha verimli sıkıştırma sağlayan ve fotoğrafların daha fazla bilgiyi saklamasına izin veren modern formattır.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2.2 Gri Tonlamalı ve Renkli (RGB) Görüntüler -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-sm">2.2</span>
+                        Gri Tonlamalı Görüntü, RGB Renk Uzayı ve Yapay Renklendirme
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs sm:text-sm">
+                        <div class="space-y-3">
+                            <h4 class="font-bold text-base">🌑 Gri Tonlamalı (Gray Scale / Monochromatic) Görüntü</h4>
+                            <p class="text-slate-600 dark:text-slate-300">
+                                Her bir piksel yaygın olarak <strong>8 bit</strong> ile kodlanır. <code class="font-mono">2⁸ = 256</code> farklı gri ton karşılığı vardır ve <code class="font-mono">G = {0, 1, 2, ..., 255}</code> biçiminde ifade edilir.<br>
+                                • <strong>0 gri seviyesi = SİYAH</strong><br>
+                                • <strong>255 gri seviyesi = BEYAZ</strong>
+                            </p>
+                            <h4 class="font-bold text-base pt-2">🌈 Renkli (RGB) Görüntü ve Bant Yapısı</h4>
+                            <p class="text-slate-600 dark:text-slate-300">
+                                R (Kırmızı - 1. Bant), G (Yeşil - 2. Bant) ve B (Mavi - 3. Bant) kodlanmış 3 adet gri düzeyli matrisin <code class="font-mono">{I(i, j, k) | k = 1, 2, 3}</code> üst üste gösterilmesiyle oluşur.<br>
+                                • Her bant 8 bit olduğundan <code class="font-mono">3 × 8 = 24 bit</code> veri içerir.<br>
+                                • Toplam renk sayısı: <code class="font-mono">2⁸ × 2⁸ × 2⁸ = 2²⁴ = 16.777.216</code> (yaklaşık 17 milyon renk).<br>
+                                • Doğal renkli görüntü için bant sırası <strong>1-2-3 (R-G-B)</strong> olmalıdır. Bantların yerleri değiştirilirse (örn: <strong>2-1-3, 1-3-2, 2-3-1</strong>) veya diğer bantlar sıfırlanırsa (<strong>R00, 0G0, 00B</strong>) oluşan görüntülere <strong>Yapay Renkli Görüntüler</strong> denir.
+                            </p>
+                        </div>
+
+                        <!-- RGB Tablosu -->
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse text-xs">
+                                <thead>
+                                    <tr class="bg-slate-100 dark:bg-slate-800">
+                                        <th class="p-2.5 rounded-tl-xl">Renk Adı</th>
+                                        <th class="p-2.5 text-rose-500">R</th>
+                                        <th class="p-2.5 text-emerald-500">G</th>
+                                        <th class="p-2.5 text-blue-500">B</th>
+                                        <th class="p-2.5 rounded-tr-xl">Önizleme</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-200 dark:divide-slate-800 font-mono">
+                                    <tr><td class="p-2 font-sans font-semibold">Kırmızı (Red)</td><td class="p-2">255</td><td class="p-2">0</td><td class="p-2">0</td><td class="p-2"><span class="inline-block w-6 h-4 rounded bg-red-600"></span></td></tr>
+                                    <tr><td class="p-2 font-sans font-semibold">Yeşil (Green)</td><td class="p-2">0</td><td class="p-2">255</td><td class="p-2">0</td><td class="p-2"><span class="inline-block w-6 h-4 rounded bg-green-500"></span></td></tr>
+                                    <tr><td class="p-2 font-sans font-semibold">Mavi (Blue)</td><td class="p-2">0</td><td class="p-2">0</td><td class="p-2">255</td><td class="p-2"><span class="inline-block w-6 h-4 rounded bg-blue-600"></span></td></tr>
+                                    <tr><td class="p-2 font-sans font-semibold">Beyaz (White)</td><td class="p-2">255</td><td class="p-2">255</td><td class="p-2">255</td><td class="p-2"><span class="inline-block w-6 h-4 rounded bg-white border border-slate-400"></span></td></tr>
+                                    <tr><td class="p-2 font-sans font-semibold">Siyah (Black)</td><td class="p-2">0</td><td class="p-2">0</td><td class="p-2">0</td><td class="p-2"><span class="inline-block w-6 h-4 rounded bg-black border border-slate-600"></span></td></tr>
+                                    <tr><td class="p-2 font-sans font-semibold">Açık Gri</td><td class="p-2">200</td><td class="p-2">200</td><td class="p-2">200</td><td class="p-2"><span class="inline-block w-6 h-4 rounded bg-neutral-300"></span></td></tr>
+                                    <tr><td class="p-2 font-sans font-semibold">Koyu Gri</td><td class="p-2">100</td><td class="p-2">100</td><td class="p-2">100</td><td class="p-2"><span class="inline-block w-6 h-4 rounded bg-neutral-600"></span></td></tr>
+                                    <tr class="bg-amber-500/10"><td class="p-2 font-sans font-bold text-amber-600 dark:text-amber-400">Sarı (Yellow = R+G)</td><td class="p-2 font-bold">255</td><td class="p-2 font-bold">255</td><td class="p-2">0</td><td class="p-2"><span class="inline-block w-6 h-4 rounded bg-yellow-400"></span></td></tr>
+                                    <tr class="bg-cyan-500/10"><td class="p-2 font-sans font-bold text-cyan-600 dark:text-cyan-400">Turkuaz (Cyan = G+B)</td><td class="p-2">0</td><td class="p-2 font-bold">255</td><td class="p-2 font-bold">255</td><td class="p-2"><span class="inline-block w-6 h-4 rounded bg-cyan-400"></span></td></tr>
+                                    <tr class="bg-fuchsia-500/10"><td class="p-2 font-sans font-bold text-fuchsia-600 dark:text-fuchsia-400">Eflatun (Magenta = R+B)</td><td class="p-2 font-bold">255</td><td class="p-2">0</td><td class="p-2 font-bold">255</td><td class="p-2"><span class="inline-block w-6 h-4 rounded bg-fuchsia-500"></span></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2.3 Bellek Alanı Hesaplama -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-sm">2.3</span>
+                        Sayısal Görüntünün Kapladığı Bellek Alanı Hesabı
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+                        <div class="p-4 rounded-xl bg-slate-900 text-white space-y-2 font-mono text-xs sm:text-sm">
+                            <div class="text-indigo-400 font-sans font-bold">📌 Bellek Formülü:</div>
+                            <div class="text-lg font-bold text-emerald-400">Bit Sayısı (b) = N × M × m</div>
+                            <p class="text-slate-300 font-sans text-xs">
+                                • <strong>N × M:</strong> Görüntünün satır ve sütun piksel boyutları<br>
+                                • <strong>m:</strong> Her pikselin kapladığı bit alanı (Gri resim için <code class="font-mono">m = 8</code>, Renkli RGB resim için <code class="font-mono">m = 24</code>)<br>
+                                • <strong>Birim Dönüşümleri:</strong> <code class="font-mono">8 bit = 1 Byte</code> | <code class="font-mono">1024 Byte = 1 KByte</code> | <code class="font-mono">1024 KByte = 1 MByte</code>
+                            </p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm space-y-2">
+                            <div class="font-bold text-indigo-600 dark:text-indigo-400">📝 Slayt Örnek Çözümü (1000 × 600 Piksel):</div>
+                            <p><strong>1) 8-bit Gri Tonlamalı Resim:</strong><br>
+                            <code class="font-mono">b = 1000 × 600 × 8 = 4.800.000 bit</code><br>
+                            <code class="font-mono">4.800.000 / 8 = 600.000 Byte ≈ 600 KByte ≈ 0,6 MByte</code></p>
+                            <p><strong>2) 24-bit Renkli (RGB) Resim:</strong><br>
+                            <code class="font-mono">b = 1000 × 600 × 24 = 14.400.000 bit</code><br>
+                            <code class="font-mono">14.400.000 / 8 = 1.800.000 Byte ≈ 1.800 KByte ≈ 1,8 MByte</code> (Tam 3 katı!)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2.4 Görüntü İşleme Sınıfları, Parlaklık, Kontrast ve Keskinleştirme -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-sm">2.4</span>
+                        İşlem Sınıfları (Noktasal, Bölgesel, Global), Parlaklık, Kontrast ve MATLAB
+                    </h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs sm:text-sm">
+                        <div class="p-3.5 rounded-xl bg-indigo-500/5 border border-indigo-500/20">
+                            <div class="font-bold text-indigo-600 dark:text-indigo-400">1. Noktasal İşlemler (Point)</div>
+                            <p class="mt-1 text-slate-600 dark:text-slate-300">Her pikseli <strong>diğer piksellerden bağımsız olarak</strong> tek tek işler (Parlaklık, kontrast, negatif, eşikleme).</p>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-purple-500/5 border border-purple-500/20">
+                            <div class="font-bold text-purple-600 dark:text-purple-400">2. Bölgesel/Alansal (Local)</div>
+                            <p class="mt-1 text-slate-600 dark:text-slate-300">Merkez pikselin yeni değerini belirlemek için <strong>komşu piksellerden</strong> faydalanılır. <strong>Filtreleme</strong> işlemlerinde çok kullanılır.</p>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-emerald-500/5 border border-emerald-500/20">
+                            <div class="font-bold text-emerald-600 dark:text-emerald-400">3. Global İşlemler</div>
+                            <p class="mt-1 text-slate-600 dark:text-slate-300">Tüm görüntü tek bir büyük blok gibi düşünülür ve işlenir (Örn: <strong>Fourier Dönüşümü</strong>).</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 space-y-2">
+                            <h4 class="font-bold text-indigo-600 dark:text-indigo-400">☀️ Parlaklık (Brightness) Ayarı</h4>
+                            <p>Renk kanalları üzerine sabit bir <code class="font-mono">b</code> sayısı eklenir veya çıkarılır: <code class="font-mono">f(x,y) = g(x,y) ± b</code></p>
+                            <p class="text-rose-500 font-semibold">⚠️ Sınır Kırpma (Clipping): Sonuç 255'ten büyükse 255'e, 0'dan küçükse 0'a eşitlenir!</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 space-y-2">
+                            <h4 class="font-bold text-indigo-600 dark:text-indigo-400">🌓 Kontrast (Karşıtlık) vs Keskinleştirme (Sharpen)</h4>
+                            <p>• <strong>Kontrast:</strong> En parlak ile en karanlık bölüm arasındaki farktır. Görüntüyü sabit bir <code class="font-mono">c</code> değeriyle çarparak/bölerek (<code class="font-mono">y = x * c</code>) yapılır. Alanların renk değerleri birbirinden uzaklaştırılır.</p>
+                            <p>• <strong>Keskinleştirme (Sharpen):</strong> Kontrast ile aynı şey <strong>değildir!</strong> Alanların iç kısımları değil, <strong>sadece kenar (sınır) kısımları belirginleştirilir.</strong></p>
+                        </div>
+                    </div>
+
+                    <!-- MATLAB Kod Analizi -->
+                    <div class="p-4 rounded-xl bg-slate-900 text-slate-100 font-mono text-xs space-y-2">
+                        <div class="text-amber-400 font-sans font-bold">💻 MATLAB Uygulaması: Soldan Sağa Siyahtan Kırmızıya Gradyan Oluşturma (2 Yöntem)</div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <pre class="bg-slate-950 p-3 rounded-lg overflow-x-auto text-emerald-300"><code>% 1. Yöntem (For Döngüsü ile)
+im = zeros(512,512,3);
+[m,n,k] = size(im);
+for i = 1:m
+    for j = 1:n
+        s = j/m*255;
+        im(i,j,1) = s; % Sadece 1. bant (Kırmızı)
+    end
+end
+imshow(im)</code></pre>
+                            <pre class="bg-slate-950 p-3 rounded-lg overflow-x-auto text-cyan-300"><code>% 2. Yöntem (Vektörel / Döngüsüz)
+im = uint8(zeros(512,512,3));
+[m,n,k] = size(im);
+r = 1:n;
+k = ones(m,n);
+r1 = r .* k;
+r2 = fix(r1 ./ n * 255); % fix: tam sayıya yuvarlar
+im(:,:,1) = r2;
+imshow(im)</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bölüm 2 Mini Test -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 space-y-4">
+                    <h4 class="font-bold text-base flex items-center gap-2">📝 2. Bölüm Konu Sonu Mini Testi</h4>
+                    <div id="quiz-bolum2" class="space-y-4"></div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 BÖLÜM 3: LUT, NEGATİF, GRİ DÖNÜŞÜM, EŞİKLEME & HİSTOGRAM
+                 ========================================== -->
+            <section id="tab-bolum3" class="tab-content hidden space-y-8">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
+                    <div>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 mb-2">3. Bölüm Ders Notu</span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Look-Up Table (LUT), Negatif, Griye Çevirme, Eşikleme ve Histogram</h2>
+                    </div>
+                    <button onclick="toggleComplete('bolum3')" id="btn-complete-bolum3" class="px-4 py-2.5 rounded-xl text-xs font-bold border border-slate-300 dark:border-slate-700 hover:bg-emerald-500 hover:text-white hover:border-emerald-500 transition flex items-center gap-2 self-start">
+                        <span>✓ Konuyu Tamamladım</span>
+                    </button>
+                </div>
+
+                <!-- 3.1 Look Up Table (LUT) -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-sm">3.1</span>
+                        Look Up Table (LUT - Arama Tablosu) Mantığı ve Optimizasyonu
+                    </h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                        <strong>LUT Metodu:</strong> Giriş değerlerine göre çıkış değerlerinin <strong>en baştan bir kez hesaplanarak</strong> bir tabloda saklandığı yöntemdir.
+                        Örneğin <code class="font-mono">W = 400, H = 300</code> boyutunda 3 kanallı (RGB) bir resimde <code class="font-mono">f(r) = r³ + 2r² - 4r + 12</code> gibi karmaşık bir polinomu her piksel için ayrı ayrı hesaplarsak <code class="font-mono">400 × 300 × 3 = 360.000</code> kez işlem yapmak gerekir. Oysa olası renk değeri sadece <code class="font-mono">[0, 255]</code> arası <strong>256 tanedir!</strong> LUT ile sadece 256 kez hesaplama yapılır, 360.000 piksel doğrudan tablodan bakılarak (<code class="font-mono">O(1)</code> sürede) dönüştürülür.
+                    </p>
+
+                    <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-3 text-xs sm:text-sm">
+                        <div class="font-bold text-indigo-600 dark:text-indigo-400">🧮 Slayt Sorusu Çözümü: 3-bit [0,7] Görüntü İçin <code class="font-mono">f(r) = 2r - 2</code> LUT Uygulaması</div>
+                        <p>Önce <code class="font-mono">r ∈ {0,1,2,3,4,5,6,7}</code> için <code class="font-mono">f(r) = 2r - 2</code> hesaplanır (0'dan küçükler 0'a, 7'den büyükler 7'ye kırpılır):</p>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-center border-collapse font-mono text-xs">
+                                <tr class="bg-slate-200 dark:bg-slate-700 font-bold"><td class="p-2">Giriş (r)</td><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td></tr>
+                                <tr class="bg-indigo-500/10 text-indigo-600 dark:text-indigo-300 font-bold"><td class="p-2">LUT Çıkışı f(r)</td><td>0</td><td>0</td><td>2</td><td>4</td><td>6</td><td>7</td><td>7</td><td>7</td></tr>
+                            </table>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-300">
+                            • <code class="font-mono">r=0 ➔ 2(0)-2 = -2 ➔ 0</code> | <code class="font-mono">r=1 ➔ 2(1)-2 = 0</code> | <code class="font-mono">r=5 ➔ 2(5)-2 = 8 ➔ 7 (Max sınır!)</code><br>
+                            • MATLAB'da indeksler 1'den başladığı için <code class="font-mono">yim = LUT(im + 1)</code> komutu kullanılır!
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 3.2 Negatif Alma ve Gri Tona Çevirme -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-sm">3.2</span>
+                        Görüntünün Negatifini Alma ve Gri Tona Dönüştürme Formülleri
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 space-y-2">
+                            <h4 class="font-bold text-indigo-600 dark:text-indigo-400">🔄 Görüntüyü Tersine Çevirme (Negatif Alma)</h4>
+                            <p><code class="font-mono">[0, L]</code> aralığında renk değerine sahip bir görüntü için formül:</p>
+                            <div class="p-2.5 rounded-lg bg-slate-900 text-emerald-400 font-mono text-center font-bold">
+                                y = L - x &nbsp;&nbsp;(8-bit L=255 için: y = 255 - x)
+                            </div>
+                            <p class="text-slate-600 dark:text-slate-300">3-bit <code class="font-mono">[0,7]</code> görüntüde <code class="font-mono">L = 7</code> olduğu için <code class="font-mono">y = 7 - x</code> olur (örn: 5 ➔ 2, 0 ➔ 7).<br>MATLAB LUT karşılığı: <code class="font-mono">Lut = 255:-1:0; outim = Lut(im+1);</code></p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 space-y-2">
+                            <h4 class="font-bold text-indigo-600 dark:text-indigo-400">👁️ Renkli Görüntüyü Gri Tona Çevirme</h4>
+                            <p class="text-slate-600 dark:text-slate-300">
+                                Üç rengi toplayıp üçe bölmek (<code class="font-mono">(R+G+B)/3</code>) <strong>insan gözünün algılama hassasiyetini tam yansıtmaz!</strong> Çünkü retinadaki koni hücrelerinin duyarlılığı gün ışığında <strong>~555 nm (Yeşil bölge)</strong> civarında en yüksektir; kırmızıya orta, maviye çok az duyarlıyız.
+                            </p>
+                            <div class="p-2.5 rounded-lg bg-slate-900 text-amber-300 font-mono text-xs space-y-1">
+                                <div>1) En Gerçekçi (NTSC/PAL): <strong>Gri = 0.299·R + 0.587·G + 0.114·B</strong></div>
+                                <div>2) HDTV Standardı: <strong>Gri = 0.21·R + 0.71·G + 0.071·B</strong></div>
+                                <div>3) Pratik Akılda Kalıcı: <strong>Gri = 0.3·R + 0.6·G + 0.1·B</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3.3 Eşikleme (Thresholding) ve Histogram -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-sm">3.3</span>
+                        Görüntü Eşikleme (Thresholding) ve Görüntü Histogramı Analizi
+                    </h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-300">
+                        <strong>Görüntü Eşikleme:</strong> Gri tonlamalı bir görüntüyü siyah (0) ve beyaz (255) piksellerden oluşan <strong>ikili (binary) görüntüye</strong> dönüştürerek nesneleri arka plandan ayırma (bölütleme) yöntemidir: <code class="font-mono">im2(i,j) >= esik ? 255 : 0</code>.
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                        <div class="p-4 rounded-xl bg-indigo-500/5 border border-indigo-500/20 space-y-1.5">
+                            <h4 class="font-bold text-indigo-600 dark:text-indigo-400">5 Temel Eşikleme Yöntemi:</h4>
+                            <ul class="space-y-1 text-slate-600 dark:text-slate-300">
+                                <li>1. <strong>Şekle Bağlı Yöntemler:</strong> Histogramın tepe noktaları, çukurları ve eğrilerini analiz eder.</li>
+                                <li>2. <strong>Kümeleme Tabanlı Yöntemler:</strong> Arka plan ve nesne olarak ikiye ayırıp gri ton ortalamalarını alır (Otsu vb.).</li>
+                                <li>3. <strong>Entropiye Dayanan Yöntemler:</strong> Görüntünün bilgi içeriğini maksimum tutacak eşiği seçer.</li>
+                                <li>4. <strong>Nesne Özniteliğine Dayalı:</strong> Şekil, boyut, kontrast gibi özellikleri kullanır.</li>
+                                <li>5. <strong>Yerel (Local) Yöntemler:</strong> Görüntünün farklı bölgeleri için farklı eşik değerleri seçer.</li>
+                            </ul>
+                        </div>
+                        <div class="p-4 rounded-xl bg-emerald-500/5 border border-emerald-500/20 space-y-1.5">
+                            <h4 class="font-bold text-emerald-600 dark:text-emerald-400">📊 Histogram Nedir ve Nasıl Yorumlanır?</h4>
+                            <p class="text-slate-600 dark:text-slate-300">
+                                <strong>Histogram:</strong> Yatay eksende (x) <code class="font-mono">0-255</code> gri ton değerlerini, dikey eksende (y) o gri değerden görüntüde <strong>kaç adet piksel bulunduğunu (sıklığını)</strong> gösteren çubuk grafiktir (<code class="font-mono">imhist(im)</code>).<br>
+                                • <strong>Sol tarafa (0'a) yığılmışsa:</strong> Karanlık (Koyu) görüntü.<br>
+                                • <strong>Sağ tarafa (255'e) yığılmışsa:</strong> Parlak (Aydınlık) görüntü.<br>
+                                • <strong>Dar bir bölgeye sıkışmışsa:</strong> Düşük kontrastlı (kötü) görüntü.<br>
+                                • <strong>Tüm aralığa dengeli/eşit yayılmışsa:</strong> Yüksek (İyi) kontrastlı görüntü.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bölüm 3 Mini Test -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 space-y-4">
+                    <h4 class="font-bold text-base flex items-center gap-2">📝 3. Bölüm Konu Sonu Mini Testi</h4>
+                    <div id="quiz-bolum3" class="space-y-4"></div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 BÖLÜM 4: HİSTOGRAM GERME VE HİSTOGRAM EŞİTLEME
+                 ========================================== -->
+            <section id="tab-bolum4" class="tab-content hidden space-y-8">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
+                    <div>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 mb-2">4. Bölüm Ders Notu (Sınavda %100 Hesaplama Çıkar!)</span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Histogram Germe (Stretching) ve Histogram Eşitleme (Equalization)</h2>
+                    </div>
+                    <button onclick="toggleComplete('bolum4')" id="btn-complete-bolum4" class="px-4 py-2.5 rounded-xl text-xs font-bold border border-slate-300 dark:border-slate-700 hover:bg-emerald-500 hover:text-white hover:border-emerald-500 transition flex items-center gap-2 self-start">
+                        <span>✓ Konuyu Tamamladım</span>
+                    </button>
+                </div>
+
+                <!-- 4.1 Histogram Germe -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-sm">4.1</span>
+                        Histogram Germe (Contrast Stretching) Formülü ve Slayt Çözümü
+                    </h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-300">
+                        Dar bir gri seviye aralığına sıkışmış olan pikselleri, doğrusal (lineer) bir fonksiyon yardımıyla daha geniş bir aralığa çekme işlemidir.
+                    </p>
+
+                    <div class="p-4 rounded-2xl bg-slate-900 text-white font-mono text-center space-y-2">
+                        <div class="text-xs text-indigo-400 font-sans font-bold uppercase">Histogram Germe Lineer Dönüşüm Formülü</div>
+                        <div class="text-base sm:text-xl font-bold text-emerald-400">
+                            j = [ (Yeni_mak - Yeni_min) / (Eski_mak - Eski_min) ] × (i - Eski_min) + Yeni_min
+                        </div>
+                        <div class="text-xs text-slate-400 font-sans">Burada <code>i</code> pikselin eski (orijinal) gri değeri, <code>j</code> ise dönüşüm sonrası yeni gri değeridir.</div>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-3 text-xs sm:text-sm">
+                        <div class="font-bold text-indigo-600 dark:text-indigo-400">📐 Slayt Örneği: [5, 9] Aralığındaki Gri Değerleri [2, 14] Aralığına Germe</div>
+                        <p>
+                            Verilenler: <code class="font-mono">Eski_min = 5</code>, <code class="font-mono">Eski_mak = 9</code> &nbsp;|&nbsp; <code class="font-mono">Yeni_min = 2</code>, <code class="font-mono">Yeni_mak = 14</code><br>
+                            Formül: <code class="font-mono">j = [(14 - 2) / (9 - 5)] × (i - 5) + 2 = (12 / 4) × (i - 5) + 2 = 3 × (i - 5) + 2</code>
+                        </p>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-center border-collapse font-mono text-xs">
+                                <tr class="bg-slate-200 dark:bg-slate-700 font-bold"><td class="p-2">Eski Değer (i)</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td></tr>
+                                <tr class="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold"><td class="p-2">Yeni Değer (j)</td><td>2</td><td>5</td><td>8</td><td>11</td><td>14</td></tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4.2 Histogram Eşitleme -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-sm">4.2</span>
+                        Histogram Eşitleme (Histogram Equalization) Algoritması ve Adım Adım Tablo Çözümü
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                        <div class="space-y-2 text-slate-600 dark:text-slate-300">
+                            <p>• <strong>Histogram Germe vs Eşitleme Farkı:</strong> Histogram germenin <strong>bir kullanıcı girişine (alt/üst sınır belirlemeye) ihtiyaç duyma dezavantajı</strong> vardır. Histogram eşitleme ise <strong>tamamen otomatik</strong> bir prosedürdür ve olasılık dağılımına bağlı <strong>doğrusal olmayan (non-linear)</strong> bir dönüşüm gerçekleştirir.</p>
+                            <p>• Bulunma olasılığı yüksek piksellerin arası fazlaca açılırken, düşük olasılıklı seviyeler birbirine yaklaşır.</p>
+                            <p>• Tüm resme uygulanırsa <strong>Global Histogram Eşitleme</strong>, belli bir bölgesine uygulanırsa <strong>Lokal Histogram Eşitleme</strong> adını alır. Aşırı eşitleme görüntüde istenmeyen <strong>artefaktlara</strong> yol açabilir.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-900 text-white space-y-2">
+                            <div class="text-xs font-bold text-amber-400 uppercase">Histogram Eşitleme Matematiksel Formülü</div>
+                            <div class="text-lg font-mono font-bold text-center py-2 bg-white/10 rounded-lg">
+                                s_k = (L - 1) · ∑ (n_j / n) &nbsp;&nbsp;(j = 0'dan k'ya)
+                            </div>
+                            <ul class="text-xs text-slate-300 space-y-1">
+                                <li>• <strong>n:</strong> Görüntüdeki toplam piksel sayısı</li>
+                                <li>• <strong>n_j (veya f_r):</strong> j. gri seviyedeki piksel sayısı (sıklık)</li>
+                                <li>• <strong>∑ n_j:</strong> Birikimli (Kümülatif) histogram (kendisi + öncekilerin toplamı)</li>
+                                <li>• <strong>L - 1:</strong> Maksimum renk seviyesi (3-bit için 7, 8-bit için 255)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Slayttaki 3-bit 24 piksellik örneğin tam tablosu -->
+                    <div class="space-y-3 pt-2">
+                        <h4 class="font-bold text-sm text-indigo-600 dark:text-indigo-400">📋 Slayttaki 3-Bit (4×6 = 24 Piksel) Görüntünün Adım Adım Histogram Eşitleme Tablosu:</h4>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-center border-collapse text-xs font-mono">
+                                <thead>
+                                    <tr class="bg-slate-100 dark:bg-slate-800 font-sans font-bold text-slate-700 dark:text-slate-200">
+                                        <th class="p-2.5 border border-slate-200 dark:border-slate-700">Renk Değeri (r)</th>
+                                        <th class="p-2.5 border border-slate-200 dark:border-slate-700">Sıklık (Histogram f_r)</th>
+                                        <th class="p-2.5 border border-slate-200 dark:border-slate-700">Birikimli Sıklık (∑ f_r)</th>
+                                        <th class="p-2.5 border border-slate-200 dark:border-slate-700">Birimleştirme (∑ f_r / 24)</th>
+                                        <th class="p-2.5 border border-slate-200 dark:border-slate-700">Ölçeklendirme (7 × ∑ f_r / 24)</th>
+                                        <th class="p-2.5 border border-slate-200 dark:border-slate-700 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">Yuvarlatılmış Yeni Değer (s_k)</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+                                    <tr><td class="p-2 font-bold">0</td><td>5</td><td>5</td><td>5 / 24</td><td>35 / 24 = 1.45</td><td class="font-bold text-emerald-600 dark:text-emerald-400">1</td></tr>
+                                    <tr><td class="p-2 font-bold">1</td><td>9</td><td>5 + 9 = 14</td><td>14 / 24</td><td>98 / 24 = 4.08</td><td class="font-bold text-emerald-600 dark:text-emerald-400">3 (veya 4)</td></tr>
+                                    <tr><td class="p-2 font-bold">2</td><td>4</td><td>14 + 4 = 18</td><td>18 / 24</td><td>126 / 24 = 5.25</td><td class="font-bold text-emerald-600 dark:text-emerald-400">5</td></tr>
+                                    <tr><td class="p-2 font-bold">3</td><td>4</td><td>18 + 4 = 22</td><td>22 / 24</td><td>154 / 24 = 6.41</td><td class="font-bold text-emerald-600 dark:text-emerald-400">6</td></tr>
+                                    <tr><td class="p-2 font-bold">4</td><td>1</td><td>22 + 1 = 23</td><td>23 / 24</td><td>161 / 24 = 6.70</td><td class="font-bold text-emerald-600 dark:text-emerald-400">7</td></tr>
+                                    <tr><td class="p-2 font-bold">5</td><td>1</td><td>23 + 1 = 24</td><td>24 / 24</td><td>168 / 24 = 7.00</td><td class="font-bold text-emerald-600 dark:text-emerald-400">7</td></tr>
+                                    <tr><td class="p-2 font-bold">6</td><td>0</td><td>24 + 0 = 24</td><td>24 / 24</td><td>168 / 24 = 7.00</td><td class="font-bold text-emerald-600 dark:text-emerald-400">7</td></tr>
+                                    <tr><td class="p-2 font-bold">7</td><td>0</td><td>24 + 0 = 24</td><td>24 / 24</td><td>168 / 24 = 7.00</td><td class="font-bold text-emerald-600 dark:text-emerald-400">7</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">
+                            💡 <strong>Not:</strong> Slayttaki tabloda <code class="font-mono">r=4</code> ve <code class="font-mono">r=5</code> satırlarında yazım olarak sıklık 4 ve 5 görünse de birikimli toplam <code class="font-mono">22 ➔ 23 ➔ 24</code> olarak ilerlemiştir (yani gerçek sıklıklar 1 ve 1'dir, toplam 24 pikseldir). Son adımda matristeki her eski değer yerine karşılık gelen yeni <code class="font-mono">s_k</code> değeri yazılır (0➔1, 1➔3, 2➔5, 3➔6, 4➔7, 5➔7).
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Bölüm 4 Mini Test -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 space-y-4">
+                    <h4 class="font-bold text-base flex items-center gap-2">📝 4. Bölüm Konu Sonu Mini Testi</h4>
+                    <div id="quiz-bolum4" class="space-y-4"></div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 BÖLÜM 5: GEOMETRİK DÖNÜŞÜMLER VE ALIASING
+                 ========================================== -->
+            <section id="tab-bolum5" class="tab-content hidden space-y-8">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
+                    <div>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 mb-2">5. Bölüm Ders Notu</span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Geometrik Dönüşümler: Taşıma, Aynalama, Eğme, Ölçekleme ve Döndürme</h2>
+                    </div>
+                    <button onclick="toggleComplete('bolum5')" id="btn-complete-bolum5" class="px-4 py-2.5 rounded-xl text-xs font-bold border border-slate-300 dark:border-slate-700 hover:bg-emerald-500 hover:text-white hover:border-emerald-500 transition flex items-center gap-2 self-start">
+                        <span>✓ Konuyu Tamamladım</span>
+                    </button>
+                </div>
+
+                <!-- 5.1 Genel Denklem, Taşıma ve Aynalama -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-sm">5.1</span>
+                        Genel Geometrik Dönüşüm Denklemi, Taşıma (Translate) ve Aynalama (Mirror)
+                    </h3>
+                    <div class="p-4 rounded-xl bg-slate-900 text-white flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div class="text-xs sm:text-sm space-y-1">
+                            <div class="font-bold text-indigo-400">Genel Matris Denklemi:</div>
+                            <p class="text-slate-300">• <strong>A Matrisi:</strong> Ölçekleme, döndürme ve aynalama işlemlerini formülize eder.<br>• <strong>B Matrisi:</strong> Taşıma (öteleme) için kullanılır.<br>• <strong>Perspektif dönüşümlerde:</strong> Her iki matris (A ve B) birlikte kullanılır.</p>
+                        </div>
+                        <div class="font-mono text-lg font-bold text-emerald-400 bg-white/10 px-4 py-2.5 rounded-xl shrink-0">
+                            [x₂ ; y₂] = A · [x₁ ; y₁] + B
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 space-y-2">
+                            <h4 class="font-bold text-indigo-600 dark:text-indigo-400">📦 1. Taşıma (Move / Translate) & Kanvas Kavramı</h4>
+                            <p class="text-slate-600 dark:text-slate-300">
+                                Her <code class="font-mono">(x₁, y₁)</code> pikseli <code class="font-mono">(T_x, T_y)</code> kadar ötelenir:<br>
+                                <code class="font-mono font-bold text-indigo-500">x₂ = x₁ + T_x</code> &nbsp;ve&nbsp; <code class="font-mono font-bold text-indigo-500">y₂ = y₁ + T_y</code><br>
+                                • Görüntünün bulunduğu alana <strong>Resim (Image)</strong>, üzerinde kaydırıldığı zemine <strong>Tuval (Canvas)</strong> denir. Sınır dışına çıkan pikseller ya yok sayılır ya da kanvas genişletilir.
+                            </p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 space-y-2">
+                            <h4 class="font-bold text-indigo-600 dark:text-indigo-400">🪞 2. Aynalama (Mirror / Reflect / Flip) Formülleri</h4>
+                            <ul class="space-y-1 text-slate-600 dark:text-slate-300">
+                                <li>• <strong>Dikey Eksen (x₀) Etrafında (Sağ-Sol Simetri):</strong><br>
+                                <code class="font-mono font-bold text-emerald-600 dark:text-emerald-400">x₂ = -x₁ + 2x₀</code> &nbsp;|&nbsp; <code class="font-mono font-bold">y₂ = y₁</code></li>
+                                <li>• <strong>Yatay Eksen (y₀) Etrafında (Üst-Alt Takla):</strong><br>
+                                <code class="font-mono font-bold">x₂ = x₁</code> &nbsp;|&nbsp; <code class="font-mono font-bold text-emerald-600 dark:text-emerald-400">y₂ = -y₁ + 2y₀</code></li>
+                                <li>• <strong>(x₀, y₀)'dan Geçen θ Açılı Eksen Etrafında:</strong><br>
+                                <code class="font-mono">Δ = (x₁ - x₀)Sinθ - (y₁ - y₀)Cosθ</code> olmak üzere;<br>
+                                <code class="font-mono">x₂ = x₁ + 2Δ(-Sinθ)</code> ve <code class="font-mono">y₂ = y₁ + 2Δ(Cosθ)</code></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5.2 Eğme-Kaydırma (Shearing) ve Ölçekleme (Scaling) -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-sm">5.2</span>
+                        Eğme-Kaydırma (Shearing/Skew) ve Ölçekleme (Scaling - Zoom In/Out)
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 space-y-2">
+                            <h4 class="font-bold text-indigo-600 dark:text-indigo-400">📐 3. Eğme ve Kaydırma (Shearing)</h4>
+                            <p class="text-slate-600 dark:text-slate-300">Resmin bir kenarı sabit dururken diğer kenarını <code class="font-mono">b</code> eğme katsayısı ile kaydırma işlemidir:</p>
+                            <div class="p-2.5 rounded-lg bg-slate-900 text-slate-100 font-mono text-xs space-y-1">
+                                <div>• <strong>X-ekseni doğrultusunda:</strong> <code class="text-emerald-400">x₂ = x₁ ± b·y₁</code> , <code class="text-emerald-400">y₂ = y₁</code></div>
+                                <div>• <strong>Y-ekseni doğrultusunda:</strong> <code class="text-amber-400">x₂ = x₁</code> , <code class="text-amber-400">y₂ = y₁ ± b·x₁</code></div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 space-y-2">
+                            <h4 class="font-bold text-indigo-600 dark:text-indigo-400">🔍 4. Ölçekleme (Scaling): Değiştirme vs İnterpolasyon</h4>
+                            <p class="text-slate-600 dark:text-slate-300">
+                                Hem küçültme (Zoom out) hem büyütmede (Zoom in) 2 temel teknik kullanılır:<br>
+                                • <strong>a) Piksel Değiştirme:</strong> Küçültürken komşu gruptan rastgele/ilk piksel seçilir; büyütürken piksel değeri doğrudan kopyalanarak çoğaltılır (keskin/pikselli geçiş).<br>
+                                • <strong>b) Piksel İnterpolasyonu:</strong> Küçültürken komşu piksellerin <strong>istatistiksel ortalaması</strong> alınır (örn: <code class="font-mono">(2+5+6+7)/4 = 5</code>); büyütürken komşu pikseller arasındaki fark <strong>kademeli olarak</strong> dağıtılır (örn: 2 ile 5 arasına 3 ve 4 yazılır).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5.3 Döndürme (Rotation) ve Aliasing Problemi -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-sm">5.3</span>
+                        Döndürme (Rotation) Matrisi ve Alias (Aliasing) Boşluk Sorunu Çözümleri
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                        <div class="p-4 rounded-xl bg-slate-900 text-white space-y-2">
+                            <div class="font-bold text-amber-400">🔄 Orijin (0,0) Etrafında Saat Yönünde θ Döndürme:</div>
+                            <div class="font-mono text-sm bg-white/10 p-2.5 rounded-lg">
+                                x₂ = x₁·Cosθ - y₁·Sinθ<br>
+                                y₂ = x₁·Sinθ + y₁·Cosθ
+                            </div>
+                            <div class="font-bold text-emerald-400 pt-1">🎯 Resim Merkezi (x₀, y₀) Etrafında Döndürme:</div>
+                            <div class="font-mono text-xs bg-white/10 p-2.5 rounded-lg">
+                                x₂ = (x₁ - x₀)Cosθ - (y₁ - y₀)Sinθ + x₀<br>
+                                y₂ = (x₁ - x₀)Sinθ + (y₁ - y₀)Cosθ + y₀
+                            </div>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 space-y-2">
+                            <h4 class="font-bold text-rose-600 dark:text-rose-400">⚠️ Alias (Aliasing) Nedir? Neden Oluşur?</h4>
+                            <p class="text-slate-700 dark:text-slate-200">
+                                Döndürme formülündeki <code class="font-mono">Sinθ</code> ve <code class="font-mono">Cosθ</code> değerlerinden dolayı <code class="font-mono">(x₂, y₂)</code> koordinatları <strong>ondalıklı sayı</strong> çıkar. Yuvarlatılsa bile bazı pikseller çift adreslenirken <strong>bazı piksellere hiç renk ataması yapılamaz ve resimde delikler/boşluklar oluşur.</strong> Bu bozucu duruma <strong>Alias (Aliasing)</strong> denir.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Aliasing 3 Çözüm Yöntemi -->
+                    <div class="p-4 rounded-xl bg-indigo-500/5 border border-indigo-500/20 space-y-2 text-xs sm:text-sm">
+                        <h4 class="font-bold text-indigo-600 dark:text-indigo-400">🛠️ Aliasing (Boşluk) Sorununu Çözmek İçin Kullanılan 3 Yöntem (Sınav Sorusu!):</h4>
+                        <ol class="list-decimal list-inside space-y-1.5 text-slate-700 dark:text-slate-300">
+                            <li><strong>Aşırı Örnekleme (Oversampling):</strong> Kaynak resimdeki her piksel <code class="font-mono">n×n</code> (örn: <code class="font-mono">2×2</code>) büyüklüğünde büyütülür, bu haliyle döndürülür ve ardından tekrar küçültülürse aradaki boşluklar kaybolur.</li>
+                            <li><strong>Sorunu Tersine Çevirme (Hedef ➔ Kaynak Eşleme & Alan Ağırlıklı Ortalama):</strong> Hedef pikselin üzerine basan 4 kaynak pikselden hangisi ağırlıkça en fazla yer işgal ediyorsa onun rengi atanır veya 4 pikselin alan ağırlığıyla orantılı ortalama renk atanır (daha pürüzsüz görüntü sağlar ama hesaplama zamanı artar).</li>
+                            <li><strong>3 Aşamalı Kaydırma (Shearing) Yöntemi:</strong> Tüm pikseller sırasıyla: <strong>(1) Yatayda sağa kaydırılır ➔ (2) Dikeyde aşağı kaydırılır ➔ (3) Tekrar yatayda sağa kaydırılır.</strong> Böylece boşluk oluşmadan resim dönmüş olur!</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- Bölüm 5 Mini Test -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 space-y-4">
+                    <h4 class="font-bold text-base flex items-center gap-2">📝 5. Bölüm Konu Sonu Mini Testi</h4>
+                    <div id="quiz-bolum5" class="space-y-4"></div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 BÖLÜM 6: BİTSEL (BOOLEAN) İŞLEMLER VE MASKELEME
+                 ========================================== -->
+            <section id="tab-bolum6" class="tab-content hidden space-y-8">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
+                    <div>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 mb-2">6. Bölüm Ders Notu</span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Bitsel İşlemler (Bitwise Operations), Boolean Matematiği ve Maskeleme</h2>
+                    </div>
+                    <button onclick="toggleComplete('bolum6')" id="btn-complete-bolum6" class="px-4 py-2.5 rounded-xl text-xs font-bold border border-slate-300 dark:border-slate-700 hover:bg-emerald-500 hover:text-white hover:border-emerald-500 transition flex items-center gap-2 self-start">
+                        <span>✓ Konuyu Tamamladım</span>
+                    </button>
+                </div>
+
+                <!-- 6.1 Boolean Operatörleri -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-sm">6.1</span>
+                        Boolean Matematiği ve MATLAB Bitsel Operatörleri
+                    </h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                            <thead>
+                                <tr class="bg-slate-100 dark:bg-slate-800">
+                                    <th class="p-3 rounded-tl-xl">Operatör</th>
+                                    <th class="p-3">MATLAB Komutu</th>
+                                    <th class="p-3">İngilizce / Türkçe Karşılığı</th>
+                                    <th class="p-3 rounded-tr-xl">Mantıksal Kuralı ve Görüntüdeki Etkisi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+                                <tr>
+                                    <td class="p-3 font-mono font-bold text-indigo-500">&amp;</td>
+                                    <td class="p-3 font-mono">a &amp; b</td>
+                                    <td class="p-3 font-bold">AND (Ve)</td>
+                                    <td class="p-3">Her iki bit de <strong>1</strong> ise sonuç <strong>1</strong>, aksi halde 0 döner. <em>(Siyah [0] ile AND yapılan bölge siyah olur; Beyaz [1] ile AND yapılan bölge orijinal görüntüyü korur!)</em></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-mono font-bold text-emerald-500">|</td>
+                                    <td class="p-3 font-mono">a | b</td>
+                                    <td class="p-3 font-bold">OR (Veya)</td>
+                                    <td class="p-3">Bitlerden <strong>en az biri 1</strong> ise sonuç <strong>1</strong> döner. <em>(Beyaz [1] ile OR yapılan bölge tamamen beyaz olur; Siyah [0] ile OR yapılan bölge orijinal görüntüyü korur!)</em></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-mono font-bold text-amber-500">^</td>
+                                    <td class="p-3 font-mono">xor(a, b)</td>
+                                    <td class="p-3 font-bold">XOR (Özel Veya)</td>
+                                    <td class="p-3">Bitlerden <strong>yalnızca biri 1</strong> ise (farklıysa) <strong>1</strong>, aynıysa (0-0 veya 1-1) <strong>0</strong> döner.</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-mono font-bold text-rose-500">~</td>
+                                    <td class="p-3 font-mono">~a</td>
+                                    <td class="p-3 font-bold">NOT (Değil)</td>
+                                    <td class="p-3">Tüm bitlerin tersini alır (1 ➔ 0, 0 ➔ 1). Siyah-beyaz maskeyi tersine çevirir.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 6.2 Slayttaki MATLAB Maskeleme Kombinasyonları -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-sm">6.2</span>
+                        Slayttaki Görüntü Maskeleme (im1, im2, im3) Denklemlerinin Analizi
+                    </h3>
+                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+                        Slaytta 3 görüntü tanımlanmıştır:<br>
+                        • <code class="font-mono font-bold">im1</code> = Lenna görüntüsü<br>
+                        • <code class="font-mono font-bold">im2</code> = Afghan Girl görüntüsü<br>
+                        • <code class="font-mono font-bold">im3</code> = Kare Maske (Dışı <strong>Siyah = 0</strong>, Ortasındaki kare <strong>Beyaz = 1</strong>)
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-2">
+                            <div class="font-mono font-bold text-indigo-600 dark:text-indigo-400">Durum 1: im4 = (im2 &amp; im3);</div>
+                            <p class="text-slate-600 dark:text-slate-300">
+                                • Maskenin (<code class="font-mono">im3</code>) ortası Beyaz (1) olduğu için <code class="font-mono">im2 &amp; 1 = im2</code> ➔ <strong>Ortadaki kare içinde Afghan Girl görünür.</strong><br>
+                                • Maskenin dışı Siyah (0) olduğu için <code class="font-mono">im2 &amp; 0 = 0</code> ➔ <strong>Karenin dışı tamamen SİYAH olur.</strong>
+                            </p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-2">
+                            <div class="font-mono font-bold text-indigo-600 dark:text-indigo-400">Durum 2: im4 = (im1 | (~im3));</div>
+                            <p class="text-slate-600 dark:text-slate-300">
+                                • <code class="font-mono">~im3</code> işlemi maskeyi ters çevirir: Dışı Beyaz (1), ortadaki kare Siyah (0) olur.<br>
+                                • <code class="font-mono">im1 | (~im3)</code> yapıldığında: Ortadaki karede (<code class="font-mono">im1 | 0 = im1</code>) <strong>Lenna görünür</strong>; karenin dışında (<code class="font-mono">im1 | 1 = 1</code>) <strong>tamamen BEYAZ çerçeve olur!</strong>
+                            </p>
+                        </div>
+                        <div class="md:col-span-2 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 space-y-2">
+                            <div class="font-mono font-bold text-emerald-700 dark:text-emerald-300">
+                                Durum 3 (İki Resmi Birleştirme - De Morgan Eşdeğerleri):
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 font-mono text-xs bg-slate-900 text-slate-100 p-3 rounded-lg">
+                                <div>
+                                    <span class="text-amber-400">% Yöntem A (OR ve AND ile):</span><br>
+                                    im4 = (im1 | (~im3));<br>
+                                    im5 = (im2 | (im3));<br>
+                                    im6 = (im5 &amp; im4);
+                                </div>
+                                <div>
+                                    <span class="text-cyan-400">% Yöntem B (NAND / De Morgan ile):</span><br>
+                                    im4 = ~(im1 &amp; im3);<br>
+                                    im5 = ~(im2 &amp; (~im3));<br>
+                                    im6 = ~(im5 &amp; im4);
+                                </div>
+                            </div>
+                            <p class="text-slate-700 dark:text-slate-200">
+                                <strong>Sonuç (<code class="font-mono">im6</code>):</strong> Her iki kod bloğu da <strong>ortadaki beyaz kare bölgesinde <code class="font-mono">im1</code> (Lenna)</strong> görüntüsünü, <strong>karenin dışındaki çerçeve bölgesinde ise <code class="font-mono">im2</code> (Afghan Girl)</strong> görüntüsünü tek bir resimde birleştirir! (Bunu "İnteraktif Lab" sekmesinde canlı deneyebilirsin.)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bölüm 6 Mini Test -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 space-y-4">
+                    <h4 class="font-bold text-base flex items-center gap-2">📝 6. Bölüm Konu Sonu Mini Testi</h4>
+                    <div id="quiz-bolum6" class="space-y-4"></div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 HIZLI HATIRLATICILAR & EZBER KARTLARI (FLASHCARDS)
+                 ========================================== -->
+            <section id="tab-hatirlaticilar" class="tab-content hidden space-y-8">
+                <div class="pb-6 border-b border-slate-200 dark:border-slate-800">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-600 dark:text-amber-400 mb-2">Sınav Öncesi Son Tekrar</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">⚡ Hızlı Hatırlatıcılar, Kritik Formüller ve Ezber Kartları</h2>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Kartların üzerine tıklayarak cevabını görebilir, aşağıdaki kutudan kendi özel sınav notlarını ekleyebilirsin.</p>
+                </div>
+
+                <!-- Interactive Flashcards Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="flashcardsContainer"></div>
+
+                <!-- All Formulas Cheat Sheet -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 space-y-4">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400">📐 Tüm Sınav Formülleri Tek Tabloda</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                            <thead>
+                                <tr class="bg-slate-100 dark:bg-slate-800">
+                                    <th class="p-3 rounded-tl-xl">Konu / İşlem</th>
+                                    <th class="p-3">Matematiksel Formül</th>
+                                    <th class="p-3 rounded-tr-xl">Kritik Sınav Notu</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+                                <tr><td class="p-3 font-semibold">Işık Hızı & Dalga Boyu</td><td class="p-3 font-mono">c = f · λ</td><td class="p-3">c = 3×10⁸ m/s, Görünür: 380 nm (Mor) - 760 nm (Kırmızı)</td></tr>
+                                <tr><td class="p-3 font-semibold">Bellek Kapasitesi</td><td class="p-3 font-mono">Bit = N × M × m</td><td class="p-3">Byte için 8'e, KB için 1024'e, MB için tekrar 1024'e böl.</td></tr>
+                                <tr><td class="p-3 font-semibold">Görüntü Negatifi</td><td class="p-3 font-mono">y = (L - 1) - x</td><td class="p-3">8-bit için <code>y = 255 - x</code>, 3-bit için <code>y = 7 - x</code></td></tr>
+                                <tr><td class="p-3 font-semibold">Gri Tona Çevirme</td><td class="p-3 font-mono">0.299R + 0.587G + 0.114B</td><td class="p-3">Göz en çok yeşile (555 nm) duyarlı olduğu için G katsayısı en büyüktür (~0.6).</td></tr>
+                                <tr><td class="p-3 font-semibold">Histogram Germe</td><td class="p-3 font-mono">j = [(Y_mak-Y_min)/(E_mak-E_min)]·(i-E_min)+Y_min</td><td class="p-3">Kullanıcı girişine ihtiyaç duyar, doğrusal (lineer) dönüşümdür.</td></tr>
+                                <tr><td class="p-3 font-semibold">Histogram Eşitleme</td><td class="p-3 font-mono">s_k = round((L - 1) · ∑(n_j / n))</td><td class="p-3">Otomatiktir, birikimli sıklık (CDF) kullanır.</td></tr>
+                                <tr><td class="p-3 font-semibold">Merkezde Aynalama</td><td class="p-3 font-mono">Dikey: x₂ = -x₁ + 2x₀ | Yatay: y₂ = -y₁ + 2y₀</td><td class="p-3">Dikey eksende y değişmez, yatay eksende x değişmez.</td></tr>
+                                <tr><td class="p-3 font-semibold">Merkezde Döndürme</td><td class="p-3 font-mono">x₂ = (x₁-x₀)cosθ - (y₁-y₀)sinθ + x₀</td><td class="p-3">Ondalık koordinatlar yüzünden <strong>Aliasing</strong> (boşluk) oluşur.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 İNTERAKTİF HESAPLAYICI & SİMÜLATÖR LAB
+                 ========================================== -->
+            <section id="tab-simulator" class="tab-content hidden space-y-8">
+                <div class="pb-6 border-b border-slate-200 dark:border-slate-800">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 mb-2">Canlı Deney Laboratuvarı</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">🧪 İnteraktif Görüntü İşleme Simülatörleri</h2>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Sınavda çıkabilecek sayısal soruları kendi değerlerinle test et ve adım adım çözümü gör.</p>
+                </div>
+
+                <!-- Tool 1: 3-Bit Histogram Equalization Calculator -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400">1. Canlı 3-Bit Histogram Eşitleme Çözücü (Adım Adım Tablo)</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300">Her gri seviyenin (<code class="font-mono">r = 0..7</code>) piksel sıklığını (<code class="font-mono">f_r</code>) gir, tablo otomatik olarak birikimli sıklığı, ölçeklendirmeyi ve yeni renk değerlerini hesaplasın:</p>
+                    <div class="grid grid-cols-4 sm:grid-cols-8 gap-2" id="histEqInputs"></div>
+                    <div class="overflow-x-auto pt-2" id="histEqResultTable"></div>
+                </div>
+
+                <!-- Tool 2: Memory & Histogram Stretching Calculator -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Bellek Hesaplayıcı -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                        <h3 class="text-base font-bold text-indigo-600 dark:text-indigo-400">2. Görüntü Bellek Alanı Hesaplayıcı</h3>
+                        <div class="grid grid-cols-3 gap-3 text-xs">
+                            <div>
+                                <label class="block font-semibold mb-1">Satır (N)</label>
+                                <input type="number" id="memN" value="1000" oninput="calcMemory()" class="w-full p-2 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-mono">
+                            </div>
+                            <div>
+                                <label class="block font-semibold mb-1">Sütun (M)</label>
+                                <input type="number" id="memM" value="600" oninput="calcMemory()" class="w-full p-2 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-mono">
+                            </div>
+                            <div>
+                                <label class="block font-semibold mb-1">Bit Derinliği (m)</label>
+                                <select id="memBit" onchange="calcMemory()" class="w-full p-2 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-mono">
+                                    <option value="1">1-bit (S/B)</option>
+                                    <option value="8">8-bit (Gri)</option>
+                                    <option value="24" selected>24-bit (RGB)</option>
+                                    <option value="32">32-bit (RGBA)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="memOutput" class="p-4 rounded-xl bg-slate-900 text-emerald-400 font-mono text-xs space-y-1"></div>
+                    </div>
+
+                    <!-- Histogram Germe Hesaplayıcı -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                        <h3 class="text-base font-bold text-indigo-600 dark:text-indigo-400">3. Histogram Germe (Stretching) Hesaplayıcı</h3>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                            <div>
+                                <label class="block font-semibold mb-1">Eski Min</label>
+                                <input type="number" id="stOldMin" value="5" oninput="calcStretch()" class="w-full p-2 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-mono">
+                            </div>
+                            <div>
+                                <label class="block font-semibold mb-1">Eski Mak</label>
+                                <input type="number" id="stOldMax" value="9" oninput="calcStretch()" class="w-full p-2 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-mono">
+                            </div>
+                            <div>
+                                <label class="block font-semibold mb-1">Yeni Min</label>
+                                <input type="number" id="stNewMin" value="2" oninput="calcStretch()" class="w-full p-2 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-mono">
+                            </div>
+                            <div>
+                                <label class="block font-semibold mb-1">Yeni Mak</label>
+                                <input type="number" id="stNewMax" value="14" oninput="calcStretch()" class="w-full p-2 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-mono">
+                            </div>
+                        </div>
+                        <div id="stretchOutput" class="p-3 rounded-xl bg-slate-900 text-amber-300 font-mono text-xs overflow-x-auto"></div>
+                    </div>
+                </div>
+
+                <!-- Tool 3: Bitwise Masking Visualizer -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-base font-bold text-indigo-600 dark:text-indigo-400">4. Bölüm 6 Bitsel Maskeleme Simülatörü (im1, im2 ve im3 Kare Maske)</h3>
+                    <p class="text-xs text-slate-600 dark:text-slate-300">Slayttaki MATLAB ifadelerine tıklayarak <code class="font-mono">im1</code> (Lenna - Mavi Desen), <code class="font-mono">im2</code> (Afghan Girl - Turuncu Desen) ve <code class="font-mono">im3</code> (Ortası Beyaz Kare Maske) üzerindeki sonucu canlı gör:</p>
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="runMaskSim('im2_and_im3')" class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white text-xs font-mono hover:bg-indigo-500">im4 = (im2 &amp; im3)</button>
+                        <button onclick="runMaskSim('im1_or_not_im3')" class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white text-xs font-mono hover:bg-indigo-500">im4 = (im1 | (~im3))</button>
+                        <button onclick="runMaskSim('im2_or_im3')" class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white text-xs font-mono hover:bg-indigo-500">im5 = (im2 | im3)</button>
+                        <button onclick="runMaskSim('combined')" class="px-3 py-1.5 rounded-lg bg-emerald-600 text-white text-xs font-mono hover:bg-emerald-500">im6 = (im5 &amp; im4) [Birleştirme]</button>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2 text-center text-xs font-mono">
+                        <div class="space-y-1">
+                            <canvas id="canvasIm1" class="w-full aspect-square rounded-xl border border-slate-300 dark:border-slate-700"></canvas>
+                            <div>im1 (Lenna)</div>
+                        </div>
+                        <div class="space-y-1">
+                            <canvas id="canvasIm2" class="w-full aspect-square rounded-xl border border-slate-300 dark:border-slate-700"></canvas>
+                            <div>im2 (Afghan Girl)</div>
+                        </div>
+                        <div class="space-y-1">
+                            <canvas id="canvasIm3" class="w-full aspect-square rounded-xl border border-slate-300 dark:border-slate-700"></canvas>
+                            <div>im3 (Kare Maske)</div>
+                        </div>
+                        <div class="space-y-1">
+                            <canvas id="canvasResult" class="w-full aspect-square rounded-xl border-2 border-emerald-500"></canvas>
+                            <div id="canvasResultLabel" class="font-bold text-emerald-500">Çıkış Görüntüsü</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 GENEL SINAV SİMÜLASYONU (20 SORU)
+                 ========================================== -->
+            <section id="tab-sinav" class="tab-content hidden space-y-8">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
+                    <div>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-rose-500/10 text-rose-600 dark:text-rose-400 mb-2">Kapsamlı Vize / Final Denemesi</span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">🏆 Sayısal Görüntü İşleme Genel Sınavı (20 Soru)</h2>
+                        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">Tüm 6 PDF'teki teorik, matematiksel, matris ve MATLAB sorularını içerir.</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 font-mono text-sm font-bold text-indigo-600 dark:text-indigo-400">
+                            Skor: <span id="examScoreDisplay">0 / 20</span>
+                        </div>
+                        <button onclick="resetFinalExam()" class="px-4 py-2 rounded-xl bg-rose-500/10 text-rose-600 dark:text-rose-400 hover:bg-rose-500 hover:text-white text-xs font-bold transition">
+                            Sınavı Sıfırla ↻
+                        </button>
+                    </div>
+                </div>
+
+                <div id="finalExamContainer" class="space-y-6"></div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Personal Notes Drawer -->
+    <div id="notesDrawer" class="fixed inset-y-0 right-0 z-50 w-80 sm:w-96 bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
+        <div class="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+            <h3 class="font-bold text-sm flex items-center gap-2">📝 Kişisel Çalışma Notlarım & Hatırlatıcılar</h3>
+            <button onclick="toggleNotesDrawer()" class="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500">✕</button>
+        </div>
+        <div class="p-4 space-y-3 border-b border-slate-200 dark:border-slate-800">
+            <textarea id="newNoteInput" rows="3" placeholder="Unutmamak istediğin formül veya notu buraya yaz..." class="w-full p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs focus:outline-none focus:ring-2 focus:ring-amber-500"></textarea>
+            <button onclick="addPersonalNote()" class="w-full py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs transition">+ Hatırlatıcı Ekle</button>
+        </div>
+        <div id="personalNotesList" class="flex-1 p-4 overflow-y-auto space-y-3"></div>
+    </div>
+
+    <script>
+        // ==========================================
+        // 1. STATE & LOCAL STORAGE MANAGEMENT
+        // ==========================================
+        const state = {
+            currentTab: 'bolum1',
+            completedModules: JSON.parse(localStorage.getItem('sgi_completed') || '[]'),
+            personalNotes: JSON.parse(localStorage.getItem('sgi_notes') || '["MATLAB dizileri 1\'den başlar: LUT(im+1) unutma!", "Gri = 0.299R + 0.587G + 0.114B (Yeşil katsayısı en büyük!)"]'),
+            examAnswers: {}
+        };
+
+        const examTips = [
+            "MATLAB'da diziler 1'den başlar! Bu yüzden 0 gri değerini LUT tablosunda ararken LUT(im+1) kullanılır.",
+            "Uzaktaki cismi görmek için göz merceği yassılaşır ve ışığı kırma MİNİMUM olur. Yakındaki cisim için kırma MAKSİMUMDUR.",
+            "Örnekleme (Sampling) koordinatları (x,y), Nicemleme (Quantization) ise parlaklık/renk genliğini sayısallaştırır.",
+            "Eflatun (Magenta) = (255, 0, 255), Turkuaz (Cyan) = (0, 255, 255), Sarı (Yellow) = (255, 255, 0).",
+            "Histogram Germe kullanıcı girişine ihtiyaç duyar (lineerdir); Histogram Eşitleme ise otomatiktir (non-lineerdir).",
+            "Döndürme işleminde oluşan boşluklara Alias (Aliasing) denir. 3 ardışık kaydırma (Sağa -> Aşağı -> Sağa) ile çözülebilir!"
+        ];
+
+        function nextRandomTip() {
+            const el = document.getElementById('sidebarRandomTip');
+            const random = examTips[Math.floor(Math.random() * examTips.length)];
+            el.textContent = random;
+        }
+
+        // ==========================================
+        // 2. TAB NAVIGATION & PROGRESS
+        // ==========================================
+        function switchTab(tabId) {
+            state.currentTab = tabId;
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            const target = document.getElementById('tab-' + tabId);
+            if (target) target.classList.remove('hidden');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                if (btn.dataset.tab === tabId) {
+                    btn.classList.add('bg-indigo-600', 'text-white', 'shadow-md');
+                    btn.classList.remove('hover:bg-slate-100', 'dark:hover:bg-slate-800');
+                } else {
+                    btn.classList.remove('bg-indigo-600', 'text-white', 'shadow-md');
+                    btn.classList.add('hover:bg-slate-100', 'dark:hover:bg-slate-800');
+                }
+            });
+
+            // Close mobile sidebar
+            document.getElementById('sidebar').classList.add('-translate-x-full');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleComplete(modId) {
+            const idx = state.completedModules.indexOf(modId);
+            if (idx === -1) state.completedModules.push(modId);
+            else state.completedModules.splice(idx, 1);
+            localStorage.setItem('sgi_completed', JSON.stringify(state.completedModules));
+            updateProgressUI();
+        }
+
+        function updateProgressUI() {
+            const total = 6;
+            const done = state.completedModules.length;
+            document.getElementById('overallProgressBar').style.width = `${(done / total) * 100}%`;
+            document.getElementById('overallProgressText').textContent = `${done}/${total}`;
+
+            for (let i = 1; i <= 6; i++) {
+                const mod = 'bolum' + i;
+                const checkEl = document.getElementById('check-' + mod);
+                const btnEl = document.getElementById('btn-complete-' + mod);
+                if (state.completedModules.includes(mod)) {
+                    checkEl?.classList.remove('hidden');
+                    if (btnEl) {
+                        btnEl.className = "px-4 py-2.5 rounded-xl text-xs font-bold bg-emerald-500 text-white border border-emerald-500 transition flex items-center gap-2 self-start";
+                        btnEl.innerHTML = "<span>✓ Tamamlandı (Geri Al)</span>";
+                    }
+                } else {
+                    checkEl?.classList.add('hidden');
+                    if (btnEl) {
+                        btnEl.className = "px-4 py-2.5 rounded-xl text-xs font-bold border border-slate-300 dark:border-slate-700 hover:bg-emerald-500 hover:text-white hover:border-emerald-500 transition flex items-center gap-2 self-start";
+                        btnEl.innerHTML = "<span>✓ Konuyu Tamamladım</span>";
+                    }
+                }
+            }
+        }
+
+        // ==========================================
+        // 3. CHAPTER MINI QUIZZES DATA & RENDERER
+        // ==========================================
+        const miniQuizzes = {
+            bolum1: [
+                {
+                    q: "1. 3 boyutlu karakterlerin zaman içindeki hareketini gösteren bir animasyon filmi matematiksel olarak nasıl ifade edilir ve kaç boyutlu bir sinyaldir?",
+                    options: ["f(x, y) - 2 Boyutlu", "f(x, y, t) - 3 Boyutlu", "f(x, y, z, t) - 4 Boyutlu", "f(t) - 1 Boyutlu"],
+                    ans: 2,
+                    exp: "3 boyutlu uzay koordinatlarına (x, y, z) 4. boyut olarak zaman (t) eklendiği için animasyon film f(x, y, z, t) şeklinde 4 boyutlu bir sinyaldir."
+                },
+                {
+                    q: "2. İnsan gözünde nesnenin görüntüsünün düştüğü ve yüzeyinde Koni (Cone) ile Çubuk (Rod) algılayıcılarının bulunduğu en önemli tabaka hangisidir?",
+                    options: ["Kornea (Saydam Tabaka)", "Sklera (Sert Tabaka)", "Koroid (Damar Tabaka)", "Retina (Ağ Tabaka)"],
+                    ans: 3,
+                    exp: "Gözün en önemli tabakası Ağ Tabaka (Retina)'dır. Görüntü buraya düşer ve Koni/Çubuk hücreleriyle algılanır."
+                },
+                {
+                    q: "3. Analog bir görüntünün sayısallaştırılmasında koordinatların (konumsal olarak) sayısallaştırılmasına ne ad verilir?",
+                    options: ["Nicemleme (Quantization)", "Örnekleme (Sampling)", "Eşikleme (Thresholding)", "Aynalama (Mirroring)"],
+                    ans: 1,
+                    exp: "Koordinatların (konumun) sayısallaştırılması Örnekleme (Sampling), genlik (parlaklık/renk) değerlerinin sayısallaştırılması ise Nicemleme (Quantization) olarak adlandırılır."
+                }
+            ],
+            bolum2: [
+                {
+                    q: "1. Aşağıdaki görüntü saklama formatlarından hangisi 'kayıplı (lossy)' sıkıştırma yapar ve 24-bit fotoğraf depolamak için en yaygın kullanılan formattır?",
+                    options: ["PNG", "GIF", "BMP", "JPEG"],
+                    ans: 3,
+                    exp: "JPEG kayıplı sıkıştırma yapan 24-bit bir formattır. PNG ve GIF kayıpsızdır, BMP ise sıkıştırmasızdır."
+                },
+                {
+                    q: "2. 24-bit RGB renk modelinde (255, 0, 255) ve (0, 255, 255) değerleri sırasıyla hangi renklere karşılık gelir?",
+                    options: ["Sarı ve Turkuaz", "Eflatun (Magenta) ve Turkuaz (Cyan)", "Turkuaz ve Eflatun", "Açık Gri ve Beyaz"],
+                    ans: 1,
+                    exp: "Kırmızı + Mavi (255, 0, 255) = Eflatun (Magenta); Yeşil + Mavi (0, 255, 255) = Turkuaz (Cyan); Kırmızı + Yeşil (255, 255, 0) = Sarı."
+                },
+                {
+                    q: "3. Boyutları 500 × 400 piksel olan 24-bit renkli (RGB) bir görüntünün bellekte kapladığı alan kaç Byte'tır?",
+                    options: ["200.000 Byte", "600.000 Byte", "1.600.000 Byte", "4.800.000 Byte"],
+                    ans: 1,
+                    exp: "Bit = 500 × 400 × 24 = 4.800.000 bit. Byte = 4.800.000 / 8 = 600.000 Byte."
+                }
+            ],
+            bolum3: [
+                {
+                    q: "1. Renkli değerleri [0, 7] aralığında (3-bit) olan bir görüntüye f(r) = 2r - 2 dönüşümü uygulandığında, giriş değeri 5 olan bir pikselin çıkış değeri kaç olur?",
+                    options: ["8", "7", "6", "3"],
+                    ans: 1,
+                    exp: "f(5) = 2(5) - 2 = 8 çıkar. Ancak 3-bit görüntüde maksimum değer 7 olabileceği için 8 değeri üst sınır olan 7'ye kırpılır (clipping)."
+                },
+                {
+                    q: "2. Renkli bir görüntüyü gri tona çevirirken (0.299R + 0.587G + 0.114B) formülünde Yeşil (G) katsayısının en büyük olmasının temel nedeni nedir?",
+                    options: ["Yeşil ışığın dalga boyunun en büyük olması", "Retinadaki koni hücrelerinin gün ışığında ~555 nm (yeşil bölge) duyarlılığının en yüksek olması", "Bilgisayar ekranlarında yeşil piksellerin daha büyük olması", "Mavi rengin doğada daha az bulunması"],
+                    ans: 1,
+                    exp: "İnsan gözünün retinadaki koni hücreleri yaklaşık 555 nm (yeşil) dalga boyuna en duyarlıdır. Bu yüzden aynı enerjideki yeşil, maviden çok daha parlak görünür."
+                },
+                {
+                    q: "3. Histogram grafiği sadece belirli ve dar bir gri seviye bölgesine yığılmış olan bir görüntü için aşağıdakilerden hangisi kesinlikle söylenebilir?",
+                    options: ["Görüntünün kontrastı (karşıtlığı) düşüktür/kötüdür", "Görüntü çok yüksek kontrastlıdır", "Görüntü ikili (binary) bir görüntüdür", "Görüntüde aliasing vardır"],
+                    ans: 0,
+                    exp: "Histogram belirli bir bölgeye sıkışmış/yığılmış ise görüntünün kontrastı düşüktür. İyi kontrastlı görüntünün histogramı tüm aralığa dengeli yayılır."
+                }
+            ],
+            bolum4: [
+                {
+                    q: "1. [5, 9] aralığındaki gri değerleri [2, 14] aralığına doğrusal olarak germek (Histogram Germe) istediğimizde, eski değeri i = 7 olan bir pikselin yeni değeri (j) kaç olur?",
+                    options: ["5", "8", "10", "11"],
+                    ans: 1,
+                    exp: "j = ((14 - 2) / (9 - 5)) * (7 - 5) + 2 = 3 * 2 + 2 = 8."
+                },
+                {
+                    q: "2. Toplam 24 pikselli ve 3-bitlik (L-1 = 7) bir görüntüde histogram eşitleme yapılırken, r=2 seviyesine kadar olan birikimli (kümülatif) sıklık toplamı 18 ise, r=2'nin yuvarlatılmış yeni gri değeri kaçtır?",
+                    options: ["4", "5", "6", "7"],
+                    ans: 1,
+                    exp: "s_2 = 7 * (18 / 24) = 126 / 24 = 5.25 -> En yakın tamsayıya yuvarlandığında 5 olur."
+                }
+            ],
+            bolum5: [
+                {
+                    q: "1. Orta dikey eksen (x0 = 100) etrafında aynalama yapılan bir görüntüde, x1 = 30 koordinatındaki bir pikselin yeni yatay konumu (x2) kaç olur?",
+                    options: ["70", "130", "170", "230"],
+                    ans: 2,
+                    exp: "x2 = -x1 + 2*x0 = -30 + 2(100) = 170."
+                },
+                {
+                    q: "2. Görüntü döndürme (rotation) işleminde Sin ve Cos değerlerinin ondalıklı çıkması nedeniyle bazı piksellere renk atanamaması ve resimde boşluklar oluşması sorununa ne ad verilir?",
+                    options: ["Quantization (Nicemleme)", "Thresholding (Eşikleme)", "Aliasing (Alias)", "Shearing (Eğme)"],
+                    ans: 2,
+                    exp: "Döndürme sırasında oluşan bu boşluk/delik bozulmasına Alias (Aliasing) denir."
+                }
+            ],
+            bolum6: [
+                {
+                    q: "1. im2 görüntüsü ile ortası beyaz (1), dışı siyah (0) olan bir kare maske (im3) arasında 'im4 = (im2 & im3)' işlemi yapılırsa nasıl bir görüntü oluşur?",
+                    options: ["Ortadaki kare siyah, dışı im2 olur", "Ortadaki kare içinde im2 görünür, karenin dışı siyah olur", "Ortadaki kare beyaz, dışı im2 olur", "Tüm görüntü tamamen beyaz olur"],
+                    ans: 1,
+                    exp: "AND (&) işleminde 1 ile AND yapılan yer (ortadaki kare) kendi değerini (im2) korur, 0 ile AND yapılan yer (dış kısım) 0 (siyah) olur."
+                },
+                {
+                    q: "2. MATLAB'da iki matris arasında Özel Veya (XOR) işlemi yapmak için hangi fonksiyon veya operatör kullanılır?",
+                    options: ["a & b", "a | b", "xor(a, b) veya ^", "~a"],
+                    ans: 2,
+                    exp: "XOR işlemi yalnızca bir bitin 1 olması durumunda 1 döner ve MATLAB'da xor(a,b) komutuyla uygulanır."
+                }
+            ]
+        };
+
+        function renderMiniQuizzes() {
+            Object.keys(miniQuizzes).forEach(modKey => {
+                const container = document.getElementById('quiz-' + modKey);
+                if (!container) return;
+                container.innerHTML = miniQuizzes[modKey].map((item, qIdx) => `
+                    <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 space-y-3">
+                        <p class="text-xs sm:text-sm font-semibold">${item.q}</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            ${item.options.map((opt, oIdx) => `
+                                <button onclick="checkMiniAnswer('${modKey}', ${qIdx}, ${oIdx}, this)" class="mini-opt-${modKey}-${qIdx} text-left px-3 py-2 rounded-lg text-xs border border-slate-300 dark:border-slate-600 hover:border-indigo-500 transition">
+                                    ${String.fromCharCode(65 + oIdx)}) ${opt}
+                                </button>
+                            `).join('')}
+                        </div>
+                        <div id="mini-exp-${modKey}-${qIdx}" class="hidden p-3 rounded-lg text-xs"></div>
+                    </div>
+                `).join('');
+            });
+        }
+
+        function checkMiniAnswer(modKey, qIdx, selectedIdx, btnEl) {
+            const item = miniQuizzes[modKey][qIdx];
+            const expEl = document.getElementById(`mini-exp-${modKey}-${qIdx}`);
+            const allBtns = document.querySelectorAll(`.mini-opt-${modKey}-${qIdx}`);
+
+            allBtns.forEach((b, idx) => {
+                b.disabled = true;
+                if (idx === item.ans) {
+                    b.classList.add('bg-emerald-500/20', 'border-emerald-500', 'font-bold', 'text-emerald-700', 'dark:text-emerald-300');
+                } else if (idx === selectedIdx) {
+                    b.classList.add('bg-rose-500/20', 'border-rose-500', 'text-rose-700', 'dark:text-rose-300');
+                }
+            });
+
+            expEl.classList.remove('hidden');
+            if (selectedIdx === item.ans) {
+                expEl.className = "p-3 rounded-lg text-xs bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20";
+                expEl.innerHTML = `<strong>✓ Doğru!</strong> ${item.exp}`;
+            } else {
+                expEl.className = "p-3 rounded-lg text-xs bg-rose-500/10 text-rose-700 dark:text-rose-300 border border-rose-500/20";
+                expEl.innerHTML = `<strong>✗ Yanlış.</strong> ${item.exp}`;
+            }
+        }
+
+        // ==========================================
+        // 4. FLASHCARDS DATA & RENDERER
+        // ==========================================
+        const flashcards = [
+            { q: "Görünen Işık Dalga Boyu Aralığı Nedir?", a: "0,380 - 0,760 mikron (380 - 760 nanometre). Elektromanyetik spektrumun sadece %2'sidir. 380 nm Mor/Mavi -> 760 nm Kırmızı." },
+            { q: "Siyah Cisim Isıtıldığında Hangi Sırayla Işınım Verir?", a: "1) Kızılötesi (IR) -> 2) Kırmızı -> 3) Beyaz -> 4) Çok ısıtılırsa Mavi ve Ultraviyole (UV)." },
+            { q: "Göz Merceği (Lens) Uzak ve Yakın Odaklamada Nasıl Değişir?", a: "Uzaktaki cisim için: Yassılaşır, kırma MİNİMUMDUR.\nYakındaki cisim için: Kalınlaşır, kırma MAKSİMUMDUR." },
+            { q: "Örnekleme (Sampling) vs Nicemleme (Quantization) Farkı?", a: "Örnekleme: Konumsal (x,y koordinat) sayısallaştırmadır (N×M matris).\nNicemleme: Genlik (parlaklık/renk derinliği) sayısallaştırmasıdır." },
+            { q: "BMP, JPEG, PNG ve GIF Formatlarının Sıkıştırma Farkı?", a: "BMP: Sıkıştırmasız (24-bit, büyük boyut)\nJPEG: Kayıplı sıkıştırma (24-bit)\nPNG: Kayıpsız sıkıştırma + Saydamlık (24-bit)\nGIF: Kayıpsız + Animasyon (Düşük renk derinliği)." },
+            { q: "Kontrast Artırma ile Keskinleştirme (Sharpen) Farkı?", a: "Kontrastta resimdeki alanların renk değerleri birbirinden uzaklaştırılır. Keskinleştirmede ise iç kısımlar değil, sadece KENAR kısımları belirginleştirilir." },
+            { q: "LUT (Look-Up Table) Neden Kullanılır?", a: "Karmaşık matematiksel dönüşümleri her piksel için (W*H*3 kez) tekrar hesaplamak yerine, 0-255 arası 256 değeri baştan hesaplayıp tablodan anında okumak için." },
+            { q: "Döndürmede Alias (Aliasing) Sorunu Nasıl Çözülür?", a: "1) Kaynak resmi aşırı örnekleyip (büyütüp) döndürdükten sonra küçültmek.\n2) Hedef piksele basan 4 kaynak pikselin alan ağırlıklı ortalamasını atamak.\n3) Sağa -> Aşağı -> Sağa kaydırma (shearing) yapmak." },
+            { q: "Maskelemede AND (&) ve OR (|) Nasıl Davranır?", a: "AND (&): Beyaz (1) bölgede resmi korur, Siyah (0) bölgeyi siyah yapar.\nOR (|): Siyah (0) bölgede resmi korur, Beyaz (1) bölgeyi tamamen beyaz yapar." }
+        ];
+
+        function renderFlashcards() {
+            const container = document.getElementById('flashcardsContainer');
+            container.innerHTML = flashcards.map((fc, idx) => `
+                <div onclick="this.classList.toggle('flipped')" class="flip-card h-44 cursor-pointer">
+                    <div class="flip-card-inner relative w-full h-full">
+                        <div class="flip-card-front absolute inset-0 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 flex flex-col justify-between shadow-sm hover:border-indigo-500 transition">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-indigo-500">Kart #${idx + 1} • Cevap İçin Tıkla</span>
+                            <p class="font-bold text-sm text-slate-800 dark:text-slate-100">${fc.q}</p>
+                            <span class="text-xs text-slate-400 self-end">Çevir ↻</span>
+                        </div>
+                        <div class="flip-card-back absolute inset-0 bg-indigo-600 text-white rounded-2xl p-5 flex flex-col justify-between shadow-lg">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-indigo-200">Cevap / Hatırlatıcı</span>
+                            <p class="text-xs leading-relaxed whitespace-pre-line font-medium">${fc.a}</p>
+                            <span class="text-[10px] text-indigo-200 self-end">Soruya Dön ↻</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ==========================================
+        // 5. INTERACTIVE LAB TOOLS
+        // ==========================================
+        const defaultHistFreqs = [5, 9, 4, 4, 1, 1, 0, 0];
+
+        function initHistEqTool() {
+            const inputsDiv = document.getElementById('histEqInputs');
+            inputsDiv.innerHTML = defaultHistFreqs.map((val, r) => `
+                <div class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-center">
+                    <label class="block text-[11px] font-bold text-indigo-500 mb-1">r = ${r}</label>
+                    <input type="number" min="0" id="freq-r-${r}" value="${val}" oninput="updateHistEqTable()" class="w-full text-center font-mono text-xs p-1 rounded bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700">
+                </div>
+            `).join('');
+            updateHistEqTable();
+        }
+
+        function updateHistEqTable() {
+            const freqs = [];
+            for (let r = 0; r < 8; r++) {
+                const v = parseInt(document.getElementById(`freq-r-${r}`).value) || 0;
+                freqs.push(Math.max(0, v));
+            }
+            const totalN = freqs.reduce((a, b) => a + b, 0) || 1;
+            let cum = 0;
+            let rowsHtml = '';
+            for (let r = 0; r < 8; r++) {
+                cum += freqs[r];
+                const scaled = (7 * cum) / totalN;
+                const rounded = Math.round(scaled);
+                rowsHtml += `
+                    <tr>
+                        <td class="p-2 font-bold">${r}</td>
+                        <td class="p-2">${freqs[r]}</td>
+                        <td class="p-2 font-semibold text-indigo-500">${cum}</td>
+                        <td class="p-2">${cum} / ${totalN}</td>
+                        <td class="p-2">${(7 * cum)} / ${totalN} = ${scaled.toFixed(2)}</td>
+                        <td class="p-2 font-bold text-emerald-500 bg-emerald-500/10">${rounded}</td>
+                    </tr>
+                `;
+            }
+            document.getElementById('histEqResultTable').innerHTML = `
+                <table class="w-full text-center border-collapse text-xs font-mono">
+                    <thead>
+                        <tr class="bg-slate-100 dark:bg-slate-800 font-sans">
+                            <th class="p-2 border border-slate-200 dark:border-slate-700">Renk (r)</th>
+                            <th class="p-2 border border-slate-200 dark:border-slate-700">Sıklık (f_r)</th>
+                            <th class="p-2 border border-slate-200 dark:border-slate-700">Birikimli (∑ f_r)</th>
+                            <th class="p-2 border border-slate-200 dark:border-slate-700">Birimleştirme</th>
+                            <th class="p-2 border border-slate-200 dark:border-slate-700">Ölçeklendirme (7 × ∑f_r / N)</th>
+                            <th class="p-2 border border-slate-200 dark:border-slate-700 text-emerald-500">Yeni Değer (s_k)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200 dark:divide-slate-800">${rowsHtml}</tbody>
+                </table>
+            `;
+        }
+
+        function calcMemory() {
+            const N = parseInt(document.getElementById('memN').value) || 0;
+            const M = parseInt(document.getElementById('memM').value) || 0;
+            const m = parseInt(document.getElementById('memBit').value) || 8;
+            const bits = N * M * m;
+            const bytes = bits / 8;
+            const kbBinary = bytes / 1024;
+            const mbBinary = kbBinary / 1024;
+            document.getElementById('memOutput').innerHTML = `
+                <div>• Toplam Piksel (N × M): <strong>${(N * M).toLocaleString('tr-TR')} piksel</strong></div>
+                <div>• Bit Sayısı (b = N×M×m): <strong>${bits.toLocaleString('tr-TR')} bit</strong></div>
+                <div>• Byte (b / 8): <strong>${bytes.toLocaleString('tr-TR')} Byte</strong></div>
+                <div>• Slayt Yaklaşımı (÷1000): <strong>${(bytes/1000).toFixed(1)} KB ≈ ${(bytes/1000000).toFixed(2)} MB</strong></div>
+                <div>• Tam İkili Karşılık (÷1024): <strong>${kbBinary.toFixed(2)} KB ≈ ${mbBinary.toFixed(3)} MB</strong></div>
+            `;
+        }
+
+        function calcStretch() {
+            const oldMin = parseFloat(document.getElementById('stOldMin').value) || 0;
+            const oldMax = parseFloat(document.getElementById('stOldMax').value) || 1;
+            const newMin = parseFloat(document.getElementById('stNewMin').value) || 0;
+            const newMax = parseFloat(document.getElementById('stNewMax').value) || 1;
+            const denom = (oldMax - oldMin) === 0 ? 1 : (oldMax - oldMin);
+            const slope = (newMax - newMin) / denom;
+
+            let cellsOld = '';
+            let cellsNew = '';
+            for (let i = oldMin; i <= oldMax; i++) {
+                if (i - oldMin > 15) break; // limit columns
+                const j = Math.round(slope * (i - oldMin) + newMin);
+                cellsOld += `<td class="p-1.5 border border-slate-700">${i}</td>`;
+                cellsNew += `<td class="p-1.5 border border-slate-700 text-emerald-400 font-bold">${j}</td>`;
+            }
+            document.getElementById('stretchOutput').innerHTML = `
+                <div class="mb-2">Formül: j = (${slope.toFixed(2)}) × (i - ${oldMin}) + ${newMin}</div>
+                <table class="w-full text-center border-collapse">
+                    <tr><td class="p-1.5 border border-slate-700 font-bold">Eski (i)</td>${cellsOld}</tr>
+                    <tr><td class="p-1.5 border border-slate-700 font-bold text-emerald-400">Yeni (j)</td>${cellsNew}</tr>
+                </table>
+            `;
+        }
+
+        // Bitwise Masking Canvas Visualizer
+        function initMaskVisualizer() {
+            const size = 120;
+            ['canvasIm1', 'canvasIm2', 'canvasIm3', 'canvasResult'].forEach(id => {
+                const c = document.getElementById(id);
+                if (c) { c.width = size; c.height = size; }
+            });
+            drawBaseCanvases();
+            runMaskSim('combined');
+        }
+
+        function drawBaseCanvases() {
+            const c1 = document.getElementById('canvasIm1').getContext('2d');
+            const c2 = document.getElementById('canvasIm2').getContext('2d');
+            const c3 = document.getElementById('canvasIm3').getContext('2d');
+            const s = 120;
+
+            // im1: Blue diagonal stripes + label
+            c1.fillStyle = '#1e3a8a';
+            c1.fillRect(0, 0, s, s);
+            c1.strokeStyle = '#60a5fa';
+            c1.lineWidth = 4;
+            for (let i = -s; i < s * 2; i += 16) {
+                c1.beginPath(); c1.moveTo(i, 0); c1.lineTo(i + s, s); c1.stroke();
+            }
+            c1.fillStyle = '#ffffff';
+            c1.font = 'bold 14px sans-serif';
+            c1.fillText('LENNA', 35, 65);
+
+            // im2: Orange/Red circles + label
+            c2.fillStyle = '#7c2d12';
+            c2.fillRect(0, 0, s, s);
+            c2.strokeStyle = '#fb923c';
+            c2.lineWidth = 3;
+            for (let r = 10; r < s; r += 18) {
+                c2.beginPath(); c2.arc(s/2, s/2, r, 0, Math.PI * 2); c2.stroke();
+            }
+            c2.fillStyle = '#ffffff';
+            c2.font = 'bold 13px sans-serif';
+            c2.fillText('AFGHAN', 30, 65);
+
+            // im3: Black outside (0), White square inside (1)
+            c3.fillStyle = '#000000';
+            c3.fillRect(0, 0, s, s);
+            c3.fillStyle = '#ffffff';
+            c3.fillRect(30, 30, 60, 60);
+        }
+
+        function runMaskSim(mode) {
+            const s = 120;
+            const c1 = document.getElementById('canvasIm1').getContext('2d').getImageData(0, 0, s, s);
+            const c2 = document.getElementById('canvasIm2').getContext('2d').getImageData(0, 0, s, s);
+            const c3 = document.getElementById('canvasIm3').getContext('2d').getImageData(0, 0, s, s);
+            const resCtx = document.getElementById('canvasResult').getContext('2d');
+            const out = resCtx.createImageData(s, s);
+
+            for (let i = 0; i < c1.data.length; i += 4) {
+                const m = c3.data[i]; // 0 or 255
+                const notM = 255 - m;
+                for (let ch = 0; ch < 3; ch++) {
+                    const p1 = c1.data[i + ch];
+                    const p2 = c2.data[i + ch];
+                    if (mode === 'im2_and_im3') {
+                        out.data[i + ch] = p2 & m;
+                    } else if (mode === 'im1_or_not_im3') {
+                        out.data[i + ch] = p1 | notM;
+                    } else if (mode === 'im2_or_im3') {
+                        out.data[i + ch] = p2 | m;
+                    } else if (mode === 'combined') {
+                        const im4 = p1 | notM;
+                        const im5 = p2 | m;
+                        out.data[i + ch] = im5 & im4;
+                    }
+                }
+                out.data[i + 3] = 255;
+            }
+            resCtx.putImageData(out, 0, 0);
+            const labels = {
+                'im2_and_im3': 'im4 = (im2 & im3)',
+                'im1_or_not_im3': 'im4 = (im1 | ~im3)',
+                'im2_or_im3': 'im5 = (im2 | im3)',
+                'combined': 'im6 = (im5 & im4)'
+            };
+            document.getElementById('canvasResultLabel').textContent = labels[mode];
+        }
+
+        // ==========================================
+        // 6. COMPREHENSIVE 20-QUESTION FINAL EXAM
+        // ==========================================
+        const finalExamQuestions = [
+            {
+                q: "1. Güneş sistemindeki herhangi bir noktanın güneş merkezli koordinat sisteminde x, y, z konumları ile belirlenmesi kaç boyutlu bir sinyaldir?",
+                options: ["1 Boyutlu", "2 Boyutlu", "3 Boyutlu", "4 Boyutlu"],
+                ans: 2,
+                exp: "f(x, y, z) 3 bağımsız değişkene sahip olduğu için 3 boyutlu bir sinyaldir."
+            },
+            {
+                q: "2. Analog ve dijital sinyallerin karşılaştırılmasıyla ilgili aşağıdakilerden hangisi YANLIŞTIR?",
+                options: ["Analog sinyal sürekli, dijital sinyal ayrık gösterime sahiptir.", "Analog sinyalin doğruluğu dijital sinyale göre daha fazladır.", "Dijital sinyalin depolanması için sonsuz hafıza ihtiyacı vardır.", "Dijital sinyaller 0 ve 1 genlikli kare dalgalar şeklinde gösterilir."],
+                ans: 2,
+                exp: "Sonsuz hafıza ihtiyacı dijital sinyalin değil, analog sinyalin özelliğidir. Dijital sinyaller kolaylıkla depolanabilir."
+            },
+            {
+                q: "3. Işığın dalga boyu (λ) küçük değerden (380 nm) büyük değere (760 nm) doğru ilerledikçe rengi nasıl değişir?",
+                options: ["Kırmızıdan Maviye (Mora) doğru", "Maviden (Mordan) Kırmızıya (Kızıla) doğru", "Yeşilden Mora doğru", "Sarıdan Maviye doğru"],
+                ans: 1,
+                exp: "Görünür spektrumda 380 nm Mor/Mavi, 760 nm ise Kırmızıdır. Dalga boyu büyüdükçe renk maviden kırmızıya dönüşür."
+            },
+            {
+                q: "4. Tamamen siyah bir cisim ısıtılmaya başlandığında ilk olarak hangi ışınımı saçar?",
+                options: ["Ultraviyole (Morötesi) ışınlar", "Mavi ışık", "Kızılötesi (Infrared) ışınlar", "Beyaz ışık"],
+                ans: 2,
+                exp: "Isıtılan siyah cisim önce kızılötesi ışınlar saçar, ısındıkça kırmızı, sonra beyaz olur; çok ısıtılırsa mavi ve ultraviyole saçar."
+            },
+            {
+                q: "5. İnsan gözünde bulunan Kornea, Sklera, Koroid ve Retina yapılarıyla ilgili aşağıdakilerden hangisi doğrudur?",
+                options: ["Sklera saydam bir yapıya sahiptir.", "Gözü besleyen kan damarları yoğun olarak Damar Tabakada (Koroid) bulunur.", "Koni ve Çubuk hücreleri Kornea üzerinde yer alır.", "Uzaktaki cismi görmek için göz merceğinin ışığı kırma oranı maksimum olur."],
+                ans: 1,
+                exp: "Kan damarları Koroid (Damar tabaka) içinde bulunur. Kornea saydam, Sklera saydam olmayan dış zardır. Koni ve çubuklar Retinadadır."
+            },
+            {
+                q: "6. Görüntü elemanının (pikselin) parlaklık şiddetini gösteren pozitif tamsayı değerinin belirlenmesi (analog renk değerinin en yakın dijital renk değerine dönüştürülmesi) işlemine ne denir?",
+                options: ["Görüntü Örnekleme (Sampling)", "Görüntü Nicemleme (Quantization)", "Görüntü Kırpma (Cropping)", "Görüntü İnterpolasyonu"],
+                ans: 1,
+                exp: "Genlik/parlaklık değerlerinin basamaklara ayrılarak sayısallaştırılmasına Görüntü Nicemleme (Quantization) denir."
+            },
+            {
+                q: "7. Saydamlığı (alfa kanalını), katmansal yapıyı ve 24-bitlik görüntüyü 'kayıpsız sıkıştırma' ile destekleyen görüntü formatı hangisidir?",
+                options: ["JPEG", "BMP", "PNG", "HEIF"],
+                ans: 2,
+                exp: "PNG kayıpsız sıkıştırma, 24-bit renk, katmansal yapı ve saydamlık destekler."
+            },
+            {
+                q: "8. 1000 × 600 piksel boyutlarında ve her pikseli 8 bit ile temsil edilen gri tonlamalı bir görüntünün bellekte kapladığı alan kaç KByte'tır? (Slayttaki yaklaşıma göre)",
+                options: ["1800 KByte", "600 KByte", "4800 KByte", "240 KByte"],
+                ans: 1,
+                exp: "1000 * 600 * 8 = 4.800.000 bit / 8 = 600.000 Byte ≈ 600 KByte."
+            },
+            {
+                q: "9. Bir pikselin değerini değiştirmek için komşu piksellerden faydalanılan ve filtreleme işlemlerinde çok kullanılan görüntü işleme sınıfı hangisidir?",
+                options: ["Noktasal İşlemler (Point processing)", "Bölgesel / Alansal İşlemler (Local processing)", "Global İşlemler", "Frekans Uzayı İşlemleri"],
+                ans: 1,
+                exp: "Komşu piksellerden faydalanarak merkez pikselin değerini belirleyen işlemler Bölgesel (Alansal) işlemlerdir."
+            },
+            {
+                q: "10. 8-bitlik bir görüntüde parlaklık değeri 210 olan bir piksele y = x + 80 parlaklık artırma işlemi uygulanırsa yeni piksel değeri kaç olur?",
+                options: ["290", "34", "255", "210"],
+                ans: 2,
+                exp: "210 + 80 = 290. Ancak 8-bit görüntüde üst sınır 255 olduğu için 255'ten büyük değerler 255'e sabitlenir."
+            },
+            {
+                q: "11. 400 × 300 boyutlarında renkli (3 bantlı) bir görüntüde her pikselin her rengi için ayrı ayrı işlem yapıldığında toplam kaç işlem gerçekleştirilir?",
+                options: ["120.000", "240.000", "360.000", "720.000"],
+                ans: 2,
+                exp: "Toplam piksel rengi sayısı = W * H * 3 = 400 * 300 * 3 = 360.000 işlem."
+            },
+            {
+                q: "12. 8-bitlik bir görüntüde piksel değeri 55 olan bir noktanın negatif görüntüdeki karşılığı kaçtır?",
+                options: ["200", "195", "205", "73"],
+                ans: 0,
+                exp: "y = 255 - x = 255 - 55 = 200."
+            },
+            {
+                q: "13. Aşağıdakilerden hangisi görüntü eşikleme (thresholding) algoritmalarından biri DEĞİLDİR?",
+                options: ["Şekle bağlı yöntemler", "Kümeleme tabanlı yöntemler", "Entropiye dayanan yöntemler", "Kosinüs salınım yöntemleri"],
+                ans: 3,
+                exp: "Slaytta belirtilen 5 eşikleme yöntemi: Şekle bağlı, Kümeleme tabanlı, Entropiye dayanan, Nesne özniteliğine dayalı ve Yerel yöntemlerdir."
+            },
+            {
+                q: "14. [10, 20] aralığında sıkışmış gri seviye değerlerini [0, 100] aralığına doğrusal olarak germek (Histogram Germe) istediğimizde, eski değeri 14 olan pikselin yeni değeri kaç olur?",
+                options: ["20", "30", "40", "50"],
+                ans: 2,
+                exp: "j = ((100 - 0) / (20 - 10)) * (14 - 10) + 0 = 10 * 4 = 40."
+            },
+            {
+                q: "15. Histogram Germe ile Histogram Eşitleme arasındaki farkla ilgili aşağıdakilerden hangisi doğrudur?",
+                options: ["Histogram eşitleme kullanıcıdan alt-üst sınır ister, germe otomatiktir.", "Histogram germe kullanıcı girişine ihtiyaç duyar ve lineerdir; histogram eşitleme otomatiktir ve olasılık dağılımına bağlı doğrusal olmayan dönüşüm yapar.", "Histogram eşitleme sadece renkli resimlere uygulanır.", "Histogram germe birikimli (kümülatif) toplam kullanır."],
+                ans: 1,
+                exp: "Histogram germenin kullanıcı girişine ihtiyaç duyma dezavantajı vardır; eşitleme ise kümülatif dağılımla otomatik çalışır."
+            },
+            {
+                q: "16. [x2 ; y2] = [1  b ; 0  1] * [x1 ; y1] matris dönüşümü görüntü üzerinde hangi geometrik işlemi gerçekleştirir?",
+                options: ["X-ekseni doğrultusunda eğme-kaydırma (Shearing)", "Y-ekseni doğrultusunda eğme-kaydırma (Shearing)", "Saat yönünde döndürme (Rotation)", "Yatay eksende aynalama (Flip)"],
+                ans: 0,
+                exp: "x2 = x1 + b*y1 ve y2 = y1 denklemi X-ekseni doğrultusunda eğme-kaydırma (shearing) işlemidir."
+            },
+            {
+                q: "17. 2×2 komşu piksel grubu [2, 6 ; 4, 8] olan bir bölgeyi Piksel İnterpolasyonu (ortalama) yöntemiyle tek bir piksele küçülttüğümüzde (Zoom out) yeni piksel değeri kaç olur?",
+                options: ["2", "4", "5", "8"],
+                ans: 2,
+                exp: "İnterpolasyon istatistiksel ortalama alır: (2 + 6 + 4 + 8) / 4 = 20 / 4 = 5."
+            },
+            {
+                q: "18. Bir görüntüyü döndürme matrisi kullanmadan, sadece kaydırma (shearing) işlemleriyle döndürmek için hangi 3 adım sırasıyla uygulanır?",
+                options: ["Yukarı -> Sola -> Aşağı", "Sağa yatay kaydırma -> Aşağı dikey kaydırma -> Tekrar sağa yatay kaydırma", "Aşağı -> Sağa -> Aşağı", "Sola -> Sağa -> Yukarı"],
+                ans: 1,
+                exp: "Slaytta açıklanan 3. döndürme yöntemi: Sağa yatay kaydırma -> Aşağı dikey kaydırma -> Tekrar sağa yatay kaydırmadır."
+            },
+            {
+                q: "19. Ortası beyaz (1), dışı siyah (0) olan kare maske (im3) ile Lenna (im1) görüntüsü arasında 'im4 = (im1 | (~im3))' işlemi yapılırsa sonuç ne olur?",
+                options: ["Ortadaki karede Lenna görünür, karenin dışı tamamen BEYAZ (1) olur.", "Ortadaki karede Lenna görünür, karenin dışı tamamen SİYAH (0) olur.", "Ortadaki kare BEYAZ, dışı Lenna olur.", "Ortadaki kare SİYAH, dışı Lenna olur."],
+                ans: 0,
+                exp: "~im3 ile maskenin ortası 0 (siyah), dışı 1 (beyaz) olur. OR (|) işleminde 0 olan orta kısımda im1 (Lenna) korunur, 1 olan dış kısım tamamen beyaz (1) olur."
+            },
+            {
+                q: "20. Aşağıdaki MATLAB ifadelerinden hangisi ~(im5 & im4) işleminin De Morgan kurallarına göre eşdeğeri olan iki resmi birleştirme adımlarından biridir?",
+                options: ["im4 = ~(im1 & im3); im5 = ~(im2 & (~im3)); im6 = ~(im5 & im4);", "im4 = (im1 & im2); im5 = ~im3;", "im6 = xor(im1, im2);", "im6 = im1 + im2 - im3;"],
+                ans: 0,
+                exp: "6. Bölüm son slaytında verilen ikinci yöntem: im4=~(im1&im3); im5=~(im2&(~im3)); im6=~(im5&im4); şeklindedir."
+            }
+        ];
+
+        function renderFinalExam() {
+            const container = document.getElementById('finalExamContainer');
+            container.innerHTML = finalExamQuestions.map((item, qIdx) => `
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <div class="flex items-start justify-between gap-3">
+                        <p class="font-bold text-sm sm:text-base">${item.q}</p>
+                        <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-[11px] font-mono shrink-0">5 Puan</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        ${item.options.map((opt, oIdx) => `
+                            <button onclick="answerExamQuestion(${qIdx}, ${oIdx})" class="exam-opt-${qIdx} text-left p-3 rounded-xl text-xs sm:text-sm border border-slate-200 dark:border-slate-700 hover:border-indigo-500 transition">
+                                <strong>${String.fromCharCode(65 + oIdx)})</strong> ${opt}
+                            </button>
+                        `).join('')}
+                    </div>
+                    <div id="exam-exp-${qIdx}" class="hidden p-3.5 rounded-xl text-xs sm:text-sm"></div>
+                </div>
+            `).join('');
+        }
+
+        function answerExamQuestion(qIdx, selectedIdx) {
+            if (state.examAnswers[qIdx] !== undefined) return;
+            state.examAnswers[qIdx] = selectedIdx;
+
+            const item = finalExamQuestions[qIdx];
+            const expEl = document.getElementById(`exam-exp-${qIdx}`);
+            const allBtns = document.querySelectorAll(`.exam-opt-${qIdx}`);
+
+            allBtns.forEach((b, idx) => {
+                b.disabled = true;
+                if (idx === item.ans) {
+                    b.classList.add('bg-emerald-500/20', 'border-emerald-500', 'font-bold', 'text-emerald-700', 'dark:text-emerald-300');
+                } else if (idx === selectedIdx) {
+                    b.classList.add('bg-rose-500/20', 'border-rose-500', 'text-rose-700', 'dark:text-rose-300');
+                }
+            });
+
+            expEl.classList.remove('hidden');
+            if (selectedIdx === item.ans) {
+                expEl.className = "p-3.5 rounded-xl text-xs sm:text-sm bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20";
+                expEl.innerHTML = `<strong>✓ Harika! Doğru Cevap.</strong> ${item.exp}`;
+            } else {
+                expEl.className = "p-3.5 rounded-xl text-xs sm:text-sm bg-rose-500/10 text-rose-700 dark:text-rose-300 border border-rose-500/20";
+                expEl.innerHTML = `<strong>✗ Yanlış Cevap.</strong> Doğru şık: <strong>${String.fromCharCode(65 + item.ans)}</strong>. ${item.exp}`;
+            }
+
+            updateExamScore();
+        }
+
+        function updateExamScore() {
+            let correct = 0;
+            Object.keys(state.examAnswers).forEach(qIdx => {
+                if (state.examAnswers[qIdx] === finalExamQuestions[qIdx].ans) correct++;
+            });
+            document.getElementById('examScoreDisplay').textContent = `${correct} / 20 (${correct * 5} Puan)`;
+        }
+
+        function resetFinalExam() {
+            state.examAnswers = {};
+            document.getElementById('examScoreDisplay').textContent = `0 / 20`;
+            renderFinalExam();
+        }
+
+        // ==========================================
+        // 7. PERSONAL NOTES DRAWER & SEARCH
+        // ==========================================
+        function toggleNotesDrawer() {
+            document.getElementById('notesDrawer').classList.toggle('translate-x-full');
+        }
+
+        function renderPersonalNotes() {
+            const list = document.getElementById('personalNotesList');
+            document.getElementById('savedNotesCount').textContent = state.personalNotes.length;
+            if (state.personalNotes.length === 0) {
+                list.innerHTML = `<p class="text-xs text-slate-400 text-center py-8">Henüz kişisel not eklemedin.</p>`;
+                return;
+            }
+            list.innerHTML = state.personalNotes.map((note, idx) => `
+                <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs flex items-start justify-between gap-2">
+                    <p class="text-slate-700 dark:text-slate-200 leading-relaxed">${note}</p>
+                    <button onclick="deletePersonalNote(${idx})" class="text-rose-500 hover:text-rose-600 font-bold shrink-0">✕</button>
+                </div>
+            `).join('');
+        }
+
+        function addPersonalNote() {
+            const input = document.getElementById('newNoteInput');
+            const val = input.value.trim();
+            if (!val) return;
+            state.personalNotes.unshift(val);
+            localStorage.setItem('sgi_notes', JSON.stringify(state.personalNotes));
+            input.value = '';
+            renderPersonalNotes();
+        }
+
+        function deletePersonalNote(idx) {
+            state.personalNotes.splice(idx, 1);
+            localStorage.setItem('sgi_notes', JSON.stringify(state.personalNotes));
+            renderPersonalNotes();
+        }
+
+        // Search Filter
+        document.getElementById('topicSearch').addEventListener('input', function(e) {
+            const q = e.target.value.toLowerCase().trim();
+            if (!q) return;
+            const map = [
+                { keys: ['sinyal', 'analog', 'dijital', 'ışık', 'spektrum', 'göz', 'retina', 'kornea', 'örnekleme', 'nicemleme'], tab: 'bolum1' },
+                { keys: ['bmp', 'jpeg', 'png', 'gif', 'rgb', 'eflatun', 'turkuaz', 'bellek', 'parlaklık', 'kontrast', 'keskinleştirme'], tab: 'bolum2' },
+                { keys: ['lut', 'negatif', 'gri', 'eşikleme', 'threshold', 'histogram'], tab: 'bolum3' },
+                { keys: ['germe', 'eşitleme', 'stretching', 'equalization', 'birikimli'], tab: 'bolum4' },
+                { keys: ['taşıma', 'aynalama', 'eğme', 'shearing', 'ölçekleme', 'interpolasyon', 'döndürme', 'alias'], tab: 'bolum5' },
+                { keys: ['bitsel', 'boolean', 'and', 'or', 'xor', 'not', 'maske', 'lenna'], tab: 'bolum6' }
+            ];
+            for (const item of map) {
+                if (item.keys.some(k => k.includes(q) || q.includes(k))) {
+                    switchTab(item.tab);
+                    break;
+                }
+            }
+        });
+
+        // Theme & Mobile Menu
+        document.getElementById('themeToggleBtn').addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+        });
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+            document.getElementById('sidebar').classList.toggle('-translate-x-full');
+        });
+
+        // Initialize Everything on Load
+        window.onload = function() {
+            switchTab('bolum1');
+            updateProgressUI();
+            renderMiniQuizzes();
+            renderFlashcards();
+            initHistEqTool();
+            calcMemory();
+            calcStretch();
+            initMaskVisualizer();
+            renderFinalExam();
+            renderPersonalNotes();
+        };
+    </script>
+</body>
+</html>
