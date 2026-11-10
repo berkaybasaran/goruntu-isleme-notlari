@@ -188,7 +188,7 @@
                     <button onclick="nextRandomTip()" class="text-[11px] hover:underline">Değiştir ↻</button>
                 </div>
                 <p id="sidebarRandomTip" class="text-slate-600 dark:text-slate-300 leading-relaxed text-[11px]">
-                    MATLAB'da diziler 1'den başlar! Bu yüzden 0 gri değerini LUT tablosunda ararken <code>LUT(im+1)</code> kullanılır.
+                    MATLAB'da diziler 1'den başlar! Bu yüzden 0 gri değerini LUT tablosunda ararken <code>LUT(im+1)</code> kullanılır. (imread ile okunan uint8 resimde <code>LUT(double(im)+1)</code> yaz: 255+1 = 255!)
                 </p>
             </div>
         </aside>
@@ -312,7 +312,7 @@
                 <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
                     <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
                         <span class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-sm">1.3</span>
-                        Işık Фиziği ve Elektromanyetik Spektrum
+                        Işık Fiziği ve Elektromanyetik Spektrum
                     </h3>
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
                         <div class="lg:col-span-2 space-y-3 text-sm text-slate-600 dark:text-slate-300">
@@ -448,6 +448,19 @@
                     </div>
                 </div>
 
+                <!-- 1.6 Sayısal Görüntü, Piksel ve Görüntü İşleme: Tanım ve Uygulama Alanları -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-sm">1.6</span>
+                        Sayısal Görüntü, Piksel ve Görüntü İşleme: Tanım ve Uygulama Alanları
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+<div class="p-4 rounded-xl bg-indigo-500/5 border border-indigo-500/20 space-y-1.5 text-xs sm:text-sm"><h4 class="font-bold text-indigo-600 dark:text-indigo-400">🖼️ Sayısal Görüntü ve Piksel</h4><div class="text-slate-600 dark:text-slate-300 leading-relaxed">• Sayısal görüntü, <strong>3 boyutlu nesnelerin 2 boyutlu yüzeye düşürülmüş haritası</strong> olarak tanımlanabilir. Her noktanın konum bilgisi <code class="font-mono">I(x,y)</code> ve renk bilgisi tutulur.<br>• Dijital görüntü, 2 boyutlu görüntüyü <strong>sonlu bir dijital değerler kümesi (pikseller)</strong> olarak temsil eder.<br>• <code class="font-mono">I(x,y)</code>'nin bir noktadaki değeri o noktadaki <strong>piksel değeridir</strong> (gri seviye, renk, yükseklik vb.).<br>• <strong>Yakalama zinciri:</strong> gelen enerji ➔ belli enerji tipine duyarlı sensör materyali ➔ <strong>voltaj</strong>. Sensörün verdiği voltaj dalga şeklinin sayısallaştırılmasıyla sayısal sonuç elde edilir.</div></div><div class="p-4 rounded-xl bg-purple-500/5 border border-purple-500/20 space-y-1.5 text-xs sm:text-sm"><h4 class="font-bold text-purple-600 dark:text-purple-400">⚙️ Sayısal Görüntü İşleme Nedir?</h4><div class="text-slate-600 dark:text-slate-300 leading-relaxed">• Elimizdeki görüntüden <strong>anlamlı ifadeler çıkarmaya</strong> yarayan işlemler bütünüdür. Pikseller üzerinde matematiksel işlemlerle yapılır; göreve göre bir algoritma tasarlanır.<br>• Analog görüntünün sayısal biçime dönüştürülmesi ve ardından <strong>iyileştirme, onarma, sınıflandırma, sıkıştırma, anlama ve yorumlama</strong> gibi amaçlarla bilgisayarlarla işlenmesidir.<br>• Kullanım alanları: askeri, endüstri, robotik, reklamcılık, astronomi, tıp, coğrafya, trafik. İşlenen görüntü sonrasında yapay sinir ağları (YSA), bulanık mantık gibi algoritmalarla değerlendirilir.</div></div>                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+<div class="p-4 rounded-xl bg-emerald-500/5 border border-emerald-500/20 space-y-1.5 text-xs sm:text-sm"><h4 class="font-bold text-emerald-600 dark:text-emerald-400">🎯 Görüntü İşleme ile Neler Yapılır?</h4><div class="text-slate-600 dark:text-slate-300 leading-relaxed">• Görüntüdeki <strong>gürültülerin arındırılması</strong>, temiz görüntü elde edilmesi<br>• İnsan algısının görmekte zorlandığı <strong>nesnelerin tespiti</strong><br>• Görüntünün daha kaliteli hale getirilmesi<br>• <strong>Nesne takibi</strong><br>• Farklı nesnelerin birbirinden ayırt edilmesi</div></div><div class="p-4 rounded-xl bg-amber-500/5 border border-amber-500/20 space-y-1.5 text-xs sm:text-sm"><h4 class="font-bold text-amber-600 dark:text-amber-400">🕰️ 1990'lar – Bugün: Kullanım Alanları</h4><div class="text-slate-600 dark:text-slate-300 leading-relaxed">• Görüntü iyileştirme / restorasyon<br>• Sanatsal efektler<br>• Tıbbi görüntüleme<br>• Endüstriyel muayene<br>• Kanun yürütme<br>• İnsan-bilgisayar arayüzleri</div></div>                    </div>
+<div class="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs sm:text-sm space-y-1.5"><div class="font-bold text-amber-700 dark:text-amber-300">⚠️ N ve M neyi gösteriyor? (Kafa karıştıran tanım)</div><p class="text-slate-700 dark:text-slate-200 leading-relaxed">Slaytlar <code class="font-mono">N × M</code> gösterimini iki farklı biçimde kullanır: örneklemede 'yatayda N, düşeyde M', bellek hesabında ise 'N satır, M sütun'. Bellek formülünde çarpım değişmediği için sonuç aynıdır. Matris indekslerinde de slaytlar 'i = 1..N' gibi yazar. Sınavda <strong>sorunun kendi tanımını</strong> esas al; formülde karıştırdığında sonuç değişmiyorsa takılma.</p></div>
+                </div>
+
                 <!-- Bölüm 1 Özeti -->
                 <div class="p-5 rounded-2xl bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 space-y-2">
                     <h4 class="font-bold text-sm uppercase tracking-wider text-indigo-600 dark:text-indigo-400">📌 1. Bölüm Hızlı Özet</h4>
@@ -497,11 +510,11 @@
                         </div>
                         <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
                             <div class="font-bold text-emerald-600 dark:text-emerald-400 mb-1">PNG (Portable Network Graphics)</div>
-                            <p class="text-slate-600 dark:text-slate-300"><strong>Kayıpsız (Lossless) sıkıştırma</strong> sağlar. 24 bitlik yapıyı, <strong>katmansal yapıyı ve saydamlığı (alfa kanalını)</strong> destekler.</p>
+                            <p class="text-slate-600 dark:text-slate-300"><strong>Kayıpsız (Lossless) sıkıştırma</strong> sağlar. 24 bitlik yapıyı ve <strong>saydamlığı (alfa kanalını)</strong> destekler.</p><p class="mt-2 text-[11px] text-amber-600 dark:text-amber-400">Slaytta 'katmansal yapı' da yazar. Gerçekte PNG katman (layer) taşımaz; katmanlar PSD gibi proje dosyalarına özgüdür. Sınavda slayt ifadesi gelebilir, ama doğrusunu bil.</p>
                         </div>
                         <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
                             <div class="font-bold text-amber-600 dark:text-amber-400 mb-1">GIF (Graphics Interchange Format)</div>
-                            <p class="text-slate-600 dark:text-slate-300"><strong>Animasyonları</strong> destekleyen, <strong>düşük renk derinliği (8-bit / 256 renk)</strong> ile <strong>kayıpsız sıkıştırma</strong> sağlayan formattır. Saydamlığı ve katmansal yapıyı destekler.</p>
+                            <p class="text-slate-600 dark:text-slate-300"><strong>Animasyonları</strong> destekleyen, <strong>düşük renk derinliği (8-bit / 256 renk)</strong> ile <strong>kayıpsız sıkıştırma</strong> sağlayan formattır. Saydamlığı destekler. <span class="text-[11px] text-amber-600 dark:text-amber-400">(Slaytta 'katmansal yapı' da yazar; gerçekte GIF katman değil, animasyon kareleri (frame) taşır.)</span></p>
                         </div>
                         <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
                             <div class="font-bold text-purple-600 dark:text-purple-400 mb-1">TIFF (Tagged Image File Format)</div>
@@ -509,7 +522,7 @@
                         </div>
                         <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
                             <div class="font-bold text-sky-600 dark:text-sky-400 mb-1">HEIF (High Efficiency Image File)</div>
-                            <p class="text-slate-600 dark:text-slate-300"><strong>Apple</strong> tarafından geliştirilen, daha verimli sıkıştırma sağlayan ve fotoğrafların daha fazla bilgiyi saklamasına izin veren modern formattır.</p>
+                            <p class="text-slate-600 dark:text-slate-300">Slayta göre <strong>Apple</strong> tarafından geliştirilen (gerçekte MPEG/ISO standardıdır; Apple iOS 11 ile varsayılan yaptı), daha verimli sıkıştırma sağlayan ve fotoğrafların daha fazla bilgiyi saklamasına izin veren modern formattır.</p>
                         </div>
                     </div>
                 </div>
@@ -589,7 +602,7 @@
                             <code class="font-mono">4.800.000 / 8 = 600.000 Byte ≈ 600 KByte ≈ 0,6 MByte</code></p>
                             <p><strong>2) 24-bit Renkli (RGB) Resim:</strong><br>
                             <code class="font-mono">b = 1000 × 600 × 24 = 14.400.000 bit</code><br>
-                            <code class="font-mono">14.400.000 / 8 = 1.800.000 Byte ≈ 1.800 KByte ≈ 1,8 MByte</code> (Tam 3 katı!)</p>
+                            <code class="font-mono">14.400.000 / 8 = 1.800.000 Byte ≈ 1.800 KByte ≈ 1,8 MByte</code> (Tam 3 katı!)</p><p class="text-amber-600 dark:text-amber-400"><strong>⚠️ 1000 mi, 1024 mü?</strong> Slayt kolaylık için 1000 ile böler (600.000 Byte ≈ 600 KByte). Yukarıda yazan <code class="font-mono">1024 Byte = 1 KByte</code> kuralını uygularsan sonuç <code class="font-mono">600.000 / 1024 = 585,94 KByte</code> (≈ 0,572 MByte) ve <code class="font-mono">1.800.000 / 1024 = 1757,8 KByte</code> (≈ 1,72 MByte) çıkar. Sınavda soru hangisini istiyorsa onu uygula; belirtilmemişse hangi kabulü kullandığını yaz. (Lab sekmesindeki hesaplayıcı ikisini de gösterir.)</p>
                         </div>
                     </div>
                 </div>
@@ -624,7 +637,7 @@
                         </div>
                         <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 space-y-2">
                             <h4 class="font-bold text-indigo-600 dark:text-indigo-400">🌓 Kontrast (Karşıtlık) vs Keskinleştirme (Sharpen)</h4>
-                            <p>• <strong>Kontrast:</strong> En parlak ile en karanlık bölüm arasındaki farktır. Görüntüyü sabit bir <code class="font-mono">c</code> değeriyle çarparak/bölerek (<code class="font-mono">y = x * c</code>) yapılır. Alanların renk değerleri birbirinden uzaklaştırılır.</p>
+                            <p>• <strong>Kontrast:</strong> En parlak ile en karanlık bölüm arasındaki farktır. Görüntüyü sabit bir <code class="font-mono">c</code> değeriyle çarparak/bölerek (<code class="font-mono">y = x * c</code>) yapılır. <strong>c &gt; 1 (örn. g*1.5) kontrastı artırır, c &lt; 1 (örn. g/1.5) azaltır.</strong> Kontrast artarken alanların renk değerleri birbirinden uzaklaştırılır.</p>
                             <p>• <strong>Keskinleştirme (Sharpen):</strong> Kontrast ile aynı şey <strong>değildir!</strong> Alanların iç kısımları değil, <strong>sadece kenar (sınır) kısımları belirginleştirilir.</strong></p>
                         </div>
                     </div>
@@ -653,6 +666,40 @@ r2 = fix(r1 ./ n * 255); % fix: tam sayıya yuvarlar
 im(:,:,1) = r2;
 imshow(im)</code></pre>
                         </div>
+                        <p class="font-sans text-xs text-amber-300 leading-relaxed">⚠️ <strong>1. yöntemde dikkat:</strong> <code>zeros(512,512,3)</code> double üretir ve <code>imshow</code> double görüntüde 0-1 aralığı bekler; 255'e kadar giden değerler doygun (neredeyse tamamen kırmızı) görünür. Doğru görüntü için <code>imshow(uint8(im))</code> yaz ya da <code>s = j/n</code> (0-1) kullan. Ayrıca sütun sayısı n olduğundan <code>j/m</code> yerine <code>j/n</code> daha doğrudur (512×512'de fark etmez).</p>
+                    </div>
+                </div>
+
+                <!-- 2.5 Yoğunluk Dönüşüm Fonksiyonu ve Slayt Örnekleri -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-sm">2.5</span>
+                        Yoğunluk Dönüşüm Fonksiyonu ve Slayt Örnekleri
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+<div class="p-4 rounded-xl bg-indigo-500/5 border border-indigo-500/20 space-y-1.5 text-xs sm:text-sm"><h4 class="font-bold text-indigo-600 dark:text-indigo-400">📈 Yoğunluk Dönüşüm Fonksiyonu</h4><div class="text-slate-600 dark:text-slate-300 leading-relaxed">• Görüntü işlemede <strong>yoğunluk (intensity)</strong>, bir pikselin sahip olduğu <strong>gri seviye değeridir</strong>.<br>• Yoğunluk dönüşüm fonksiyonu <code class="font-mono">s = T(r)</code>, her giriş gri seviyesini bir çıkış gri seviyesine eşler. Noktasal işlemdir ve LUT ile uygulanabilir.<br>• Slaytta aynı görüntüye uygulanan dört işlem aşağıdadır.</div></div>                        <div class="overflow-x-auto"><table class="w-full text-left border-collapse text-xs sm:text-sm"><thead><tr class="bg-slate-100 dark:bg-slate-800"><th class="p-2.5">İşlem</th><th class="p-2.5">Etki</th></tr></thead><tbody class="divide-y divide-slate-200 dark:divide-slate-800"><tr><td class="p-2.5 font-mono">f(x,y) = g(x,y) + 100</td><td class="p-2.5">Parlaklık artar (görüntü açılır), 255 üstü kırpılır</td></tr><tr><td class="p-2.5 font-mono">f(x,y) = g(x,y) - 100</td><td class="p-2.5">Parlaklık azalır (görüntü kararır), 0 altı kırpılır</td></tr><tr><td class="p-2.5 font-mono">f(x,y) = g(x,y) * 1.5</td><td class="p-2.5">Kontrast artar</td></tr><tr><td class="p-2.5 font-mono">f(x,y) = g(x,y) / 1.5</td><td class="p-2.5">Kontrast azalır</td></tr></tbody></table></div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 space-y-2">
+                        <h4 class="font-bold text-indigo-600 dark:text-indigo-400 text-sm">💻 Çalışma Örneği: Sol Üst Köşeden Siyahla Başlayıp Dairesel Olarak Eflatuna Geçiş</h4>
+                        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300">Slayttaki ödev sorusudur (teslim biçimine kendi ödev yönergende bak). Fikir: her pikselin <strong>sol üst köşeye uzaklığını</strong> 0-1 aralığına ölçekle; eflatun <code class="font-mono">(255,0,255)</code> olduğu için aynı değeri hem R hem B bandına yaz, G sıfır kalsın.</p>
+<pre class="bg-slate-900 p-3 rounded-lg overflow-x-auto text-emerald-300 font-mono text-xs"><code>% Döngülü
+im = zeros(512,512,3);          % double, imshow için 0-1 aralığı
+[m,n,~] = size(im);
+maxD = sqrt((m-1)^2 + (n-1)^2); % en uzak köşeye uzaklık
+for i = 1:m
+    for j = 1:n
+        d = sqrt((i-1)^2 + (j-1)^2) / maxD;   % 0 (siyah) ... 1 (eflatun)
+        im(i,j,1) = d;          % R
+        im(i,j,3) = d;          % B  (R+B = eflatun)
+    end
+end
+imshow(im)
+
+% Döngüsüz
+[J,I] = meshgrid(0:n-1, 0:m-1);
+D = sqrt(I.^2 + J.^2) / maxD;
+im = cat(3, D, zeros(m,n), D);
+imshow(im)</code></pre>
                     </div>
                 </div>
 
@@ -699,7 +746,7 @@ imshow(im)</code></pre>
                         </div>
                         <p class="text-slate-600 dark:text-slate-300">
                             • <code class="font-mono">r=0 ➔ 2(0)-2 = -2 ➔ 0</code> | <code class="font-mono">r=1 ➔ 2(1)-2 = 0</code> | <code class="font-mono">r=5 ➔ 2(5)-2 = 8 ➔ 7 (Max sınır!)</code><br>
-                            • MATLAB'da indeksler 1'den başladığı için <code class="font-mono">yim = LUT(im + 1)</code> komutu kullanılır!
+                            • MATLAB'da indeksler 1'den başladığı için <code class="font-mono">yim = LUT(im + 1)</code> komutu kullanılır!<br><span class="text-amber-600 dark:text-amber-400">• ⚠️ <strong>uint8 tuzağı:</strong> Slayttaki örnekte <code class="font-mono">im</code> double bir matristir, sorun yok. Ama <code class="font-mono">imread</code> ile okunan resim <strong>uint8</strong> olur ve uint8'de <code class="font-mono">255 + 1 = 255</code> (doygunluk) çıkar; 255 değerli pikseller <code class="font-mono">LUT(256)</code> yerine <code class="font-mono">LUT(255)</code> okur. Güvenli yazım: <code class="font-mono">yim = LUT(double(im) + 1)</code>.</span>
                         </p>
                     </div>
                 </div>
@@ -713,11 +760,11 @@ imshow(im)</code></pre>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
                         <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 space-y-2">
                             <h4 class="font-bold text-indigo-600 dark:text-indigo-400">🔄 Görüntüyü Tersine Çevirme (Negatif Alma)</h4>
-                            <p><code class="font-mono">[0, L]</code> aralığında renk değerine sahip bir görüntü için formül:</p>
+                            <p><code class="font-mono">[0, L]</code> aralığında (<strong>L = en büyük renk değeri</strong>) renk değerine sahip bir görüntü için formül:</p>
                             <div class="p-2.5 rounded-lg bg-slate-900 text-emerald-400 font-mono text-center font-bold">
                                 y = L - x &nbsp;&nbsp;(8-bit L=255 için: y = 255 - x)
                             </div>
-                            <p class="text-slate-600 dark:text-slate-300">3-bit <code class="font-mono">[0,7]</code> görüntüde <code class="font-mono">L = 7</code> olduğu için <code class="font-mono">y = 7 - x</code> olur (örn: 5 ➔ 2, 0 ➔ 7).<br>MATLAB LUT karşılığı: <code class="font-mono">Lut = 255:-1:0; outim = Lut(im+1);</code></p>
+                            <p class="text-slate-600 dark:text-slate-300">3-bit <code class="font-mono">[0,7]</code> görüntüde <code class="font-mono">L = 7</code> olduğu için <code class="font-mono">y = 7 - x</code> olur (örn: 5 ➔ 2, 0 ➔ 7).<br>MATLAB LUT karşılığı: <code class="font-mono">Lut = 255:-1:0; outim = Lut(double(im)+1);</code></p><p class="text-amber-600 dark:text-amber-400 text-[11px] leading-relaxed">⚠️ Slayt <code class="font-mono">Lut(im+1)</code> yazar; <code class="font-mono">imread</code> uint8 döndürdüğü için 255 değerli pikseller yanlış okunur (255+1=255). <code class="font-mono">double(im)+1</code> kullan.<br>📌 <strong>L neyi gösteriyor?</strong> Burada L = en büyük değer (255) olduğundan <code class="font-mono">y = L - x</code>. Histogram eşitlemede ve formül tablosunda L = gri seviye sayısı (256) olduğundan aynı işlem <code class="font-mono">y = (L-1) - x</code> yazılır. İkisi aynı sonucu verir; soruda L'nin neyi anlattığına bak.</p>
                         </div>
 
                         <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 space-y-2">
@@ -741,7 +788,7 @@ imshow(im)</code></pre>
                         Görüntü Eşikleme (Thresholding) ve Görüntü Histogramı Analizi
                     </h3>
                     <p class="text-sm text-slate-600 dark:text-slate-300">
-                        <strong>Görüntü Eşikleme:</strong> Gri tonlamalı bir görüntüyü siyah (0) ve beyaz (255) piksellerden oluşan <strong>ikili (binary) görüntüye</strong> dönüştürerek nesneleri arka plandan ayırma (bölütleme) yöntemidir: <code class="font-mono">im2(i,j) >= esik ? 255 : 0</code>.
+                        <strong>Görüntü Eşikleme:</strong> Gri tonlamalı bir görüntüyü siyah (0) ve beyaz (255) piksellerden oluşan <strong>ikili (binary) görüntüye</strong> dönüştürerek nesneleri arka plandan ayırma (bölütleme) yöntemidir: <code class="font-mono">im2(i,j) &gt;= esik ➔ 255, aksi halde 0</code>. MATLAB'da tek satır: <code class="font-mono">im2 = uint8(im2 &gt;= esik) * 255;</code> (<code class="font-mono">? :</code> yazımı MATLAB'da yoktur).
                     </p>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
@@ -766,6 +813,54 @@ imshow(im)</code></pre>
                             </p>
                         </div>
                     </div>
+                </div>
+
+                <!-- 3.4 Eşik Seçimi, Çift Eşikleme ve MATLAB Uygulamaları -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-sm">3.4</span>
+                        Eşik Seçimi, Çift Eşikleme ve MATLAB Uygulamaları
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+<div class="p-4 rounded-xl bg-indigo-500/5 border border-indigo-500/20 space-y-1.5 text-xs sm:text-sm"><h4 class="font-bold text-indigo-600 dark:text-indigo-400">🎚️ Eşikleme Mantığı (Slayt)</h4><div class="text-slate-600 dark:text-slate-300 leading-relaxed">• Her pikselin değeri belli bir eşikle kıyaslanır: eşiğin altındaysa başka, üzerindeyse başka bir değer atanır. Örnek: eşik 128 ise altındaki pikseller <code class="font-mono">0</code>, üzerindekiler <code class="font-mono">255</code> olur.<br>• Uygun eşiğin kaç olacağı çoğu zaman bilinmez; bu noktada <strong>histogram</strong> yol gösterir.<br>• Eşikleme ile gürültü azaltılabilir, nesneler belirlenebilir veya renkli görüntü farklı renk bantlarına ayrılabilir.</div></div><div class="p-4 rounded-xl bg-emerald-500/5 border border-emerald-500/20 space-y-1.5 text-xs sm:text-sm"><h4 class="font-bold text-emerald-600 dark:text-emerald-400">🌊 Zambak Örneği: Histogramdan İki Eşik Seçmek</h4><div class="text-slate-600 dark:text-slate-300 leading-relaxed">• Resimde koyu pikseller çoğunlukta olduğu için histogram <strong>sol tarafta (siyaha yakın)</strong> toplanır; orta bölgeye yakın bir zirve de vardır (suyun üstündeki geniş yapraklar).<br>• 128'den sonra piksel sayıları azalır (açık tonlar).<br>• <strong>İki farklı eşikle (128 ve 192)</strong> hangi renklerin hangi nesnelere ait olduğu görülebilir. Yani eşik sayısı iki olursa görüntü <strong>üç bölgeye</strong> ayrılır.<br>• Histogram; daraltma, genişletme veya kaydırma gibi gri seviye değişimleriyle de değiştirilebilir (bazen 'histogram boyutlandırma' denir).</div></div>                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="space-y-2"><div class="text-xs font-bold text-indigo-600 dark:text-indigo-400">💻 Slayttaki 128 eşikli kod (döngülü) ve döngüsüz karşılığı</div>
+<pre class="bg-slate-900 p-3 rounded-lg overflow-x-auto text-emerald-300 font-mono text-xs"><code>im  = imread('afghan_girl.jpg');
+im2 = im2gray(im);
+figure, imhist(im2);          % histogram (histogram(im2) de olur)
+esik = 128;
+[m,n,k] = size(im2);
+for i = 1:m
+    for j = 1:n
+        if im2(i,j) &gt;= esik
+            im2(i,j) = 255;
+        else
+            im2(i,j) = 0;
+        end
+    end
+end
+figure, imshow(im2)
+
+% Döngüsüz:
+% bw = uint8(im2gray(im) &gt;= esik) * 255;</code></pre></div>
+                        <div class="space-y-2"><div class="text-xs font-bold text-indigo-600 dark:text-indigo-400">💻 Ödev taslağı: coins.png nesnelerini kırmızıya boyama ve cameraman ile 2 eşik</div>
+<pre class="bg-slate-900 p-3 rounded-lg overflow-x-auto text-cyan-300 font-mono text-xs"><code>% coins.png -&gt; nesneleri (madeni paralar) kırmızıya boya
+im   = imread('coins.png');         % gri, uint8
+esik = 100;                         % imhist(im) ile bakıp sen seç (örnek değer)
+maske = im &gt;= esik;                 % nesne pikselleri (mantıksal)
+R = im; G = im; B = im;
+R(maske) = 255; G(maske) = 0; B(maske) = 0;
+imshow(cat(3, R, G, B))
+
+% cameraman ile 2 eşik -&gt; 3 bölge
+im = imread('cameraman.tif');       % slayttaki ad cameraman.tiff
+e1 = 80; e2 = 160;                  % örnek değerler, histograma göre seç
+out = zeros(size(im), 'uint8');     % e1 altı: 0 (siyah)
+out(im &gt;= e1 &amp; im &lt; e2) = 128;      % orta bölge: gri
+out(im &gt;= e2)           = 255;      % üst bölge: beyaz
+imshow(out)</code></pre></div>
+                    </div>
+<div class="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs sm:text-sm space-y-1.5"><div class="font-bold text-amber-700 dark:text-amber-300">⚠️ Eşik değerlerini kendin belirle</div><p class="text-slate-700 dark:text-slate-200 leading-relaxed">Koddaki 100, 80 ve 160 değerleri sadece örnektir. Gerçek eşikleri <code class="font-mono">imhist(im)</code> grafiğindeki tepe ve çukurlara bakarak seçersin; sınavda da 'eşiği nasıl belirlersin?' sorusunun cevabı budur.</p></div>
                 </div>
 
                 <!-- Bölüm 3 Mini Test -->
@@ -832,7 +927,7 @@ imshow(im)</code></pre>
                         <div class="space-y-2 text-slate-600 dark:text-slate-300">
                             <p>• <strong>Histogram Germe vs Eşitleme Farkı:</strong> Histogram germenin <strong>bir kullanıcı girişine (alt/üst sınır belirlemeye) ihtiyaç duyma dezavantajı</strong> vardır. Histogram eşitleme ise <strong>tamamen otomatik</strong> bir prosedürdür ve olasılık dağılımına bağlı <strong>doğrusal olmayan (non-linear)</strong> bir dönüşüm gerçekleştirir.</p>
                             <p>• Bulunma olasılığı yüksek piksellerin arası fazlaca açılırken, düşük olasılıklı seviyeler birbirine yaklaşır.</p>
-                            <p>• Tüm resme uygulanırsa <strong>Global Histogram Eşitleme</strong>, belli bir bölgesine uygulanırsa <strong>Lokal Histogram Eşitleme</strong> adını alır. Aşırı eşitleme görüntüde istenmeyen <strong>artefaktlara</strong> yol açabilir.</p>
+                            <p>• Tüm resme uygulanırsa <strong>Global Histogram Eşitleme</strong>, belli bir bölgesine uygulanırsa <strong>Lokal Histogram Eşitleme</strong> adını alır. Aşırı eşitleme görüntüde istenmeyen <strong>artefaktlara</strong> yol açabilir.</p><p>• <strong>İdeal eşitleme</strong>, giriş histogramını her gri seviyesinde eşit piksel sayısına sahip bir histograma dönüştürmek gibi düşünülebilir; <strong>pratikte tam olarak mümkün değildir</strong> (seviyeler ayrık olduğundan).</p><p>• Yöntem, <strong>histogramı dar olan</strong> resimlerde veya resmin dar histogramlı bölgelerinde daha iyi sonuç verir. Eşitleme genel anlamda germenin bir türü sayılabilir, ama germede parça parça lineer veya değişik fonksiyonlar gerekirken eşitlemede işlem otomatiktir.</p>
                         </div>
                         <div class="p-4 rounded-xl bg-slate-900 text-white space-y-2">
                             <div class="text-xs font-bold text-amber-400 uppercase">Histogram Eşitleme Matematiksel Formülü</div>
@@ -847,6 +942,8 @@ imshow(im)</code></pre>
                             </ul>
                         </div>
                     </div>
+
+                    <div class="p-4 rounded-xl bg-indigo-500/5 border border-indigo-500/20 space-y-1.5 text-xs sm:text-sm"><h4 class="font-bold text-indigo-600 dark:text-indigo-400">🧭 Histogram Eşitleme Algoritma Adımları (Slayt)</h4><div class="text-slate-600 dark:text-slate-300 leading-relaxed"><ol class="list-decimal list-inside space-y-1"><li>Resmin <strong>histogramı (sıklık)</strong> bulunur: her gri seviye için piksel sayısı.</li><li>Histogramdan <strong>kümülatif (birikimli) histogram</strong> bulunur: her değer, kendisinden öncekilerin ve kendisinin toplamını içerir.</li><li>Kümülatif değerler <strong>toplam piksel sayısına bölünerek normalize edilir</strong>, yeni resimde olmasını istediğimiz en büyük renk değeriyle (L-1) çarpılır ve çıkan değer <strong>tam sayıya yuvarlanır</strong>.</li><li>Eski (orijinal) gri seviye değerleri, 3. adımdaki yeni değerlerle karşılık düşürülür ve yeni histogram çizilir.</li></ol></div></div>
 
                     <!-- Slayttaki 3-bit 24 piksellik örneğin tam tablosu -->
                     <div class="space-y-3 pt-2">
@@ -865,7 +962,7 @@ imshow(im)</code></pre>
                                 </thead>
                                 <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
                                     <tr><td class="p-2 font-bold">0</td><td>5</td><td>5</td><td>5 / 24</td><td>35 / 24 = 1.45</td><td class="font-bold text-emerald-600 dark:text-emerald-400">1</td></tr>
-                                    <tr><td class="p-2 font-bold">1</td><td>9</td><td>5 + 9 = 14</td><td>14 / 24</td><td>98 / 24 = 4.08</td><td class="font-bold text-emerald-600 dark:text-emerald-400">3 (veya 4)</td></tr>
+                                    <tr><td class="p-2 font-bold">1</td><td>9</td><td>5 + 9 = 14</td><td>14 / 24</td><td>98 / 24 = 4.08</td><td class="font-bold text-emerald-600 dark:text-emerald-400">4 <span class="font-sans font-normal text-amber-600 dark:text-amber-400">(slaytta 3 yazılmış)</span></td></tr>
                                     <tr><td class="p-2 font-bold">2</td><td>4</td><td>14 + 4 = 18</td><td>18 / 24</td><td>126 / 24 = 5.25</td><td class="font-bold text-emerald-600 dark:text-emerald-400">5</td></tr>
                                     <tr><td class="p-2 font-bold">3</td><td>4</td><td>18 + 4 = 22</td><td>22 / 24</td><td>154 / 24 = 6.41</td><td class="font-bold text-emerald-600 dark:text-emerald-400">6</td></tr>
                                     <tr><td class="p-2 font-bold">4</td><td>1</td><td>22 + 1 = 23</td><td>23 / 24</td><td>161 / 24 = 6.70</td><td class="font-bold text-emerald-600 dark:text-emerald-400">7</td></tr>
@@ -876,8 +973,43 @@ imshow(im)</code></pre>
                             </table>
                         </div>
                         <p class="text-xs text-slate-500 dark:text-slate-400">
-                            💡 <strong>Not:</strong> Slayttaki tabloda <code class="font-mono">r=4</code> ve <code class="font-mono">r=5</code> satırlarında yazım olarak sıklık 4 ve 5 görünse de birikimli toplam <code class="font-mono">22 ➔ 23 ➔ 24</code> olarak ilerlemiştir (yani gerçek sıklıklar 1 ve 1'dir, toplam 24 pikseldir). Son adımda matristeki her eski değer yerine karşılık gelen yeni <code class="font-mono">s_k</code> değeri yazılır (0➔1, 1➔3, 2➔5, 3➔6, 4➔7, 5➔7).
+                            💡 <strong>Not:</strong> Slayttaki tabloda <code class="font-mono">r=4</code> ve <code class="font-mono">r=5</code> satırlarında yazım olarak sıklık 4 ve 5 görünse de birikimli toplam <code class="font-mono">22 ➔ 23 ➔ 24</code> olarak ilerlemiştir (yani gerçek sıklıklar 1 ve 1'dir, toplam 24 pikseldir). Son adımda matristeki her eski değer yerine karşılık gelen yeni <code class="font-mono">s_k</code> değeri yazılır (0➔1, 1➔4, 2➔5, 3➔6, 4➔7, 5➔7).
                         </p>
+                        <div class="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs sm:text-sm space-y-1.5"><div class="font-bold text-amber-700 dark:text-amber-300">⚠️ Slayttaki çıkış matrisi r=1 için hatalı</div><p class="text-slate-700 dark:text-slate-200 leading-relaxed">r=1 için <code class="font-mono">98 / 24 = 4,08</code> çıkar ve slayt algoritmasının 3. adımı 'tam sayıya yuvarla' dediği için sonuç <strong>4</strong> olmalıdır. Slayt 8'deki çıkış matrisinde bu piksellere <strong>3</strong> yazılmış (yani 1 değerli her piksel hatalı). Slayt tablosunda ayrıca r=4 ve r=5 sıklıkları 4 ve 5 yazılmış, gerçek değerleri 1 ve 1'dir. Yöntemi doğru uygularsan sonucun 4 çıkması normaldir; sınavda slayttaki 3'ün beklenip beklenmediğini hocana sormak mantıklıdır.</p></div>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
+                            <div class="space-y-1"><div class="text-[11px] font-bold text-slate-500 dark:text-slate-400">Orijinal 3-bit görüntü</div><div class="overflow-x-auto"><table class="border-collapse font-mono text-xs"><tr><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">0</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">3</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">5</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-indigo-500/20 font-bold text-indigo-700 dark:text-indigo-300">1</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-indigo-500/20 font-bold text-indigo-700 dark:text-indigo-300">1</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">0</td></tr><tr><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">0</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">3</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-indigo-500/20 font-bold text-indigo-700 dark:text-indigo-300">1</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">0</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">4</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">3</td></tr><tr><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-indigo-500/20 font-bold text-indigo-700 dark:text-indigo-300">1</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">2</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">0</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-indigo-500/20 font-bold text-indigo-700 dark:text-indigo-300">1</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-indigo-500/20 font-bold text-indigo-700 dark:text-indigo-300">1</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-indigo-500/20 font-bold text-indigo-700 dark:text-indigo-300">1</td></tr><tr><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">2</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">2</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">3</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">2</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-indigo-500/20 font-bold text-indigo-700 dark:text-indigo-300">1</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-indigo-500/20 font-bold text-indigo-700 dark:text-indigo-300">1</td></tr></table></div></div>
+                            <div class="space-y-1"><div class="text-[11px] font-bold text-slate-500 dark:text-slate-400">Doğru çıkış (1 ➔ 4)</div><div class="overflow-x-auto"><table class="border-collapse font-mono text-xs"><tr><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">1</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">6</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">7</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-emerald-500/20 font-bold text-emerald-700 dark:text-emerald-300">4</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-emerald-500/20 font-bold text-emerald-700 dark:text-emerald-300">4</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">1</td></tr><tr><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">1</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">6</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-emerald-500/20 font-bold text-emerald-700 dark:text-emerald-300">4</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">1</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">7</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">6</td></tr><tr><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-emerald-500/20 font-bold text-emerald-700 dark:text-emerald-300">4</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">5</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">1</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-emerald-500/20 font-bold text-emerald-700 dark:text-emerald-300">4</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-emerald-500/20 font-bold text-emerald-700 dark:text-emerald-300">4</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-emerald-500/20 font-bold text-emerald-700 dark:text-emerald-300">4</td></tr><tr><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">5</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">5</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">6</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">5</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-emerald-500/20 font-bold text-emerald-700 dark:text-emerald-300">4</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-emerald-500/20 font-bold text-emerald-700 dark:text-emerald-300">4</td></tr></table></div></div>
+                            <div class="space-y-1"><div class="text-[11px] font-bold text-slate-500 dark:text-slate-400">Slayttaki çıkış (1 ➔ 3, hatalı)</div><div class="overflow-x-auto"><table class="border-collapse font-mono text-xs"><tr><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">1</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">6</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">7</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-rose-500/20 font-bold text-rose-700 dark:text-rose-300">3</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-rose-500/20 font-bold text-rose-700 dark:text-rose-300">3</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">1</td></tr><tr><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">1</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">6</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-rose-500/20 font-bold text-rose-700 dark:text-rose-300">3</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">1</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">7</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">6</td></tr><tr><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-rose-500/20 font-bold text-rose-700 dark:text-rose-300">3</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">5</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">1</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-rose-500/20 font-bold text-rose-700 dark:text-rose-300">3</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-rose-500/20 font-bold text-rose-700 dark:text-rose-300">3</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-rose-500/20 font-bold text-rose-700 dark:text-rose-300">3</td></tr><tr><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">5</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">5</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">6</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">5</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-rose-500/20 font-bold text-rose-700 dark:text-rose-300">3</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-rose-500/20 font-bold text-rose-700 dark:text-rose-300">3</td></tr></table></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4.3 MATLAB Uygulamaları: Histogram Germe ve Eşitleme -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-sm">4.3</span>
+                        MATLAB Uygulamaları: Histogram Germe ve Eşitleme
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="space-y-2"><div class="text-xs font-bold text-indigo-600 dark:text-indigo-400">💻 Histogram germe (slayt ödevi)</div>
+<pre class="bg-slate-900 p-3 rounded-lg overflow-x-auto text-emerald-300 font-mono text-xs"><code>im  = imread('pout.tif');             % herhangi bir gri görüntü
+a = double(min(im(:)));              % Eski_min
+b = double(max(im(:)));              % Eski_mak
+yeniMin = 0;  yeniMax = 255;
+out = (yeniMax - yeniMin) / (b - a) * (double(im) - a) + yeniMin;
+out = uint8(round(out));
+figure, imshow(out)
+figure, imhist(out)</code></pre></div>
+                        <div class="space-y-2"><div class="text-xs font-bold text-indigo-600 dark:text-indigo-400">💻 Histogram eşitleme (adımları elle uygulayan LUT yöntemi)</div>
+<pre class="bg-slate-900 p-3 rounded-lg overflow-x-auto text-cyan-300 font-mono text-xs"><code>im  = imread('pout.tif');
+h   = imhist(im);                    % 1) histogram (256x1)
+cdf = cumsum(h);                     % 2) kümülatif histogram
+n   = numel(im);                     % toplam piksel sayısı
+LUT = uint8(round(255 * cdf / n));   % 3) normalize, (L-1) ile çarp, yuvarla
+out = LUT(double(im) + 1);           % 4) karşılık düşür (+1: MATLAB 1'den başlar)
+figure, imshow(out)
+figure, imhist(out)
+% Hazır fonksiyon: out2 = histeq(im);</code></pre></div>
                     </div>
                 </div>
 
@@ -924,7 +1056,7 @@ imshow(im)</code></pre>
                             <p class="text-slate-600 dark:text-slate-300">
                                 Her <code class="font-mono">(x₁, y₁)</code> pikseli <code class="font-mono">(T_x, T_y)</code> kadar ötelenir:<br>
                                 <code class="font-mono font-bold text-indigo-500">x₂ = x₁ + T_x</code> &nbsp;ve&nbsp; <code class="font-mono font-bold text-indigo-500">y₂ = y₁ + T_y</code><br>
-                                • Görüntünün bulunduğu alana <strong>Resim (Image)</strong>, üzerinde kaydırıldığı zemine <strong>Tuval (Canvas)</strong> denir. Sınır dışına çıkan pikseller ya yok sayılır ya da kanvas genişletilir.
+                                • Görüntünün bulunduğu alana <strong>Resim (Image)</strong>, üzerinde kaydırıldığı zemine <strong>Tuval (Canvas)</strong> denir. Sınır dışına çıkan pikseller ya yok sayılır ya da kanvas genişletilir.<br>• <strong>Kanvas durumları (slayt):</strong> resim kaydırıldığında altında kanvas görünür; kanvas yeni sınırları kapsayacak şekilde büyütülürse dışarı çıkan kısımlar tekrar görünür ama zeminde kanvas da görünür; kanvas istenen renge boyanabilir ya da renksiz düşünülebilir.
                             </p>
                         </div>
                         <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 space-y-2">
@@ -940,6 +1072,7 @@ imshow(im)</code></pre>
                             </ul>
                         </div>
                     </div>
+                    <div class="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs sm:text-sm space-y-1.5"><div class="font-bold text-amber-700 dark:text-amber-300">⚠️ Eksen yönü: 5. bölümde x yataydır</div><p class="text-slate-700 dark:text-slate-200 leading-relaxed">Bu bölümdeki formüllerde <code class="font-mono">x</code> yatay, <code class="font-mono">y</code> dikey eksendir (kartezyen mantık): 'dikey eksen etrafında aynalama' sağ-sol simetri, <code class="font-mono">y₂ = y₁</code> demektir. 1. bölümdeki matris gösteriminde ise <code class="font-mono">x</code> satır numarasıdır. Formülleri slaytta yazıldığı gibi kullan; MATLAB'da indekslerken <code class="font-mono">im(satır, sütun)</code> sırasına dikkat et.</p></div>
                 </div>
 
                 <!-- 5.2 Eğme-Kaydırma (Shearing) ve Ölçekleme (Scaling) -->
@@ -992,7 +1125,7 @@ imshow(im)</code></pre>
                         <div class="p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 space-y-2">
                             <h4 class="font-bold text-rose-600 dark:text-rose-400">⚠️ Alias (Aliasing) Nedir? Neden Oluşur?</h4>
                             <p class="text-slate-700 dark:text-slate-200">
-                                Döndürme formülündeki <code class="font-mono">Sinθ</code> ve <code class="font-mono">Cosθ</code> değerlerinden dolayı <code class="font-mono">(x₂, y₂)</code> koordinatları <strong>ondalıklı sayı</strong> çıkar. Yuvarlatılsa bile bazı pikseller çift adreslenirken <strong>bazı piksellere hiç renk ataması yapılamaz ve resimde delikler/boşluklar oluşur.</strong> Bu bozucu duruma <strong>Alias (Aliasing)</strong> denir.
+                                Döndürme formülündeki <code class="font-mono">Sinθ</code> ve <code class="font-mono">Cosθ</code> değerlerinden dolayı <code class="font-mono">(x₂, y₂)</code> koordinatları <strong>ondalıklı sayı</strong> çıkar. Yuvarlatılsa bile bazı pikseller çift adreslenirken <strong>bazı piksellere hiç renk ataması yapılamaz ve resimde delikler/boşluklar oluşur.</strong> Bu bozucu duruma <strong>Alias (Aliasing)</strong> denir.<br><span class="text-[11px] text-slate-500 dark:text-slate-400">Terminoloji notu: Genel literatürde aliasing yetersiz örneklemeden doğan bozulmadır ve bu boşluklara 'holes' da denir. Derste bu duruma 'alias' dendiği için sınavda bu tanımı kullan; çözümün özü hedeften kaynağa (ters) eşlemedir.</span>
                             </p>
                         </div>
                     </div>
@@ -1005,6 +1138,63 @@ imshow(im)</code></pre>
                             <li><strong>Sorunu Tersine Çevirme (Hedef ➔ Kaynak Eşleme & Alan Ağırlıklı Ortalama):</strong> Hedef pikselin üzerine basan 4 kaynak pikselden hangisi ağırlıkça en fazla yer işgal ediyorsa onun rengi atanır veya 4 pikselin alan ağırlığıyla orantılı ortalama renk atanır (daha pürüzsüz görüntü sağlar ama hesaplama zamanı artar).</li>
                             <li><strong>3 Aşamalı Kaydırma (Shearing) Yöntemi:</strong> Tüm pikseller sırasıyla: <strong>(1) Yatayda sağa kaydırılır ➔ (2) Dikeyde aşağı kaydırılır ➔ (3) Tekrar yatayda sağa kaydırılır.</strong> Böylece boşluk oluşmadan resim dönmüş olur!</li>
                         </ol>
+                    </div>
+                </div>
+
+                <!-- 5.4 Kırpma (Crop) -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-sm">5.4</span>
+                        Kırpma (Crop)
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+<div class="p-4 rounded-xl bg-indigo-500/5 border border-indigo-500/20 space-y-1.5 text-xs sm:text-sm"><h4 class="font-bold text-indigo-600 dark:text-indigo-400">✂️ Kırpma (Crop) Nedir? (Slayt)</h4><div class="text-slate-600 dark:text-slate-300 leading-relaxed">• Görüntü çerçevesinin <strong>genişliğini ve yüksekliğini ayarlama</strong> işlemidir.<br>• Seçilen bölgenin dışında kalan pikseller atılır; kalan piksellerin <strong>değerleri değişmez</strong>, sadece çerçeve küçülür.<br>• Yeni boyut: <code class="font-mono">(satir2 - satir1 + 1) × (sutun2 - sutun1 + 1)</code>.</div></div><div class="p-4 rounded-xl bg-purple-500/5 border border-purple-500/20 space-y-1.5 text-xs sm:text-sm"><h4 class="font-bold text-purple-600 dark:text-purple-400">🔎 Kırpma, Ölçekleme ve Taşımadan Nasıl Ayrılır?</h4><div class="text-slate-600 dark:text-slate-300 leading-relaxed">• <strong>Ölçekleme:</strong> boyut değişir ve yeni piksel değerleri hesaplanır (interpolasyon).<br>• <strong>Kırpma:</strong> boyut değişir ama piksel değerleri aynen korunur.<br>• <strong>Taşıma:</strong> boyut sabit, pikseller konum değiştirir.</div></div>                    </div>
+<pre class="bg-slate-900 p-3 rounded-lg overflow-x-auto text-emerald-300 font-mono text-xs"><code>% Matris dilimleme ile kırpma (satır aralığı, sütun aralığı, tüm bantlar)
+kirp = im(satir1:satir2, sutun1:sutun2, :);
+
+% Hazır fonksiyon: [xmin ymin genislik yukseklik]
+kirp2 = imcrop(im, [xmin ymin genislik yukseklik]);</code></pre>
+                </div>
+
+                <!-- 5.5 Resim Büyütme Algoritması (Katsayı 2) ve MATLAB Çözümü -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-sm">5.5</span>
+                        Resim Büyütme Algoritması (Katsayı 2) ve MATLAB Çözümü
+                    </h3>
+                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300">Slayt ödevi: görüntü büyütme katsayısı <strong>2</strong>. Her piksel büyüyen görüntünün köşesine eklenir; aradaki boşluklar sağa doğru tararken iki pikselin, aşağı doğru tararken yine iki pikselin ortalamasıyla doldurulur; en son satır ve sütundaki boşluklar son pikseller tekrarlanarak bulunur. Slayttaki örnekte ortalamalar <strong>aşağı yuvarlanır</strong> (2,5 ➔ 2; 3,5 ➔ 3).</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="space-y-1"><div class="text-[11px] font-bold text-slate-500 dark:text-slate-400">0) Kaynak 3×3</div><div class="overflow-x-auto"><table class="border-collapse font-mono text-xs"><tr><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">2</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">5</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">4</td></tr><tr><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">2</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">5</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">0</td></tr><tr><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">4</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">3</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">1</td></tr></table></div></div>
+                        <div class="space-y-1"><div class="text-[11px] font-bold text-slate-500 dark:text-slate-400">1) Pikselleri köşelere yerleştir</div><div class="overflow-x-auto"><table class="border-collapse font-mono text-xs"><tr><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">2</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">5</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">4</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td></tr><tr><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td></tr><tr><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">2</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">5</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">0</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td></tr><tr><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td></tr><tr><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">4</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">3</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">1</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td></tr><tr><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td></tr></table></div></div>
+                        <div class="space-y-1"><div class="text-[11px] font-bold text-slate-500 dark:text-slate-400">2) Satırları doldur (yatay ortalama)</div><div class="overflow-x-auto"><table class="border-collapse font-mono text-xs"><tr><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">2</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-indigo-500/20 font-bold text-indigo-700 dark:text-indigo-300">3</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">5</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-indigo-500/20 font-bold text-indigo-700 dark:text-indigo-300">4</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">4</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-indigo-500/20 font-bold text-indigo-700 dark:text-indigo-300">4</td></tr><tr><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td></tr><tr><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">2</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-indigo-500/20 font-bold text-indigo-700 dark:text-indigo-300">3</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">5</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-indigo-500/20 font-bold text-indigo-700 dark:text-indigo-300">2</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">0</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-indigo-500/20 font-bold text-indigo-700 dark:text-indigo-300">0</td></tr><tr><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td></tr><tr><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">4</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-indigo-500/20 font-bold text-indigo-700 dark:text-indigo-300">3</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">3</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-indigo-500/20 font-bold text-indigo-700 dark:text-indigo-300">2</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">1</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-indigo-500/20 font-bold text-indigo-700 dark:text-indigo-300">1</td></tr><tr><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]"></td></tr></table></div></div>
+                        <div class="space-y-1"><div class="text-[11px] font-bold text-slate-500 dark:text-slate-400">3) Satır aralarını doldur (dikey ortalama)</div><div class="overflow-x-auto"><table class="border-collapse font-mono text-xs"><tr><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">2</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">3</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">5</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">4</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">4</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">4</td></tr><tr><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-emerald-500/20 font-bold text-emerald-700 dark:text-emerald-300">2</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-emerald-500/20 font-bold text-emerald-700 dark:text-emerald-300">3</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-emerald-500/20 font-bold text-emerald-700 dark:text-emerald-300">5</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-emerald-500/20 font-bold text-emerald-700 dark:text-emerald-300">3</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-emerald-500/20 font-bold text-emerald-700 dark:text-emerald-300">2</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-emerald-500/20 font-bold text-emerald-700 dark:text-emerald-300">2</td></tr><tr><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">2</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">3</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">5</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">2</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">0</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">0</td></tr><tr><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-emerald-500/20 font-bold text-emerald-700 dark:text-emerald-300">3</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-emerald-500/20 font-bold text-emerald-700 dark:text-emerald-300">3</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-emerald-500/20 font-bold text-emerald-700 dark:text-emerald-300">4</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-emerald-500/20 font-bold text-emerald-700 dark:text-emerald-300">2</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-emerald-500/20 font-bold text-emerald-700 dark:text-emerald-300">0</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-emerald-500/20 font-bold text-emerald-700 dark:text-emerald-300">0</td></tr><tr><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">4</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">3</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">3</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">2</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">1</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem]">1</td></tr><tr><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-emerald-500/20 font-bold text-emerald-700 dark:text-emerald-300">4</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-emerald-500/20 font-bold text-emerald-700 dark:text-emerald-300">3</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-emerald-500/20 font-bold text-emerald-700 dark:text-emerald-300">3</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-emerald-500/20 font-bold text-emerald-700 dark:text-emerald-300">2</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-emerald-500/20 font-bold text-emerald-700 dark:text-emerald-300">1</td><td class="border border-slate-300 dark:border-slate-600 px-2 py-1 text-center min-w-[2rem] bg-emerald-500/20 font-bold text-emerald-700 dark:text-emerald-300">1</td></tr></table></div></div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+<div class="p-4 rounded-xl bg-indigo-500/5 border border-indigo-500/20 space-y-1.5 text-xs sm:text-sm"><h4 class="font-bold text-indigo-600 dark:text-indigo-400">🧮 Örnek Hesaplar</h4><div class="text-slate-600 dark:text-slate-300 leading-relaxed">• Yatay: <code class="font-mono">(2+5)/2 = 3,5 ➔ 3</code> &nbsp;|&nbsp; <code class="font-mono">(5+4)/2 = 4,5 ➔ 4</code> &nbsp;|&nbsp; <code class="font-mono">(5+0)/2 = 2,5 ➔ 2</code><br>• Dikey: <code class="font-mono">(4+0)/2 = 2</code> &nbsp;|&nbsp; <code class="font-mono">(0+1)/2 = 0,5 ➔ 0</code><br>• Son sütun ve son satır, bir öncekinin tekrarıdır (<code class="font-mono">4 4 4</code>, <code class="font-mono">4 3 3 2 1 1</code>).</div></div>                        <div><pre class="bg-slate-900 p-3 rounded-lg overflow-x-auto text-emerald-300 font-mono text-xs"><code>im = [2 5 4; 2 5 0; 4 3 1];
+[m,n] = size(im);
+yeni = zeros(2*m, 2*n);
+yeni(1:2:end, 1:2:end) = im;                 % 1) köşelere yerleştir
+
+for i = 1:2:2*m                              % 2) satırlar: sağdaki komşuyla ortalama
+    for j = 2:2:2*n
+        if j &lt; 2*n
+            yeni(i,j) = fix((yeni(i,j-1) + yeni(i,j+1)) / 2);
+        else
+            yeni(i,j) = yeni(i,j-1);         % son sütun: tekrar
+        end
+    end
+end
+
+for i = 2:2:2*m                              % 3) sütunlar: alttaki komşuyla ortalama
+    for j = 1:2*n
+        if i &lt; 2*m
+            yeni(i,j) = fix((yeni(i-1,j) + yeni(i+1,j)) / 2);
+        else
+            yeni(i,j) = yeni(i-1,j);         % son satır: tekrar
+        end
+    end
+end
+yeni</code></pre></div>
                     </div>
                 </div>
 
@@ -1059,7 +1249,7 @@ imshow(im)</code></pre>
                                     <td class="p-3">Bitlerden <strong>en az biri 1</strong> ise sonuç <strong>1</strong> döner. <em>(Beyaz [1] ile OR yapılan bölge tamamen beyaz olur; Siyah [0] ile OR yapılan bölge orijinal görüntüyü korur!)</em></td>
                                 </tr>
                                 <tr>
-                                    <td class="p-3 font-mono font-bold text-amber-500">^</td>
+                                    <td class="p-3 font-mono font-bold text-amber-500">^ <sup class="text-rose-500">*</sup></td>
                                     <td class="p-3 font-mono">xor(a, b)</td>
                                     <td class="p-3 font-bold">XOR (Özel Veya)</td>
                                     <td class="p-3">Bitlerden <strong>yalnızca biri 1</strong> ise (farklıysa) <strong>1</strong>, aynıysa (0-0 veya 1-1) <strong>0</strong> döner.</td>
@@ -1073,6 +1263,7 @@ imshow(im)</code></pre>
                             </tbody>
                         </table>
                     </div>
+                    <div class="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs sm:text-sm space-y-1.5"><div class="font-bold text-amber-700 dark:text-amber-300">⚠️ MATLAB'da dikkat: operatörler ve gri görüntüler</div><p class="text-slate-700 dark:text-slate-200 leading-relaxed">* Slayt XOR için 'operatörü ^ dir' yazar (C/Java/Python gibi). <strong>MATLAB'da ^ matris üssüdür</strong>; XOR için <code class="font-mono">xor(a,b)</code> kullanılır, sınavda MATLAB komutu olarak bunu yaz.<br><strong>Mantıksal ve bitsel farkı:</strong> MATLAB'da <code class="font-mono">&amp;</code>, <code class="font-mono">|</code>, <code class="font-mono">~</code> operatörleri sıfır olmayanı 'doğru' sayar ve <em>mantıksal (0/1)</em> sonuç döndürür. İkili (siyah-beyaz) maskelerde sorun yoktur, ama gri veya RGB (uint8) görüntülerde gri değerler kaybolur. Gerçek bitsel işlem için <code class="font-mono">bitand</code>, <code class="font-mono">bitor</code>, <code class="font-mono">bitxor</code>, <code class="font-mono">bitcmp</code> kullanılır ve maskenin beyaz bölgesi 1 değil <strong>255</strong> (11111111) olmalıdır:<br><code class="font-mono">im3 = zeros(size(im1),'uint8'); im3(r1:r2,c1:c2,:) = 255;</code><br><code class="font-mono">im4 = bitand(im2, im3);</code> &nbsp;|&nbsp; <code class="font-mono">im4 = bitor(im1, bitcmp(im3));</code></p></div>
                 </div>
 
                 <!-- 6.2 Slayttaki MATLAB Maskeleme Kombinasyonları -->
@@ -1162,13 +1353,17 @@ imshow(im)</code></pre>
                             </thead>
                             <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
                                 <tr><td class="p-3 font-semibold">Işık Hızı & Dalga Boyu</td><td class="p-3 font-mono">c = f · λ</td><td class="p-3">c = 3×10⁸ m/s, Görünür: 380 nm (Mor) - 760 nm (Kırmızı)</td></tr>
-                                <tr><td class="p-3 font-semibold">Bellek Kapasitesi</td><td class="p-3 font-mono">Bit = N × M × m</td><td class="p-3">Byte için 8'e, KB için 1024'e, MB için tekrar 1024'e böl.</td></tr>
+                                <tr><td class="p-3 font-semibold">Bellek Kapasitesi</td><td class="p-3 font-mono">Bit = N × M × m</td><td class="p-3">Byte için 8'e, KB için 1024'e, MB için tekrar 1024'e böl. Slayt kolaylık için 1000 kullanır (600.000 Byte ≈ 600 KB); tam ikili karşılığı 585,9 KB.</td></tr>
                                 <tr><td class="p-3 font-semibold">Görüntü Negatifi</td><td class="p-3 font-mono">y = (L - 1) - x</td><td class="p-3">8-bit için <code>y = 255 - x</code>, 3-bit için <code>y = 7 - x</code></td></tr>
                                 <tr><td class="p-3 font-semibold">Gri Tona Çevirme</td><td class="p-3 font-mono">0.299R + 0.587G + 0.114B</td><td class="p-3">Göz en çok yeşile (555 nm) duyarlı olduğu için G katsayısı en büyüktür (~0.6).</td></tr>
                                 <tr><td class="p-3 font-semibold">Histogram Germe</td><td class="p-3 font-mono">j = [(Y_mak-Y_min)/(E_mak-E_min)]·(i-E_min)+Y_min</td><td class="p-3">Kullanıcı girişine ihtiyaç duyar, doğrusal (lineer) dönüşümdür.</td></tr>
-                                <tr><td class="p-3 font-semibold">Histogram Eşitleme</td><td class="p-3 font-mono">s_k = round((L - 1) · ∑(n_j / n))</td><td class="p-3">Otomatiktir, birikimli sıklık (CDF) kullanır.</td></tr>
+                                <tr><td class="p-3 font-semibold">Histogram Eşitleme</td><td class="p-3 font-mono">s_k = round((L - 1) · ∑(n_j / n))</td><td class="p-3">Otomatiktir, birikimli sıklık (CDF) kullanır. Slayt örneğinde r=1: 98/24 = 4,08 ➔ <strong>4</strong> (slayt 3 yazmış).</td></tr>
                                 <tr><td class="p-3 font-semibold">Merkezde Aynalama</td><td class="p-3 font-mono">Dikey: x₂ = -x₁ + 2x₀ | Yatay: y₂ = -y₁ + 2y₀</td><td class="p-3">Dikey eksende y değişmez, yatay eksende x değişmez.</td></tr>
                                 <tr><td class="p-3 font-semibold">Merkezde Döndürme</td><td class="p-3 font-mono">x₂ = (x₁-x₀)cosθ - (y₁-y₀)sinθ + x₀</td><td class="p-3">Ondalık koordinatlar yüzünden <strong>Aliasing</strong> (boşluk) oluşur.</td></tr>
+                                <tr><td class="p-3 font-semibold">Büyütme (katsayı 2)</td><td class="p-3 font-mono">köşeye yerleştir ➔ yatay ortalama ➔ dikey ortalama</td><td class="p-3">Ortalamalar aşağı yuvarlanır; son satır/sütun tekrarlanır.</td></tr>
+                                <tr><td class="p-3 font-semibold">Kırpma (Crop)</td><td class="p-3 font-mono">im(r1:r2, c1:c2, :)</td><td class="p-3">Boyut küçülür, piksel değerleri değişmez.</td></tr>
+                                <tr><td class="p-3 font-semibold">MATLAB uint8 tuzağı</td><td class="p-3 font-mono">LUT(double(im)+1)</td><td class="p-3">uint8'de 255+1 = 255 (doygunluk), 255 değerli pikseller yanlış okunur.</td></tr>
+                                <tr><td class="p-3 font-semibold">Gri görüntüde bitsel işlem</td><td class="p-3 font-mono">bitand, bitor, bitxor, bitcmp</td><td class="p-3">&amp; | ~ mantıksal sonuç verir; maskenin beyazı 255 olmalı. XOR için ^ değil xor().</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -1327,12 +1522,15 @@ imshow(im)</code></pre>
         };
 
         const examTips = [
-            "MATLAB'da diziler 1'den başlar! Bu yüzden 0 gri değerini LUT tablosunda ararken LUT(im+1) kullanılır.",
+            "MATLAB'da diziler 1'den başlar! Bu yüzden 0 gri değerini LUT tablosunda ararken LUT(im+1) kullanılır. Ama im uint8 ise double(im)+1 yaz: uint8'de 255+1 = 255 olur!",
             "Uzaktaki cismi görmek için göz merceği yassılaşır ve ışığı kırma MİNİMUM olur. Yakındaki cisim için kırma MAKSİMUMDUR.",
             "Örnekleme (Sampling) koordinatları (x,y), Nicemleme (Quantization) ise parlaklık/renk genliğini sayısallaştırır.",
             "Eflatun (Magenta) = (255, 0, 255), Turkuaz (Cyan) = (0, 255, 255), Sarı (Yellow) = (255, 255, 0).",
             "Histogram Germe kullanıcı girişine ihtiyaç duyar (lineerdir); Histogram Eşitleme ise otomatiktir (non-lineerdir).",
-            "Döndürme işleminde oluşan boşluklara Alias (Aliasing) denir. 3 ardışık kaydırma (Sağa -> Aşağı -> Sağa) ile çözülebilir!"
+            "Döndürme işleminde oluşan boşluklara Alias (Aliasing) denir. 3 ardışık kaydırma (Sağa -> Aşağı -> Sağa) ile çözülebilir!",
+            "Histogram eşitlemede 4,08 tam sayıya yuvarlanınca 4 olur. Slayt örneğinde r=1 için 3 yazılmış, bu slayt hatasıdır.",
+            "MATLAB'da & | ~ gri görüntüde mantıksal sonuç verir; gerçek bitsel işlem için bitand, bitor, bitcmp kullan. XOR için xor(a,b) yaz, ^ matris üssüdür.",
+            "Büyütme algoritmasında önce pikseller köşelere yerleşir, sonra yatay, sonra dikey ortalama alınır; ortalamalar aşağı yuvarlanır, son satır/sütun tekrarlanır."
         ];
 
         function nextRandomTip() {
@@ -1421,6 +1619,12 @@ imshow(im)</code></pre>
                     options: ["Nicemleme (Quantization)", "Örnekleme (Sampling)", "Eşikleme (Thresholding)", "Aynalama (Mirroring)"],
                     ans: 1,
                     exp: "Koordinatların (konumun) sayısallaştırılması Örnekleme (Sampling), genlik (parlaklık/renk) değerlerinin sayısallaştırılması ise Nicemleme (Quantization) olarak adlandırılır."
+                },
+                {
+                    q: "4. Sensör materyali, gelen enerjiyi görüntü yakalama sırasında önce neye dönüştürür?",
+                    options: ["Frekansa", "Voltaja", "Dalga boyuna", "Doğrudan bit dizisine"],
+                    ans: 1,
+                    exp: "Gelen enerji, sensör materyali tarafından voltaja dönüştürülür; bu voltaj dalga şeklinin sayısallaştırılmasıyla sayısal görüntü elde edilir."
                 }
             ],
             bolum2: [
@@ -1441,6 +1645,12 @@ imshow(im)</code></pre>
                     options: ["200.000 Byte", "600.000 Byte", "1.600.000 Byte", "4.800.000 Byte"],
                     ans: 1,
                     exp: "Bit = 500 × 400 × 24 = 4.800.000 bit. Byte = 4.800.000 / 8 = 600.000 Byte."
+                },
+                {
+                    q: "4. f(x,y) = g(x,y) / 1.5 işlemi bir görüntüye uygulanırsa kontrast nasıl değişir?",
+                    options: ["Artar", "Azalır", "Değişmez", "Sadece kenarlar belirginleşir"],
+                    ans: 1,
+                    exp: "g * 1.5 kontrastı artırır, g / 1.5 ise azaltır. Kenarların belirginleşmesi keskinleştirme (sharpen) işlemidir, kontrastla aynı şey değildir."
                 }
             ],
             bolum3: [
@@ -1461,6 +1671,18 @@ imshow(im)</code></pre>
                     options: ["Görüntünün kontrastı (karşıtlığı) düşüktür/kötüdür", "Görüntü çok yüksek kontrastlıdır", "Görüntü ikili (binary) bir görüntüdür", "Görüntüde aliasing vardır"],
                     ans: 0,
                     exp: "Histogram belirli bir bölgeye sıkışmış/yığılmış ise görüntünün kontrastı düşüktür. İyi kontrastlı görüntünün histogramı tüm aralığa dengeli yayılır."
+                },
+                {
+                    q: "4. im değişkeni imread ile okunmuş bir uint8 görüntüyse LUT(im+1) ifadesinde hangi sorun çıkar?",
+                    options: ["255+1 = 256 olur ve LUT(256) okunur", "uint8'de 255+1 = 255 (doygunluk) olur, 255 değerli pikseller LUT(255) okur", "MATLAB indeksleri 0'dan başladığı için hata verir", "LUT tablosu uint8 ile kullanılamaz"],
+                    ans: 1,
+                    exp: "uint8 aritmetiği doygunluklu çalışır. Güvenli yazım LUT(double(im)+1) şeklindedir."
+                },
+                {
+                    q: "5. Bir gri görüntüye e1 < e2 olacak şekilde iki eşik uygulanırsa görüntü kaç bölgeye ayrılır?",
+                    options: ["2", "3", "4", "e1 ve e2 farkı kadar"],
+                    ans: 1,
+                    exp: "e1 altı, e1 ile e2 arası ve e2 üstü olmak üzere 3 bölge oluşur. Tek eşik ikili (binary) görüntü verir."
                 }
             ],
             bolum4: [
@@ -1475,6 +1697,12 @@ imshow(im)</code></pre>
                     options: ["4", "5", "6", "7"],
                     ans: 1,
                     exp: "s_2 = 7 * (18 / 24) = 126 / 24 = 5.25 -> En yakın tamsayıya yuvarlandığında 5 olur."
+                },
+                {
+                    q: "3. Histogram eşitleme örneğinde (N = 24, L-1 = 7) r=1 seviyesine kadar birikimli sıklık 14 ise yuvarlatılmış yeni gri değer kaçtır?",
+                    options: ["3", "4", "5", "6"],
+                    ans: 1,
+                    exp: "s_1 = 7 * (14 / 24) = 98 / 24 = 4,08 ve en yakın tam sayıya yuvarlanınca 4 olur. Slayttaki çıkış matrisinde 3 yazılmıştır, bu slayt hatasıdır."
                 }
             ],
             bolum5: [
@@ -1489,6 +1717,18 @@ imshow(im)</code></pre>
                     options: ["Quantization (Nicemleme)", "Thresholding (Eşikleme)", "Aliasing (Alias)", "Shearing (Eğme)"],
                     ans: 2,
                     exp: "Döndürme sırasında oluşan bu boşluk/delik bozulmasına Alias (Aliasing) denir."
+                },
+                {
+                    q: "3. Katsayısı 2 olan büyütme algoritmasında yan yana 5 ve 0 piksellerinin arasına (ortalama aşağı yuvarlanarak) hangi değer yazılır?",
+                    options: ["0", "2", "3", "5"],
+                    ans: 1,
+                    exp: "(5 + 0) / 2 = 2,5 ve slayt örneğindeki gibi aşağı yuvarlanınca 2 olur."
+                },
+                {
+                    q: "4. Görüntü çerçevesinin genişliğini ve yüksekliğini ayarlama işlemine ne ad verilir?",
+                    options: ["Kırpma (Crop)", "Ölçekleme (Scaling)", "Taşıma (Translate)", "Eğme (Shearing)"],
+                    ans: 0,
+                    exp: "Kırpmada çerçeve küçülür ama piksel değerleri değişmez. Ölçeklemede yeni piksel değerleri hesaplanır."
                 }
             ],
             bolum6: [
@@ -1500,9 +1740,15 @@ imshow(im)</code></pre>
                 },
                 {
                     q: "2. MATLAB'da iki matris arasında Özel Veya (XOR) işlemi yapmak için hangi fonksiyon veya operatör kullanılır?",
-                    options: ["a & b", "a | b", "xor(a, b) veya ^", "~a"],
+                    options: ["a & b", "a | b", "xor(a, b)", "~a"],
                     ans: 2,
-                    exp: "XOR işlemi yalnızca bir bitin 1 olması durumunda 1 döner ve MATLAB'da xor(a,b) komutuyla uygulanır."
+                    exp: "XOR işlemi yalnızca bir bitin 1 olması durumunda 1 döner ve MATLAB'da xor(a,b) komutuyla uygulanır. Slayt operatör olarak ^ yazsa da MATLAB'da ^ matris üssüdür."
+                },
+                {
+                    q: "3. uint8 bir gri görüntüde, beyaz bölgesi 255 olan bir maskeyle gerçek bitsel AND yapmak için hangisi kullanılmalıdır?",
+                    options: ["im & maske", "bitand(im, maske)", "im * maske", "xor(im, maske)"],
+                    ans: 1,
+                    exp: "MATLAB'da & mantıksal (0/1) sonuç döndürür ve gri değerleri kaybettirir. Bitsel işlem için bitand kullanılır, maskenin beyazı da 255 olmalıdır."
                 }
             ]
         };
@@ -1563,6 +1809,12 @@ imshow(im)</code></pre>
             { q: "Kontrast Artırma ile Keskinleştirme (Sharpen) Farkı?", a: "Kontrastta resimdeki alanların renk değerleri birbirinden uzaklaştırılır. Keskinleştirmede ise iç kısımlar değil, sadece KENAR kısımları belirginleştirilir." },
             { q: "LUT (Look-Up Table) Neden Kullanılır?", a: "Karmaşık matematiksel dönüşümleri her piksel için (W*H*3 kez) tekrar hesaplamak yerine, 0-255 arası 256 değeri baştan hesaplayıp tablodan anında okumak için." },
             { q: "Döndürmede Alias (Aliasing) Sorunu Nasıl Çözülür?", a: "1) Kaynak resmi aşırı örnekleyip (büyütüp) döndürdükten sonra küçültmek.\n2) Hedef piksele basan 4 kaynak pikselin alan ağırlıklı ortalamasını atamak.\n3) Sağa -> Aşağı -> Sağa kaydırma (shearing) yapmak." },
+            { q: "Histogram Eşitleme Algoritmasının Adımları Nelerdir?", a: "1) Histogramı (sıklık) bul.\n2) Kümülatif histogramı bul.\n3) Toplam piksel sayısına böl, (L-1) ile çarp, tam sayıya yuvarla.\n4) Eski gri seviyeleri yeni değerlerle karşılık düşür." },
+            { q: "Kırpma (Crop) Nedir, Ölçeklemeden Farkı Nedir?", a: "Görüntü çerçevesinin genişlik ve yüksekliğini ayarlama işlemidir. Boyut küçülür ama piksel değerleri değişmez. Ölçeklemede ise yeni piksel değerleri hesaplanır (interpolasyon)." },
+            { q: "Görüntü Büyütme (Katsayı 2) Algoritması Nasıl Çalışır?", a: "1) Pikselleri büyüyen görüntünün köşelerine yerleştir.\n2) Satırlarda iki komşunun ortalamasıyla boşlukları doldur.\n3) Sütunlarda aynısını yap.\n4) Son satır/sütunu tekrarla. Ortalamalar aşağı yuvarlanır." },
+            { q: "MATLAB'da LUT(im+1) Ne Zaman Hata Verir?", a: "im uint8 ise (imread sonucu) 255+1 = 255 olur (doygunluk); 255 değerli pikseller yanlış okunur. Çözüm: LUT(double(im)+1)." },
+            { q: "Sayısal Görüntü İşleme Nedir?", a: "Analog görüntünün sayısal biçime dönüştürülüp iyileştirme, onarma, sınıflandırma, sıkıştırma, anlama ve yorumlama gibi amaçlarla bilgisayarla işlenmesidir." },
+            { q: "Gri Görüntüde Gerçek Bitsel AND/OR Nasıl Yapılır?", a: "& ve | mantıksal sonuç verir. Gri/RGB uint8 görüntüde bitand, bitor, bitxor, bitcmp kullan; maskenin beyazı 255 olmalı. XOR için xor(a,b)." },
             { q: "Maskelemede AND (&) ve OR (|) Nasıl Davranır?", a: "AND (&): Beyaz (1) bölgede resmi korur, Siyah (0) bölgeyi siyah yapar.\nOR (|): Siyah (0) bölgede resmi korur, Beyaz (1) bölgeyi tamamen beyaz yapar." }
         ];
 
@@ -1812,16 +2064,16 @@ imshow(im)</code></pre>
                 exp: "Genlik/parlaklık değerlerinin basamaklara ayrılarak sayısallaştırılmasına Görüntü Nicemleme (Quantization) denir."
             },
             {
-                q: "7. Saydamlığı (alfa kanalını), katmansal yapıyı ve 24-bitlik görüntüyü 'kayıpsız sıkıştırma' ile destekleyen görüntü formatı hangisidir?",
+                q: "7. Saydamlığı (alfa kanalını) ve 24-bitlik rengi 'kayıpsız sıkıştırma' ile destekleyen görüntü formatı hangisidir?",
                 options: ["JPEG", "BMP", "PNG", "HEIF"],
                 ans: 2,
-                exp: "PNG kayıpsız sıkıştırma, 24-bit renk, katmansal yapı ve saydamlık destekler."
+                exp: "PNG kayıpsız sıkıştırma, 24-bit renk ve saydamlık (alfa) destekler. Slayt PNG için 'katmansal yapı' da yazar, ancak gerçekte PNG katman taşımaz."
             },
             {
                 q: "8. 1000 × 600 piksel boyutlarında ve her pikseli 8 bit ile temsil edilen gri tonlamalı bir görüntünün bellekte kapladığı alan kaç KByte'tır? (Slayttaki yaklaşıma göre)",
                 options: ["1800 KByte", "600 KByte", "4800 KByte", "240 KByte"],
                 ans: 1,
-                exp: "1000 * 600 * 8 = 4.800.000 bit / 8 = 600.000 Byte ≈ 600 KByte."
+                exp: "1000 * 600 * 8 = 4.800.000 bit / 8 = 600.000 Byte ≈ 600 KByte (slayt 1000 ile böler; 1024 ile bölünürse 585,9 KByte olur)."
             },
             {
                 q: "9. Bir pikselin değerini değiştirmek için komşu piksellerden faydalanılan ve filtreleme işlemlerinde çok kullanılan görüntü işleme sınıfı hangisidir?",
@@ -2003,11 +2255,11 @@ imshow(im)</code></pre>
             const q = e.target.value.toLowerCase().trim();
             if (!q) return;
             const map = [
-                { keys: ['sinyal', 'analog', 'dijital', 'ışık', 'spektrum', 'göz', 'retina', 'kornea', 'örnekleme', 'nicemleme'], tab: 'bolum1' },
+                { keys: ['sinyal', 'analog', 'dijital', 'ışık', 'spektrum', 'göz', 'retina', 'kornea', 'örnekleme', 'nicemleme', 'piksel', 'uygulama alanları', 'görüntü işleme'], tab: 'bolum1' },
                 { keys: ['bmp', 'jpeg', 'png', 'gif', 'rgb', 'eflatun', 'turkuaz', 'bellek', 'parlaklık', 'kontrast', 'keskinleştirme'], tab: 'bolum2' },
-                { keys: ['lut', 'negatif', 'gri', 'eşikleme', 'threshold', 'histogram'], tab: 'bolum3' },
+                { keys: ['lut', 'negatif', 'gri', 'eşikleme', 'threshold', 'histogram', 'çift eşik', 'coins', 'cameraman'], tab: 'bolum3' },
                 { keys: ['germe', 'eşitleme', 'stretching', 'equalization', 'birikimli'], tab: 'bolum4' },
-                { keys: ['taşıma', 'aynalama', 'eğme', 'shearing', 'ölçekleme', 'interpolasyon', 'döndürme', 'alias'], tab: 'bolum5' },
+                { keys: ['taşıma', 'aynalama', 'eğme', 'shearing', 'ölçekleme', 'interpolasyon', 'döndürme', 'alias', 'kırpma', 'crop', 'büyütme', 'zoom'], tab: 'bolum5' },
                 { keys: ['bitsel', 'boolean', 'and', 'or', 'xor', 'not', 'maske', 'lenna'], tab: 'bolum6' }
             ];
             for (const item of map) {
