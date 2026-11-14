@@ -114,7 +114,7 @@
 
                 <!-- Modules List -->
                 <div>
-                    <p class="px-2 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Ders Modülleri (1-6)</p>
+                    <p class="px-2 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Ders Modülleri (1-7)</p>
                     <nav class="space-y-1" id="moduleNav">
                         <button onclick="switchTab('bolum1')" data-tab="bolum1" class="nav-btn w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-left text-xs font-medium transition">
                             <span class="flex items-center gap-2.5">
@@ -157,6 +157,20 @@
                                 <span>Bitsel (Boolean) İşlemler & Maske</span>
                             </span>
                             <span id="check-bolum6" class="hidden text-emerald-500">✓</span>
+                        </button>
+                        <button onclick="switchTab('bolum7')" data-tab="bolum7" class="nav-btn w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-left text-xs font-medium transition">
+                            <span class="flex items-center gap-2.5">
+                                <span class="w-6 h-6 rounded-lg bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold">7</span>
+                                <span>Alansal İşlemler, Filtre & Konvolüsyon</span>
+                            </span>
+                            <span id="check-bolum7" class="hidden text-emerald-500">✓</span>
+                        </button>
+                        <button onclick="switchTab('videolar')" data-tab="videolar" class="nav-btn w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-left text-xs font-bold bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20 transition mt-2">
+                            <span class="flex items-center gap-2.5">
+                                <span class="w-6 h-6 rounded-lg bg-rose-600 text-white flex items-center justify-center">🎬</span>
+                                <span>Videolu Anlatım (1-7. Bölüm)</span>
+                            </span>
+                            <span class="px-1.5 py-0.5 text-[10px] rounded bg-rose-600 text-white">SESLİ</span>
                         </button>
                     </nav>
                 </div>
@@ -1325,7 +1339,309 @@ yeni</code></pre></div>
                     <div id="quiz-bolum6" class="space-y-4"></div>
                 </div>
             </section>
+            <!-- ==========================================
+                 BÖLÜM 7: ALANSAL (BÖLGESEL) İŞLEMLER, KOMŞULUK, FİLTRELEME VE KONVOLÜSYON
+                 ========================================== -->
+            <section id="tab-bolum7" class="tab-content hidden space-y-8">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
+                    <div>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 mb-2">7. Bölüm Ders Notu (Filtreleme & Evrişim)</span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Alansal (Bölgesel) İşlemler, Komşuluk, Filtreleme ve Konvolüsyon</h2>
+                    </div>
+                    <div class="flex items-center gap-2 self-start">
+                        <button onclick="openVideoLesson(6)" class="px-3.5 py-2.5 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-500 text-white transition flex items-center gap-1.5 shadow-md shadow-rose-600/20">
+                            <span>🎬 Videolu İzle</span>
+                        </button>
+                        <button onclick="toggleComplete('bolum7')" id="btn-complete-bolum7" class="px-4 py-2.5 rounded-xl text-xs font-bold border border-slate-300 dark:border-slate-700 hover:bg-emerald-500 hover:text-white hover:border-emerald-500 transition flex items-center gap-2">
+                            <span>✓ Konuyu Tamamladım</span>
+                        </button>
+                    </div>
+                </div>
 
+                <!-- 7.1 Alansal İşlemler ve 4 Adımı -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-sm">7.1</span>
+                        Alansal (Bölgesel / Komşuluk İlişkili) İşlemler ve Maske Kavramı
+                    </h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                        <strong>Noktasal İşlemler vs Bölgesel İşlemler:</strong> Noktasal işlemler imgedeki her piksele diğer piksellerden bağımsız olarak <code class="font-mono">y = f(x)</code> uygulanmasıydı. <strong>Komşuluk ilişkili (Alansal/Bölgesel) işlemler</strong> ise merkez pikselin yeni değeri hesaplanırken etrafındaki <strong>komşu piksellerin de</strong> göz önüne alınmasıdır. Merkezi piksel etrafında tanımlanan komşuluğa <strong>"Maske", "Pencere", "Ağırlık Matrisi", "Kernel" veya "Çekirdek"</strong> denir.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                        <div class="p-4 rounded-xl bg-indigo-500/5 border border-indigo-500/20 space-y-2">
+                            <h4 class="font-bold text-indigo-600 dark:text-indigo-400">🔄 Komşuluk İlişkili İşlemlerin 4 Temel Adımı (Slayt):</h4>
+                            <ol class="list-decimal list-inside space-y-1 text-slate-600 dark:text-slate-300">
+                                <li>Bir merkez nokta tanımlamak <code class="font-mono">(x, y)</code>.</li>
+                                <li>Merkez noktanın yeni değerini elde etmek için sadece önceden tanımlanmış komşu pikselleri içeren bir operasyon yapmak.</li>
+                                <li>Merkez noktadaki işlemin o operasyonun cevabı (çıkışı) olmasına izin vermek.</li>
+                                <li>İmgedeki her nokta için bu işlemi tekrarlamak (<strong>Merkez noktayı kaydırma</strong>: sol üst köşeden başlayıp birer piksel sağa, satır bitince alt satırın başına geçme).</li>
+                            </ol>
+                        </div>
+                        <div class="p-4 rounded-xl bg-purple-500/5 border border-purple-500/20 space-y-2">
+                            <h4 class="font-bold text-purple-600 dark:text-purple-400">🎯 Komşuluk Göz Önünde Bulundurularak Yapılan 3 Temel İşlem:</h4>
+                            <ul class="list-disc list-inside space-y-1.5 text-slate-600 dark:text-slate-300">
+                                <li><strong>Griton (Gri seviye) düzgünleştirme:</strong> Grey level smoothing (Yumuşatma / Bulanıklaştırma).</li>
+                                <li><strong>Griton farklılıklarını vurgulamak:</strong> Emphasizing grey level differences.</li>
+                                <li><strong>Griton geçişlerini keskinleştirmek:</strong> Sharpening grey level steps (Keskinleştirme).</li>
+                            </ul>
+                            <p class="pt-1 text-slate-500 dark:text-slate-400 text-xs">
+                                <strong>Önemli Noktalar:</strong> Ağırlıkların (<code class="font-mono">w_i</code>) seçimi, pencere genişliğinin (<code class="font-mono">N</code>, genelde tek sayılı dikdörtgen) seçimi ve sınırlarda hesaplamalar (hesap yapmama, zero-padding veya periyodik varsayma).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7.2 Komşuluk Türleri (N4, ND, N8) ve Aritmetik Formül -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-sm">7.2</span>
+                        Komşuluk Tanımları: N₄(p), N_D(p) ve N₈(p)
+                    </h3>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 text-xs sm:text-sm">
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-2">
+                            <div class="font-bold text-amber-600 dark:text-amber-400">1) 4-Komşuluk: N₄(p)</div>
+                            <p class="text-slate-600 dark:text-slate-300">
+                                <code class="font-mono">(x,y)</code> noktasındaki <code class="font-mono">p</code> pikselinin 1 birim uzaklıktaki <strong>4 yatay ve dikey</strong> komşusudur:<br>
+                                <code class="font-mono font-bold">(x+1, y), (x-1, y), (x, y+1), (x, y-1)</code>
+                            </p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-2">
+                            <div class="font-bold text-sky-600 dark:text-sky-400">2) Diyagonal Komşuluk: N_D(p) / N₄D(p)</div>
+                            <p class="text-slate-600 dark:text-slate-300">
+                                Merkez pikselin <strong>4 köşegen</strong> komşusudur:<br>
+                                <code class="font-mono font-bold">(x-1, y-1), (x-1, y+1), (x+1, y-1), (x+1, y+1)</code>
+                            </p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-2">
+                            <div class="font-bold text-emerald-600 dark:text-emerald-400">3) 8-Komşuluk: N₈(p)</div>
+                            <p class="text-slate-600 dark:text-slate-300">
+                                Yatay, dikey ve köşegen tüm komşuların birleşimidir (toplam 8 komşu):<br>
+                                <code class="font-mono font-bold">N₈(p) = N₄(p) ∪ N_D(p)</code>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-900 text-white font-mono text-xs sm:text-sm text-center space-y-1">
+                        <div class="text-indigo-400 font-sans font-bold">Komşuluk Bazlı Aritmetik İşlem (3×3 Maske İçin):</div>
+                        <div class="text-emerald-400 font-bold">p = w₁a + w₂b + w₃c + w₄d + w₅e + w₆f + w₇g + w₈h + w₉i = ∑ w_i · f_i</div>
+                    </div>
+                </div>
+
+                <!-- 7.3 Filtreleme Örnekleri ve Çekirdek Toplamı Kuralı -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-sm">7.3</span>
+                        Filtreleme (Filtering) Hesaplamaları: Slayt Örnekleri (32 ve 88 Çözümleri)
+                    </h3>
+                    <div class="p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 text-xs sm:text-sm flex items-start gap-3">
+                        <span class="text-xl">🚨</span>
+                        <div>
+                            <div class="font-bold text-rose-600 dark:text-rose-400">SINAV KURALI: Çekirdek (Kernel) Toplamı Neden 1 Olmalıdır?</div>
+                            <p class="text-slate-700 dark:text-slate-200">
+                                Slayt Notu: <strong>"Çekirdek parlaklık değişmesin istiyorsak toplamı 1 olmalı!"</strong> Örneğin <code class="font-mono">[0, -1, 0; -1, 5, -1; 0, -1, 0]</code> çekirdeğinin elemanları toplamı <code class="font-mono">5 + (-1 - 1 - 1 - 1) = 1</code>'dir. Aynı şekilde <code class="font-mono">[-1, -1, -1; -2, 10, -2; -1, -1, -1]</code> çekirdeğinin toplamı da <code class="font-mono">10 - 8 = 2</code> (veya ağırlıklı keskinleştirme) olarak çalışır.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-2">
+                            <h4 class="font-bold text-indigo-600 dark:text-indigo-400">🧮 Slayt Örneği 1: 3×3 İmge ve Çekirdek (Sonuç = 32)</h4>
+                            <p class="font-mono text-xs">
+                                imge = [55, 75, 77; 48, <strong>70</strong>, 83; 51, 68, 85]<br>
+                                çekirdek = [-1, -1, -1; -2, <strong>10</strong>, -2; -1, -1, -1]
+                            </p>
+                            <p class="text-slate-600 dark:text-slate-300">
+                                Merkez <code class="font-mono">i(1,1) = 70</code> için filtreleme:<br>
+                                <code class="font-mono">(-1×55) + (-1×75) + (-1×77) + (-2×48) + (10×70) + (-2×83) + (-1×51) + (-1×68) + (-1×85)</code><br>
+                                <code class="font-mono">= -55 - 75 - 77 - 96 + 700 - 166 - 51 - 68 - 85 = <strong class="text-emerald-600 dark:text-emerald-400">32</strong></code>
+                                <br><span class="text-[11px] text-amber-600 dark:text-amber-400">(Not: Slayttaki 3B şekil üzerinde sol üst piksel 50 yazılmışsa da denklemde 55 kullanılmıştır; konvolüsyon slaytında ise 50 kullanılıp simetrik çekirdekle yine 32 bulunmuştur.)</span>
+                            </p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-2">
+                            <h4 class="font-bold text-indigo-600 dark:text-indigo-400">🧮 Slayt Örneği 2: 8×8 Görüntüde Laplace Keskinleştirme (88 ve 73)</h4>
+                            <p class="font-mono text-xs">
+                                Filtre = [0, -1, 0; -1, <strong>5</strong>, -1; 0, -1, 0]<br>
+                                Formül: g'(i,j) = 5·g(i,j) - g(i,j-1) - g(i-1,j) - g(i+1,j) - g(i,j+1)
+                            </p>
+                            <p class="text-slate-600 dark:text-slate-300">
+                                • <strong>(1,1) koordinatlı piksel (değeri 85, komşuları 82, 82, 85, 88):</strong><br>
+                                <code class="font-mono">g'(1,1) = -82 - 82 + 5×85 - 85 - 88 = 425 - 337 = <strong class="text-rose-500">88</strong></code><br>
+                                • <strong>(4,5) koordinatlı piksel (değeri 86, komşuları 93, 85, 87, 92):</strong><br>
+                                <code class="font-mono">g'(4,5) = -93 - 85 + 5×86 - 87 - 92 = 430 - 357 = <strong class="text-sky-500">73</strong></code><br>
+                                • MATLAB komutu: <code class="font-mono">f = imfilter(img, H, 'replicate')</code>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7.4 Konvolüsyon (Evrişim) ve 575 Sorusu -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-sm">7.4</span>
+                        Konvolüsyon (Evrişim - Convolution): 180° Döndürme Kuralı ve 575 Sorusu
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                        <div class="space-y-2 text-slate-600 dark:text-slate-300">
+                            <p>• <strong>Konvolüsyon Nedir?</strong> İki fonksiyon arasında birini <strong>ters çevirip (180° döndürüp)</strong> diğerine çarptıktan sonra elde edilen birleşim işlemidir.</p>
+                            <p>• <strong>Filtreleme vs Konvolüsyon Farkı:</strong> Konvolüsyon işlemi, <strong>maskenin (çekirdeğin) 180° döndürülüp</strong> (hem yatay hem dikey aynalanıp) aynı çarp-topla işleminin yapılma sürecidir!</p>
+                            <p>• Yumuşatma, keskinleştirme ve kenar belirlemede çok sık kullanılır. MATLAB'da 2-boyutlu konvolüsyon <code class="font-mono font-bold text-indigo-500">conv2</code> işlevi ile yapılır.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-900 text-white font-mono text-xs space-y-2">
+                            <div class="text-amber-400 font-sans font-bold">2-Boyutlu Ayrık Evrişim Denklemi:</div>
+                            <div class="text-emerald-400 text-sm font-bold">g(x,y) = k * f = ∑_{i=-m..m} ∑_{j=-n..n} k(i,j) · f(x - i, y - j)</div>
+                            <p class="text-slate-300 font-sans text-[11px]">
+                                Dikkat: İndisler <code class="font-mono">f(x - i, y - j)</code> olduğu için <code class="font-mono">k(-1,-1)</code> elemanı <code class="font-mono">f(x+1, y+1)</code> ile çarpılır (yani çekirdek 180° döner!).
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 575 Örneği Detaylı Çözüm -->
+                    <div class="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 space-y-3 text-xs sm:text-sm">
+                        <div class="font-bold text-emerald-700 dark:text-emerald-300">🏆 Slaytın Klasik Sınav Sorusu: A Görüntüsü ile h Kernelinin Konvolüsyonunda (2,4) Pikselinin Çıkışı (= 575)</div>
+                        <p class="text-slate-700 dark:text-slate-200">
+                            5×5 boyutlu <code class="font-mono">A</code> matrisinde <strong>2. satır, 4. sütundaki</strong> pikselin değeri <strong>14</strong>'tür. Bu pikselin etrafındaki 3×3 komşuluk bölgesi ile <code class="font-mono">h</code> çekirdeği aşağıdadır:
+                        </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono text-xs text-center">
+                            <div class="p-3 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700">
+                                <div class="font-sans font-bold text-slate-500 mb-1">1) A'da (2,4)=14 Komşuluğu</div>
+                                <div>[ 1 &nbsp;&nbsp; 8 &nbsp;&nbsp; 15 ]</div>
+                                <div>[ 7 &nbsp; <strong class="text-indigo-500">14</strong> &nbsp; 16 ]</div>
+                                <div>[ 13 &nbsp; 20 &nbsp; 22 ]</div>
+                            </div>
+                            <div class="p-3 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700">
+                                <div class="font-sans font-bold text-slate-500 mb-1">2) Orijinal h Çekirdeği</div>
+                                <div>[ 8 &nbsp;&nbsp; 1 &nbsp;&nbsp; 6 ]</div>
+                                <div>[ 3 &nbsp;&nbsp; 5 &nbsp;&nbsp; 7 ]</div>
+                                <div>[ 4 &nbsp;&nbsp; 9 &nbsp;&nbsp; 2 ]</div>
+                            </div>
+                            <div class="p-3 rounded-lg bg-amber-500/10 border border-amber-500/40">
+                                <div class="font-sans font-bold text-amber-600 dark:text-amber-400 mb-1">3) 180° Döndürülmüş h</div>
+                                <div>[ <strong>2 &nbsp;&nbsp; 9 &nbsp;&nbsp; 4</strong> ]</div>
+                                <div>[ <strong>7 &nbsp;&nbsp; 5 &nbsp;&nbsp; 3</strong> ]</div>
+                                <div>[ <strong>6 &nbsp;&nbsp; 1 &nbsp;&nbsp; 8</strong> ]</div>
+                            </div>
+                        </div>
+                        <div class="p-3 rounded-lg bg-slate-900 text-emerald-400 font-mono text-xs">
+                            Çıkış(2,4) = (1×2) + (8×9) + (15×4) + (7×7) + (14×5) + (16×3) + (13×6) + (20×1) + (22×8)<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= 2 + 72 + 60 + 49 + 70 + 48 + 78 + 20 + 176 = <strong>575</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7.5 Kenar Taşma Durumları, Hesapsal Yük ve MATLAB Ödevi -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-lg font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-sm">7.5</span>
+                        Kenar Bölgelerinde Taşma Durumları (5 Yöntem), Hesapsal Yük ve MATLAB Kodu
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-1.5">
+                            <h4 class="font-bold text-indigo-600 dark:text-indigo-400">🧱 Kenar Bölgelerindeki Taşma Durumunda 5 Olası İşlem:</h4>
+                            <ol class="list-decimal list-inside space-y-1 text-slate-600 dark:text-slate-300">
+                                <li><strong>Evrişim çekirdeğini kırpma:</strong> Maskenin dışarı taşan kısımlarını hesaba katmama.</li>
+                                <li><strong>Kenar bölgelerini sıfır yapma (Zero-padding):</strong> İmge etrafına <code class="font-mono">0</code>'lar ekleyerek genişletme.</li>
+                                <li><strong>Kenar bölgelerini kesme (Valid):</strong> Sınırlarda hesap yapmayıp içeriden (örn. <code class="font-mono">(2,2)</code> pikselinden) başlama (çıkış boyutu küçülür).</li>
+                                <li><strong>Kenar bölgelerini aynen kopyalama (Replicate):</strong> En dış satır/sütunu dışarıya tekrarlayarak kopyalama (imge boyutları büyür).</li>
+                                <li><strong>Kenar bölgelerini aynalayarak kopyalama (Symmetric):</strong> Sınır içindeki komşu satır/sütunları ayna simetrisiyle dışarı kopyalama.</li>
+                            </ol>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-900 text-white space-y-3 flex flex-col justify-center">
+                            <div class="text-xs font-bold text-amber-400 uppercase">⏱️ Hesapsal Yük Formülü (Sınav Sorusu!)</div>
+                            <p class="text-xs text-slate-300"><code class="font-mono">(m, n)</code> boyutlu bir evrişim çekirdeği kullanıldığında <strong>1 piksel için</strong> çıkış değerinin hesaplanmasında gerekli işlem sayısı:</p>
+                            <div class="p-3 rounded-lg bg-white/10 font-mono text-sm text-center text-emerald-400 font-bold">
+                                (m × n) Çarpma + (m × n - 1) Toplama
+                            </div>
+                            <p class="text-[11px] text-slate-400">Örn: 3×3 çekirdek için 1 pikselde <strong>9 çarpma ve 8 toplama</strong> işlemi yapılır!</p>
+                        </div>
+                    </div>
+
+                    <!-- 7. Bölüm Son Slayt MATLAB Ödevi Çözümü -->
+                    <div class="p-4 rounded-xl bg-slate-950 text-slate-100 font-mono text-xs space-y-2">
+                        <div class="text-amber-400 font-sans font-bold">💻 7. Bölüm MATLAB Ödevi Çözümü: Hazır Fonksiyon (imfilter/conv2) Kullanmadan Filtreleme ve 180° Konvolüsyon</div>
+                        <pre class="overflow-x-auto text-emerald-300"><code>% Uygulanacak Maske: [1 1 0; 1 1 -1; 0 -1 -1]
+% Kenar bölgelerine kesme (içeriden (2,2)'den başlama) uygulanmıştır.
+img = double(imread('cameraman.tif'));
+[M, N] = size(img);
+maske = [1 1 0; 1 1 -1; 0 -1 -1];
+maske_conv = rot90(maske, 2); % Konvolüsyon için maskeyi 180 derece çevirme
+
+out_filtre = zeros(M-2, N-2);
+out_conv   = zeros(M-2, N-2);
+
+for i = 2:M-1
+    for j = 2:N-1
+        pencere = img(i-1:i+1, j-1:j+1);
+        % 1) Direkt Filtreleme (Korelasyon)
+        out_filtre(i-1, j-1) = sum(sum(pencere .* maske));
+        % 2) 180 Derece Çevrilmiş Konvolüsyon (Evrişim)
+        out_conv(i-1, j-1)   = sum(sum(pencere .* maske_conv));
+    end
+end
+figure, imshow(uint8(out_filtre)), title('Direkt Filtreleme');
+figure, imshow(uint8(out_conv)),   title('180 Derece Konvolusyon');</code></pre>
+                    </div>
+                </div>
+
+                <!-- Bölüm 7 Mini Test -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 space-y-4">
+                    <h4 class="font-bold text-base flex items-center gap-2">📝 7. Bölüm Konu Sonu Mini Testi</h4>
+                    <div id="quiz-bolum7" class="space-y-4"></div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 VİDEOLU ANLATIM AKADEMİSİ (1 - 7. BÖLÜM SESLİ & ANİMASYONLU DERSLER)
+                 ========================================== -->
+            <section id="tab-videolar" class="tab-content hidden space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
+                    <div>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-rose-500/10 text-rose-600 dark:text-rose-400 mb-2">Sesli & Animasyonlu Ders Oynatıcı</span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">🎬 Sayısal Görüntü İşleme Video Akademisi (1 – 7. Bölüm)</h2>
+                        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">Bölümü seç, <strong>"▶ Sesli Dersi Başlat"</strong> butonuna bas; animasyonlu tahta üzerinde sesli ve altyazılı olarak konuyu dinle.</p>
+                    </div>
+                </div>
+
+                <!-- Bölüm Seçici Butonlar -->
+                <div class="flex flex-wrap gap-2" id="videoPlaylistBtns"></div>
+
+                <!-- Video Player Stage -->
+                <div class="bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden shadow-2xl">
+                    <div class="p-4 bg-slate-950 border-b border-slate-800 flex flex-wrap items-center justify-between gap-3">
+                        <div class="flex items-center gap-2.5">
+                            <span id="vidBadge" class="px-2.5 py-1 rounded-lg bg-rose-600 text-white text-xs font-bold">Bölüm 7</span>
+                            <h3 id="vidTitle" class="font-bold text-white text-sm sm:text-base">Alansal İşlemler, Filtreleme ve Konvolüsyon (575 Sorusu)</h3>
+                        </div>
+                        <span id="vidSlideCounter" class="text-xs font-mono text-slate-400">Sahne 1 / 4</span>
+                    </div>
+
+                    <!-- Animated Canvas Blackboard -->
+                    <div class="relative bg-slate-950 flex items-center justify-center p-4">
+                        <canvas id="videoStageCanvas" width="820" height="380" class="w-full max-w-[820px] rounded-xl border border-slate-800 bg-slate-900"></canvas>
+                    </div>
+
+                    <!-- Subtitle / Narration Box -->
+                    <div class="p-4 bg-slate-900/95 border-t border-slate-800 space-y-3">
+                        <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-xs sm:text-sm leading-relaxed min-h-[60px] flex items-center gap-3">
+                            <span class="text-xl shrink-0">🎙️</span>
+                            <p id="vidSubtitleText">Başlamak için aşağıdaki "Sesli Dersi Başlat" butonuna tıklayın veya sahneler arasında geçiş yapın.</p>
+                        </div>
+
+                        <!-- Controls -->
+                        <div class="flex flex-wrap items-center justify-between gap-3">
+                            <div class="flex items-center gap-2">
+                                <button onclick="prevVideoScene()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold transition">⏮ Önceki Sahne</button>
+                                <button onclick="toggleVideoPlay()" id="vidPlayBtn" class="px-5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold transition shadow-lg shadow-rose-600/30">▶ Sesli Dersi Başlat</button>
+                                <button onclick="nextVideoScene()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold transition">Sonraki Sahne ⏭</button>
+                            </div>
+                            <div class="flex items-center gap-2 text-xs text-slate-400">
+                                <label class="flex items-center gap-1.5 cursor-pointer">
+                                    <input type="checkbox" id="vidVoiceToggle" checked class="rounded text-rose-600">
+                                    <span>🔊 Türkçe Seslendirme (TTS) Açık</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
             <!-- ==========================================
                  HIZLI HATIRLATICILAR & EZBER KARTLARI (FLASHCARDS)
                  ========================================== -->
@@ -1468,6 +1784,26 @@ yeni</code></pre></div>
                             <div id="canvasResultLabel" class="font-bold text-emerald-500">Çıkış Görüntüsü</div>
                         </div>
                     </div>
+                </div>
+                <!-- Tool 5: 3x3 Convolution & Filtering Calculator -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <h3 class="text-base font-bold text-indigo-600 dark:text-indigo-400">5. Canlı 3×3 Filtreleme ve 180° Konvolüsyon (Evrişim) Çözücü (Bölüm 7)</h3>
+                    <div class="flex flex-wrap gap-2 text-xs">
+                        <button onclick="loadConvPreset('slayt575')" class="px-3 py-1.5 rounded-lg bg-emerald-600 text-white font-semibold">Slayt Örneği 1: A ve h (Sonuç = 575)</button>
+                        <button onclick="loadConvPreset('slayt32')" class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white font-semibold">Slayt Örneği 2: 3×3 Merkez=70 (Sonuç = 32)</button>
+                        <button onclick="loadConvPreset('slayt88')" class="px-3 py-1.5 rounded-lg bg-purple-600 text-white font-semibold">Slayt Örneği 3: Laplace (Sonuç = 88)</button>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
+                        <div>
+                            <div class="font-bold mb-2 text-slate-700 dark:text-slate-300">Giriş Görüntü Bölgesi (3×3):</div>
+                            <div id="convImgInputs" class="grid grid-cols-3 gap-2 max-w-[220px]"></div>
+                        </div>
+                        <div>
+                            <div class="font-bold mb-2 text-slate-700 dark:text-slate-300">Çekirdek / Maske h (3×3):</div>
+                            <div id="convKernelInputs" class="grid grid-cols-3 gap-2 max-w-[220px]"></div>
+                        </div>
+                    </div>
+                    <div id="convCalcOutput" class="p-4 rounded-xl bg-slate-900 text-slate-100 font-mono text-xs space-y-2"></div>
                 </div>
             </section>
 
@@ -2280,6 +2616,272 @@ yeni</code></pre></div>
 
         // Initialize Everything on Load
         window.onload = function() {
+           // ==========================================
+        // 8. BÖLÜM 7 VERİLERİ, KONVOLÜSYON ARACI VE VİDEO AKADEMİSİ MOTORU
+        // ==========================================
+        miniQuizzes.bolum7 = [
+            {
+                q: "1. (x,y) noktasındaki bir p pikselinin yatay ve dikey komşularından oluşan 4-komşuluk kümesi N4(p) ile köşegen komşuları ND(p) birleştiğinde hangi komşuluk oluşur?",
+                options: ["N2(p)", "N4(p)", "N8(p) = N4(p) U ND(p)", "N16(p)"],
+                ans: 2,
+                exp: "4 yatay/dikey komşu N4(p) ile 4 diyagonal (köşegen) komşu ND(p) birleştiğinde 8-komşuluk N8(p) elde edilir."
+            },
+            {
+                q: "2. Alansal filtreleme işleminde görüntünün genel parlaklığının değişmemesi isteniyorsa çekirdek (kernel) elemanlarının toplamı kaç olmalıdır?",
+                options: ["0", "1", "255", "9"],
+                ans: 1,
+                exp: "Slaytta açıkça belirtildiği üzere: 'Çekirdek parlaklık değişmesin istiyorsak toplamı 1 olmalı' (Örn: [0 -1 0; -1 5 -1; 0 -1 0] toplamı = 5 - 4 = 1)."
+            },
+            {
+                q: "3. Konvolüsyon (Evrişim) işlemini standart alansal filtreleme (korelasyon) işleminden ayıran en temel adım nedir ve MATLAB'da hangi fonksiyonla yapılır?",
+                options: ["Maskenin 90 derece döndürülmesi - imrotate", "Maskenin 180 derece döndürülüp çarpılması - conv2", "Maskenin 2 ile çarpılması - imfilter", "Sadece köşe piksellerin toplanması - histeq"],
+                ans: 1,
+                exp: "Konvolüsyon, maskenin (çekirdeğin) 180 derece döndürülüp uygulanmasıdır. MATLAB'da 2B konvolüsyon conv2 ile yapılır."
+            },
+            {
+                q: "4. (m, n) boyutlu bir evrişim çekirdeği kullanıldığında 1 piksel için çıkış değerinin hesaplanmasında gerekli işlem sayısı (hesapsal yük) nedir?",
+                options: ["(m + n) çarpma ve (m + n) toplama", "(m × n) çarpma ve (m × n - 1) toplama", "(m × n) çarpma ve (m × n) toplama", "(m × n - 1) çarpma ve (m × n) toplama"],
+                ans: 1,
+                exp: "m×n elemanlı bir pencerede her eleman ağırlıkla çarpılır (m×n çarpma) ve bu çarpımlar birbirine eklenir (m×n - 1 toplama)."
+            }
+        ];
+
+        flashcards.push(
+            { q: "Filtreleme ile Konvolüsyon (Evrişim) Arasındaki Fark Nedir?", a: "Filtrelemede maske doğrudan komşulukla çarpılıp toplanır.\nKonvolüsyonda ise maske önce 180° döndürülür (hem yatay hem dikey ters çevrilir), sonra çarpılıp toplanır (MATLAB: conv2)." },
+            { q: "(m,n) Boyutlu Çekirdeğin 1 Piksel İçin Hesapsal Yükü Nedir?", a: "(m × n) adet ÇARPMA ve (m × n - 1) adet TOPLAMA işlemidir.\nÖrn: 3×3 çekirdek için 9 çarpma + 8 toplama." },
+            { q: "Kenar Bölgelerindeki Taşmalarda Uygulanan 5 Yöntem Nedir?", a: "1) Çekirdeği kırpma\n2) Kenarları sıfır yapma (Zero-padding)\n3) Kenarları kesme (2,2'den başlama)\n4) Kenarları aynen kopyalama (Replicate)\n5) Kenarları aynalayarak kopyalama." }
+        );
+
+        // Konvolüsyon & Filtreleme Hesaplayıcı
+        let convImgData = [1, 8, 15, 7, 14, 16, 13, 20, 22];
+        let convKerData = [8, 1, 6, 3, 5, 7, 4, 9, 2];
+
+        function initConvTool() {
+            const imgDiv = document.getElementById('convImgInputs');
+            const kerDiv = document.getElementById('convKernelInputs');
+            if (!imgDiv || !kerDiv) return;
+            imgDiv.innerHTML = convImgData.map((v, idx) => `<input type="number" id="ci-${idx}" value="${v}" oninput="calcConvTool()" class="p-2 text-center font-mono rounded-lg bg-slate-100 dark:bg-slate-800 border ${idx===4?'border-indigo-500 font-bold':'border-slate-300 dark:border-slate-700'}">`).join('');
+            kerDiv.innerHTML = convKerData.map((v, idx) => `<input type="number" id="ck-${idx}" value="${v}" oninput="calcConvTool()" class="p-2 text-center font-mono rounded-lg bg-slate-100 dark:bg-slate-800 border ${idx===4?'border-amber-500 font-bold':'border-slate-300 dark:border-slate-700'}">`).join('');
+            calcConvTool();
+        }
+
+        function loadConvPreset(name) {
+            if (name === 'slayt575') {
+                convImgData = [1, 8, 15, 7, 14, 16, 13, 20, 22];
+                convKerData = [8, 1, 6, 3, 5, 7, 4, 9, 2];
+            } else if (name === 'slayt32') {
+                convImgData = [55, 75, 77, 48, 70, 83, 51, 68, 85];
+                convKerData = [-1, -1, -1, -2, 10, -2, -1, -1, -1];
+            } else if (name === 'slayt88') {
+                convImgData = [87, 82, 88, 82, 85, 85, 89, 88, 82];
+                convKerData = [0, -1, 0, -1, 5, -1, 0, -1, 0];
+            }
+            initConvTool();
+        }
+
+        function calcConvTool() {
+            if (!document.getElementById('ci-0')) return;
+            const im = [], kr = [];
+            for (let i = 0; i < 9; i++) {
+                im.push(parseFloat(document.getElementById(`ci-${i}`).value) || 0);
+                kr.push(parseFloat(document.getElementById(`ck-${i}`).value) || 0);
+            }
+            const krRot = [...kr].reverse(); // 180 derece döndürülmüş çekirdek
+            let sumFilt = 0, sumConv = 0;
+            const termsFilt = [], termsConv = [];
+            for (let i = 0; i < 9; i++) {
+                sumFilt += im[i] * kr[i];
+                sumConv += im[i] * krRot[i];
+                termsFilt.push(`(${im[i]}×${kr[i]})`);
+                termsConv.push(`(${im[i]}×${krRot[i]})`);
+            }
+            const kSum = kr.reduce((a, b) => a + b, 0);
+            document.getElementById('convCalcOutput').innerHTML = `
+                <div>• <strong>Çekirdek Elemanları Toplamı (∑w_i):</strong> <span class="text-amber-400">${kSum}</span> ${kSum===1 ? '(Toplam 1: Ortalama parlaklık korunur ✓)' : ''}</div>
+                <div>• <strong>180° Döndürülmüş Çekirdek:</strong> [${krRot.slice(0,3).join(', ')} ; ${krRot.slice(3,6).join(', ')} ; ${krRot.slice(6,9).join(', ')}]</div>
+                <div class="pt-1 text-cyan-300">• <strong>Direkt Filtreleme (Korelasyon):</strong> ${termsFilt.join(' + ')} = <strong class="text-base text-white">${sumFilt}</strong></div>
+                <div class="text-emerald-400">• <strong>180° Konvolüsyon (Evrişim):</strong> ${termsConv.join(' + ')} = <strong class="text-base text-white">${sumConv}</strong></div>
+            `;
+        }
+
+        // Video Akademisi Ders Senaryoları (Bölüm 1 - 7)
+        const videoLessons = [
+            {
+                id: 1, badge: "Bölüm 1", title: "Sinyal Boyutları, Işık Fiziği, Göz ve Örnekleme/Nicemleme",
+                scenes: [
+                    { title: "Sinyal Kavramı ve Boyutları (1B - 4B)", speech: "Birinci bölümde sinyali fiziksel değişkenlerin durumu hakkında bilgi taşıyan f fonksiyonu olarak tanımlıyoruz. Ses f(t) ile 1 boyutlu, görüntü f(x,y) ile 2 boyutlu, uzayda nokta f(x,y,z) ile 3 boyutlu ve animasyon film zaman boyutu da eklenerek f(x,y,z,t) ile 4 boyutludur.", lines: ["• 1 Boyutlu: Dalga formu (Ses) -> Genlik = f(t)", "• 2 Boyutlu: Görüntü / Fotoğraf -> Görüntü = f(x, y)", "• 3 Boyutlu: Uzayda Nokta -> f(x, y, z)", "• 4 Boyutlu: Animasyon Film -> f(x, y, z, t) [t = zaman]"] },
+                    { title: "Işık Denklemi (c = f · λ) ve Siyah Cisim Işıması", speech: "Işık hızı eşittir frekans çarpı dalga boyudur. Görünür ışık 380 nanometre mor-maviden 760 nanometre kırmızıya uzanır. Siyah bir cisim ısıtıldığında önce kızılötesi, sonra kırmızı, sonra beyaz ve çok ısıtılırsa mavi ve ultraviyole ışınlar saçar.", lines: ["• Temel Denklem: c = f · λ   (c = 300.000 km/s)", "• Görünür Spektrum (%2): 380 nm (Mor/Mavi) ---> 760 nm (Kırmızı)", "• Siyah Cisim Isıtılma Sırası: Kızılötesi (IR) -> Kırmızı -> Beyaz -> Mavi (UV)", "• Arıların Görme Aralığı: Ultraviyole bölgeden başlar, yeşilde biter."] },
+                    { title: "İnsan Gözü Tabakaları ve Mercek Odaklaması", speech: "Göz üç temel zardan oluşur: Dışta saydam Kornea ve sert Sklera, ortada kan damarlı Koroid ve en içte görüntünün düştüğü Ağ tabaka yani Retina. Uzaktaki cismi görmek için göz merceği yassılaşır ve ışığı kırma minimum olur. Yakındaki cisim için kırma maksimumdur.", lines: ["• 1. Dış Zar: Kornea (Saydam) ve Sklera (Saydam olmayan sert tabaka)", "• 2. Damar Tabaka (Koroid): Kan damarları yoğun bulunur", "• 3. Ağ Tabaka (Retina): Koni (renk) ve Çubuk (ışık) algılayıcıları buradadır", "• SINAV TUZAĞI: Uzak cisim -> Kırma MİNİMUM | Yakın cisim -> Kırma MAKSİMUM"] },
+                    { title: "Örnekleme (Sampling) ve Nicemleme (Quantization)", speech: "Analog görüntüyü sayısallaştırırken konum koordinatlarının sayısallaştırılmasına Örnekleme yani Sampling denir. Parlaklık şiddeti yani renk genliğinin tam sayı basamaklara dönüştürülmesine ise Nicemleme yani Quantization denir.", lines: ["• Örnekleme (Sampling): Konumsal (x,y koordinat) sayısallaştırma -> N×M Matris", "• Nicemleme (Quantization): Genlik / Parlaklık şiddeti sayısallaştırması", "• Piksel Başına Örnek: 1 (Gri), 3 (RGB), 4 (RGBA - Alfa Opaklık)", "• Orijin (0,0) sol üst köşedir!"] }
+                ]
+            },
+            {
+                id: 2, badge: "Bölüm 2", title: "Formatlar, RGB Renk Uzayı, Bellek Hesabı ve Noktasal İşlemler",
+                scenes: [
+                    { title: "Görüntü Formatları ve RGB Ara Renkler", speech: "BMP sıkıştırmasız 24 bittir. JPEG kayıplı sıkıştırma yapar. PNG kayıpsızdır ve saydamlığı destekler. RGB uzayında Kırmızı artı Yeşil Sarıyı, Yeşil artı Mavi Turkuazı, Kırmızı artı Mavi ise Eflatunu oluşturur.", lines: ["• JPEG: 24-bit Kayıplı | PNG: 24-bit Kayıpsız + Saydam | GIF: Animasyonlu Kayıpsız", "• Sarı (Yellow) = (255, 255, 0)", "• Turkuaz (Cyan) = (0, 255, 255)", "• Eflatun (Magenta) = (255, 0, 255)"] },
+                    { title: "Bellek Hesabı, Kontrast ve Keskinleştirme Farkı", speech: "Bellek formülü Satır çarpı Sütun çarpı Bit derinliğidir. 1000'e 600 boyutlu 8 bit gri resim 600 Kilobyte, 24 bit renkli resim ise 1.8 Megabyte yer kaplar. Kontrast renk değerlerinin arasını açarken, keskinleştirme sadece kenarları belirginleştirir.", lines: ["• Bellek Formülü: Bit = N × M × m   (8 bit = 1 Byte)", "• 1000×600 Gri (8-bit): 600.000 Byte ≈ 600 KB", "• 1000×600 RGB (24-bit): 1.800.000 Byte ≈ 1.8 MB", "• Parlaklık: g ± b | Kontrast: g × c | Keskinleştirme: Sadece kenarları vurgular!"] }
+                ]
+            },
+            {
+                id: 3, badge: "Bölüm 3", title: "Look-Up Table (LUT), Negatif, Gri Dönüşüm ve Histogram",
+                scenes: [
+                    { title: "LUT Optimizasyonu, Negatif ve Griye Çevirme", speech: "Look-up table her piksel için tekrar işlem yapmak yerine 0'dan 255'e kadar çıkışları baştan hesaplayıp tabloda saklar. MATLAB'da diziler 1'den başladığı için LUT(im+1) kullanılır. Griye çevirmede gözümüz 555 nanometre yeşile en duyarlı olduğu için yeşilin katsayısı 0.587 ile en büyüktür.", lines: ["• LUT: 400×300×3 = 360.000 işlem yerine sadece 256 değer tablodan okunur!", "• Negatif Alma: y = 255 - x   (3-bit için y = 7 - x)", "• Griye Çevirme: Gri = 0.299·R + 0.587·G + 0.114·B  (Yeşil en büyük!)", "• Eşikleme ve Histogram: Dar histogram = Düşük kontrast | Yaygın = Yüksek kontrast"] }
+                ]
+            },
+            {
+                id: 4, badge: "Bölüm 4", title: "Histogram Germe ve Histogram Eşitleme (24 Piksel Tablosu)",
+                scenes: [
+                    { title: "Histogram Germe vs Otomatik Histogram Eşitleme", speech: "Histogram germe kullanıcı girişine ihtiyaç duyar ve lineerdir. 5-9 aralığını 2-14'e gererken 3 çarpı i eksi 5 artı 2 formülüyle 2, 5, 8, 11, 14 bulunur. Histogram eşitleme ise otomatiktir, kümülatif sıklığı toplam piksel sayısına bölüp L eksi 1 ile çarpar ve yuvarlar.", lines: ["• Histogram Germe: j = [(Y_mak - Y_min)/(E_mak - E_min)] × (i - E_min) + Y_min", "• [5,9] -> [2,14] Germe Sonucu: i={5,6,7,8,9} ---> j={2, 5, 8, 11, 14}", "• Histogram Eşitleme: s_k = round( (L - 1) × (Birikimli Sıklık / N) )", "• 24 Pikselli 3-bit Örnek: r=0->1, r=1->4 (slaytta 3), r=2->5, r=3->6, r=4..7->7"] }
+                ]
+            },
+            {
+                id: 5, badge: "Bölüm 5", title: "Geometrik Dönüşümler, Döndürme ve Aliasing Çözümleri",
+                scenes: [
+                    { title: "Taşıma, Aynalama, Eğme, Ölçekleme ve Aliasing", speech: "Dikey eksende aynalamada x2 eşittir eksi x1 artı 2x0 olur. Döndürme işleminde sinüs ve kosinüs ondalıklı çıktığı için bazı piksellere renk atanamaz ve Aliasing denilen boşluklar oluşur. Bunu çözmek için aşırı örnekleme, alan ağırlıklı ters eşleme veya Sağa-Aşağı-Sağa 3 aşamalı kaydırma kullanılır.", lines: ["• Dikey Aynalama: x₂ = -x₁ + 2x₀, y₂ = y₁ | Yatay: x₂ = x₁, y₂ = -y₁ + 2y₀", "• Merkez Etrafında Döndürme: x₂ = (x₁-x₀)cosθ - (y₁-y₀)sinθ + x₀", "• Aliasing (Boşluk) 3 Çözümü: 1) Aşırı Örnekleme  2) Hedef->Kaynak Alan Ortalaması", "• 3) Üç Aşamalı Kaydırma: Sağa Kaydır -> Aşağı Kaydır -> Tekrar Sağa Kaydır!"] }
+                ]
+            },
+            {
+                id: 6, badge: "Bölüm 6", title: "Bitsel (Boolean) İşlemler ve Görüntü Maskeleme",
+                scenes: [
+                    { title: "AND (&), OR (|), XOR, NOT (~) ve İki Resmi Birleştirme", speech: "Ortası beyaz yani 1, dışı siyah yani 0 olan kare maske im3 ile AND yapıldığında ortadaki karede resim korunur, dışı siyah olur. Maskenin tersiyle OR yapıldığında ise ortada resim korunur, dışı beyaz olur. İki sonuç AND yapıldığında ortada Lenna, dış çerçevede Afghan Girl birleşir.", lines: ["• im4 = (im2 & im3)  ---> Ortadaki karede Afghan Girl, dışı SİYAH (0)", "• im4 = (im1 | ~im3) ---> Ortadaki karede Lenna, dışı BEYAZ (1)", "• im5 = (im2 | im3)  ---> Ortadaki kare BEYAZ (1), dışı Afghan Girl", "• im6 = (im5 & im4)  ---> Ortada Lenna (im1), dış çerçevede Afghan Girl (im2)!"] }
+                ]
+            },
+            {
+                id: 7, badge: "Bölüm 7", title: "Alansal İşlemler, Komşuluk, Filtreleme ve Konvolüsyon (575 Sorusu)",
+                scenes: [
+                    { title: "Sahne 1: Alansal (Bölgesel) İşlemler ve Komşuluk (N4, ND, N8)", speech: "Yedinci bölümde alansal yani bölgesel işlemlere geçiyoruz. Noktasal işlemlerde her piksel tek başına değişirken, bölgesel işlemlerde merkez pikselin yeni değeri etrafındaki maske yani çekirdek içindeki komşu piksellerle hesaplanır. Merkez pikselin yatay ve dikey 4 komşusuna N4, köşegen komşularına ND, hepsinin birleşimine ise N8 komşuluk denir.", lines: ["• Alansal İşlem: Merkez (x,y) etrafındaki pencere (maske/kernel) komşularını kullanır", "• N₄(p): 4 yatay ve dikey komşu -> (x±1, y) ve (x, y±1)", "• N_D(p): 4 diyagonal (köşegen) komşu -> (x±1, y±1)", "• N₈(p) = N₄(p) ∪ N_D(p) -> Toplam 8 komşu"] },
+                    { title: "Sahne 2: Filtreleme Hesabı ve Çekirdek Toplamı = 1 Kuralı", speech: "Filtrelemede görüntü parlaklığının değişmemesi için çekirdek içindeki ağırlıkların toplamı 1 olmalıdır. Örneğin merkezinde 5, dört komşusunda eksi 1 olan çekirdeğin toplamı 1'dir. 8'e 8 görüntüde (1,1) pikseli olan 85 için: 5 çarpı 85 eksi (82 artı 82 artı 85 artı 88) işleminin sonucu 88 çıkar.", lines: ["• KURAL: Görüntü parlaklığı değişmesin istiyorsak çekirdek toplamı = 1 olmalı!", "• Örnek 1 (Merkez=70, Çekirdek Merkez=10): Çarpıp topladığımızda sonuç = 32", "• Örnek 2 (Laplace [0 -1 0; -1 5 -1; 0 -1 0]):", "• g'(1,1) = -82 - 82 + 5×(85) - 85 - 88 = 425 - 337 = 88   |   g'(4,5) = 73"] },
+                    { title: "Sahne 3: Konvolüsyon (Evrişim) 180° Kuralı ve 575 Sorusu", speech: "Konvolüsyon işlemi, maskenin 180 derece döndürülüp görüntüyle çarpılmasıdır. Slayttaki A matrisinin (2,4) pikseli olan 14 etrafındaki 3'e 3 bölge ile h çekirdeğini konvolüsyona sokarken önce h çekirdeğini 180 derece döndürürüz. Karşılıklı çarpıp topladığımızda sonuç tam 575 çıkar!", lines: ["• Konvolüsyon = Çekirdeğin (Kernel) 180° döndürülüp çarpılması (MATLAB: conv2)", "• A'da (2,4)=14 komşuluğu: [1, 8, 15 ; 7, 14, 16 ; 13, 20, 22]", "• h = [8, 1, 6 ; 3, 5, 7 ; 4, 9, 2]  --180° Döndür-->  h_rot = [2, 9, 4 ; 7, 5, 3 ; 6, 1, 8]", "• Çıkış = 1·2 + 8·9 + 15·4 + 7·7 + 14·5 + 16·3 + 13·6 + 20·1 + 22·8 = 575!"] },
+                    { title: "Sahne 4: Kenar Taşma Durumları (5 Yöntem) ve Hesapsal Yük", speech: "Maske görüntü kenarlarına geldiğinde taşma olur. Bunun için 5 yöntem vardır: Çekirdeği kırpma, kenarları sıfır yapma, kenarları kesme, kenarları aynen kopyalama ve aynalayarak kopyalama. m çarpı n boyutlu bir çekirdeğin bir piksel için hesapsal yükü m çarpı n çarpma ve m çarpı n eksi 1 toplamadır.", lines: ["• Kenar Taşma Çözümleri: 1) Çekirdeği kırpma  2) Sıfır ekleme (Zero-padding)", "• 3) Kenarları kesme (2,2'den başlama)  4) Aynen kopyalama  5) Aynalayarak kopyalama", "• HESAPSAL YÜK: (m × n) Çarpma + (m × n - 1) Toplama", "• 3×3 çekirdek için 1 pikselde: 9 çarpma + 8 toplama işlemi yapılır!"] }
+                ]
+            }
+        ];
+
+        let curVidLessonIdx = 6; // Varsayılan Bölüm 7
+        let curVidSceneIdx = 0;
+        let isVidPlaying = false;
+
+        function initVideoAcademy() {
+            const btnBar = document.getElementById('videoPlaylistBtns');
+            if (!btnBar) return;
+            btnBar.innerHTML = videoLessons.map((les, idx) => `
+                <button onclick="selectVideoLesson(${idx})" id="vbtn-${idx}" class="px-3.5 py-2 rounded-xl text-xs font-bold border transition ${idx===curVidLessonIdx ? 'bg-rose-600 text-white border-rose-600 shadow-md' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-rose-500'}">
+                    🎬 ${les.badge}: ${les.title.split(',')[0]}
+                </button>
+            `).join('');
+            renderVideoScene();
+        }
+
+        function openVideoLesson(idx) {
+            switchTab('videolar');
+            selectVideoLesson(idx);
+        }
+
+        function selectVideoLesson(idx) {
+            stopVideoSpeech();
+            curVidLessonIdx = idx;
+            curVidSceneIdx = 0;
+            initVideoAcademy();
+        }
+
+        function renderVideoScene() {
+            const lesson = videoLessons[curVidLessonIdx];
+            const scene = lesson.scenes[curVidSceneIdx];
+            document.getElementById('vidBadge').textContent = lesson.badge;
+            document.getElementById('vidTitle').textContent = lesson.title;
+            document.getElementById('vidSlideCounter').textContent = `Sahne ${curVidSceneIdx + 1} / ${lesson.scenes.length}`;
+            document.getElementById('vidSubtitleText').textContent = scene.speech;
+
+            const canvas = document.getElementById('videoStageCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Arka plan ızgarası
+            ctx.fillStyle = '#0f172a';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.strokeStyle = 'rgba(99, 102, 241, 0.12)';
+            ctx.lineWidth = 1;
+            for (let x = 0; x < canvas.width; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke(); }
+            for (let y = 0; y < canvas.height; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke(); }
+
+            // Üst Başlık Bandı
+            ctx.fillStyle = '#4f46e5';
+            ctx.fillRect(30, 28, canvas.width - 60, 48);
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 18px Inter, sans-serif';
+            ctx.fillText(`${lesson.badge} — ${scene.title}`, 48, 58);
+
+            // Maddeler
+            ctx.font = '15px "JetBrains Mono", monospace';
+            scene.lines.forEach((line, i) => {
+                const y = 125 + i * 60;
+                ctx.fillStyle = 'rgba(30, 41, 59, 0.9)';
+                ctx.fillRect(30, y - 28, canvas.width - 60, 44);
+                ctx.strokeStyle = i === scene.lines.length - 1 ? '#10b981' : '#6366f1';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(30, y - 28, canvas.width - 60, 44);
+                ctx.fillStyle = i === scene.lines.length - 1 ? '#34d399' : '#f8fafc';
+                ctx.fillText(line, 48, y);
+            });
+        }
+
+        function stopVideoSpeech() {
+            isVidPlaying = false;
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+            const btn = document.getElementById('vidPlayBtn');
+            if (btn) btn.textContent = '▶ Sesli Dersi Başlat';
+        }
+
+        function toggleVideoPlay() {
+            if (isVidPlaying) {
+                stopVideoSpeech();
+            } else {
+                isVidPlaying = true;
+                document.getElementById('vidPlayBtn').textContent = '⏹ Durdur';
+                speakCurrentScene();
+            }
+        }
+
+        function speakCurrentScene() {
+            renderVideoScene();
+            const voiceOn = document.getElementById('vidVoiceToggle')?.checked;
+            const lesson = videoLessons[curVidLessonIdx];
+            const scene = lesson.scenes[curVidSceneIdx];
+            if (voiceOn && 'speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const u = new SpeechSynthesisUtterance(scene.speech);
+                u.lang = 'tr-TR';
+                u.rate = 1.02;
+                u.onend = () => {
+                    if (!isVidPlaying) return;
+                    if (curVidSceneIdx < lesson.scenes.length - 1) {
+                        curVidSceneIdx++;
+                        speakCurrentScene();
+                    } else {
+                        stopVideoSpeech();
+                    }
+                };
+                window.speechSynthesis.speak(u);
+            }
+        }
+
+        function nextVideoScene() {
+            stopVideoSpeech();
+            const lesson = videoLessons[curVidLessonIdx];
+            curVidSceneIdx = (curVidSceneIdx + 1) % lesson.scenes.length;
+            renderVideoScene();
+        }
+
+        function prevVideoScene() {
+            stopVideoSpeech();
+            const lesson = videoLessons[curVidLessonIdx];
+            curVidSceneIdx = (curVidSceneIdx - 1 + lesson.scenes.length) % lesson.scenes.length;
+            renderVideoScene();
+        }
+
+        // Initialize Everything on Load
+        window.onload = function() {
             switchTab('bolum1');
             updateProgressUI();
             renderMiniQuizzes();
@@ -2288,6 +2890,8 @@ yeni</code></pre></div>
             calcMemory();
             calcStretch();
             initMaskVisualizer();
+            initConvTool();
+            initVideoAcademy();
             renderFinalExam();
             renderPersonalNotes();
         };
