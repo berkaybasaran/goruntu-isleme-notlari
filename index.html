@@ -86,7 +86,7 @@
                 <div class="w-28 h-2 bg-slate-300 dark:bg-slate-700 rounded-full overflow-hidden">
                     <div id="overallProgressBar" class="h-full bg-gradient-to-r from-indigo-500 to-emerald-400 w-0 transition-all duration-500"></div>
                 </div>
-                <span id="overallProgressText" class="text-xs font-bold text-indigo-600 dark:text-indigo-400">0/6</span>
+                <span id="overallProgressText" class="text-xs font-bold text-indigo-600 dark:text-indigo-400">0/7</span>
             </div>
 
             <button onclick="toggleNotesDrawer()" class="relative p-2.5 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 hover:bg-amber-500/20 border border-amber-500/20 transition flex items-center gap-2 text-xs font-semibold">
@@ -1908,12 +1908,12 @@ figure, imshow(uint8(out_conv)),   title('180 Derece Konvolusyon');</code></pre>
         }
 
         function updateProgressUI() {
-            const total = 6;
+            const total = 7;
             const done = state.completedModules.length;
             document.getElementById('overallProgressBar').style.width = `${(done / total) * 100}%`;
             document.getElementById('overallProgressText').textContent = `${done}/${total}`;
 
-            for (let i = 1; i <= 6; i++) {
+            for (let i = 1; i <= 7; i++) {
                 const mod = 'bolum' + i;
                 const checkEl = document.getElementById('check-' + mod);
                 const btnEl = document.getElementById('btn-complete-' + mod);
@@ -2614,8 +2614,7 @@ figure, imshow(uint8(out_conv)),   title('180 Derece Konvolusyon');</code></pre>
             document.getElementById('sidebar').classList.toggle('-translate-x-full');
         });
 
-        // Initialize Everything on Load
-        window.onload = function() {
+       
            // ==========================================
         // 8. BÖLÜM 7 VERİLERİ, KONVOLÜSYON ARACI VE VİDEO AKADEMİSİ MOTORU
         // ==========================================
